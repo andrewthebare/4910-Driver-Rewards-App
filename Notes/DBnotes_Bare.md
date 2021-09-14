@@ -1,3 +1,7 @@
+# Sprint 1 Tasks
++ [x] Create Database
++ [x] Learn Database Basics
+
 #### Link: https://www.youtube.com/watch?v=cepspxPAUTA
 # Schema Design
 - Avoid Duplicates
