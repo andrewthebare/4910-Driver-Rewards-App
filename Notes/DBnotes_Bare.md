@@ -9,4 +9,18 @@
     - Primary Key: The main identifier for a table
     - Foreign key: a key from another table that is used as a reference to the table that it is from
     - ex above, a customer id found inside an order table entry
-  - 
+
+#### Link: https://www.youtube.com/watch?v=9ylj9NR0Lcg
+# SQL 
+
+### Facts
+- Relational database
+- Can use mysql Workbench as a virtual viewer
+- Syntax is generally all caps
+
+### Query
+- CREATE TABLE 
+  - ex CREATE TABLE users('name' TYPE Paramaters, etc)
+- DROP TABLE 
+  - Eliminate table
+- 
