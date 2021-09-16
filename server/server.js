@@ -54,7 +54,6 @@ app.get('/',function (req,res){
 //this collects all post messages sent to <connectionaddress>/newUser
 app.post('/newUser',function(req,res){
   console.log('Someone is posting a new user!');
-  console.log(req.body);
 
   var con = mysql.createConnection({
     host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
@@ -64,11 +63,26 @@ app.post('/newUser',function(req,res){
   });
   
   //Step 2 - parse out the info from the message
+  //          The JSON payload that we load is found in req.body
+  let body = req.body;
+  console.log('body', body);
+
+  ({firstName,lastName} = body);
+
+  console.log('firstName',firstName)
+  console.log('lastname',lastName)
+
+  //there will be more to parse out eventually
 
   //Step 3 - make sure all that info is good info
 
+    //if any of these field are wrong, send a bad data status code, that the front end should tell the user about
+    if (firstName === undefined ||
+        lastName === undefined){
+          res.sendStatus(400);
+        }
+
   //Step 4 - make the connection and then post the new user to the db
-  //          currently, it has Fred Flinstone hardcoded
 
   con.connect(function(err) {
     if (err) throw err;
