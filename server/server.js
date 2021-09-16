@@ -63,6 +63,13 @@ app.post('/newUser',function(req,res){
     database: "sys"
   });
   
+  //Step 2 - parse out the info from the message
+
+  //Step 3 - make sure all that info is good info
+
+  //Step 4 - make the connection and then post the new user to the db
+  //          currently, it has Fred Flinstone hardcoded
+
   con.connect(function(err) {
     if (err) throw err;
     con.query("insert into users(FirstName, LastName) values('Fred','Flinstone')", function (err, result, fields) {
@@ -71,7 +78,10 @@ app.post('/newUser',function(req,res){
     });
   });
 
-  //this sends a json response back to the front end as well as a 200 status code
+  //Step 5 - Listen for a response from the DB
+  //          currently there is no logic for error
+
+  //Step 6 - this sends a json response back to the front end as well as a 200 status code
   res.send({'response':'Thanks'}).status(200);
 
 })
