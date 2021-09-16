@@ -86,7 +86,7 @@ app.post('/newUser',function(req,res){
 
   con.connect(function(err) {
     if (err) throw err;
-    con.query("insert into users(FirstName, LastName) values('Fred','Flinstone')", function (err, result, fields) {
+    con.query(`insert into users(FirstName, LastName) values("${firstName}","${lastName}")`, function (err, result, fields) {
       if (err) throw err;
       // console.log('result', result);
     });
