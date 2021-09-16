@@ -54,7 +54,7 @@ export default function CreateUser(){
     console.log(lastName);
 
     //empty inputs should get stopped here, let the server figure out more complex errors like accounts already existing
-    if (firstName === undefined || lastName === undefined){
+    if (firstName === '' || lastName === ''){
       //tell the user to try again
 
       return;

@@ -35,13 +35,13 @@ app.get('/',function (req,res){
     host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
     user: "admin",
     password: "Team3Test",
-    database: "sys"
+    database: "mydb"
   });
   
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.connect(function(err) {
     if (err) throw err;
-    con.query("SELECT * FROM users", function (err, result, fields) {
+    con.query("SELECT * FROM Users", function (err, result, fields) {
       if (err) throw err;
       console.log('result', result);
     });
@@ -59,7 +59,7 @@ app.post('/newUser',function(req,res){
     host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
     user: "admin",
     password: "Team3Test",
-    database: "sys"
+    database: "mydb"
   });
   
   //Step 2 - parse out the info from the message
@@ -86,9 +86,9 @@ app.post('/newUser',function(req,res){
 
   con.connect(function(err) {
     if (err) throw err;
-    con.query(`insert into users(FirstName, LastName) values("${firstName}","${lastName}")`, function (err, result, fields) {
+    con.query(`insert into Users(FirstName, LastName) values("${firstName}","${lastName}")`, function (err, result, fields) {
       if (err) throw err;
-      // console.log('result', result);
+      console.log('result', result);
     });
   });
 
