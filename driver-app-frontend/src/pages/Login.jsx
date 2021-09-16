@@ -14,8 +14,17 @@ export default function Login(){
 	<input id='Username' type='text'/>
 	<label htmlFor="Password"> Password </label>
 	<input id='Password' type='text'/>
-	<button type='submit'>Submit</button>
-      </form>        
+	<button type='submit'>Submit
+  <Link class="login2profile-link" to="./Profile">
+          <span class="sr-only">(current)</span>
+        </Link>
+  </button>
+      </form>  
+      <button >Submit
+  <Link class="login2profile-link" to="./Profile">
+          <span class="sr-only">(current)</span>
+        </Link>
+  </button>      
    </div>     
   )
 }
