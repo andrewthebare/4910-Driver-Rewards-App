@@ -31,7 +31,15 @@ export default function CreateUser(){
         <label htmlFor="FirstName">First Name</label>
         <input id='FirstName' type='text'/>
         <label htmlFor="LastName">Last Name</label>
-        <input id='LastName' type='text'/>
+        <input id='LastName' type='text'/><br/>
+        <label htmlFor="Security Question 1">Security Question 1</label>
+        <input id='Security Question 1' type='text'/><br/>
+        <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>
+        <input id='Security Question 1 Answer' type='text'/><br/><br/>
+        <label htmlFor="Security Question 2">Security Question 2</label>
+        <input id='Security Question 2' type='text'/><br/>
+        <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>
+        <input id='Security Question 2 Answer' type='text'/><br/><br/>
 
         <button type='submit'>Submit</button>
       </form>
