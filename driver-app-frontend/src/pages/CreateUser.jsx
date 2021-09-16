@@ -3,6 +3,24 @@ import axios from 'axios';
 
 export default function CreateUser(){
 
+  //infrastructure function that just fetches the DB
+  const fetchDB = () =>{
+    const newUser = { 
+      firstName: 'Fred',
+      lastName: 'Flinstone'
+    };
+
+    //post it to the server
+    axios.get('http://localhost:8081', newUser)
+    .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
+      console.log(response);
+    })
+    .catch(function (error) {   //this part catches errors
+      console.log(error);
+    });
+
+  }
+
   /**
    * This is a very simple example of how we're going to talk to the DB
    * This function is called when I click on the Add Fred Flinstone button
@@ -83,6 +101,7 @@ export default function CreateUser(){
       </form>
       <button onClick={addFred}>Add Fred Flinstone</button>
       <button onClick={onFormSubmit}>Dummy Submit</button>
+      <button onClick={fetchDB}>Fetch DB</button>
     </div>
   )
 }
