@@ -3,7 +3,11 @@ import axios from 'axios';
 
 export default function CreateUser(){
 
-  const onFormSubmit = () =>{
+  /**
+   * This is a very simple example of how we're going to talk to the DB
+   * This function is called when I click on the Add Fred Flinstone button
+   */
+  const addFred = () =>{
     //make sure that the stuff is ok
     console.log('Hi');
 
@@ -25,6 +29,18 @@ export default function CreateUser(){
 
   }
 
+  //Basic format for how we talk to the DB
+  //This function is called when the submit button is clicked
+  const onFormSubmit = ()=>{
+    //Step 1 - Make sure that all the necissary fields are filled out
+    
+    //Step 2 - Send the data along to the server
+
+    //step 3 - listen for a response from the server
+
+    //Step 4 - react to the response given to the server
+  }
+
   return(
     <div>
       <form onSubmit={()=>onFormSubmit}>
@@ -43,7 +59,7 @@ export default function CreateUser(){
 
         <button type='submit'>Submit</button>
       </form>
-      <button onClick={onFormSubmit}>Add Fred Flinstone</button>
+      <button onClick={addFred}>Add Fred Flinstone</button>
     </div>
   )
 }
