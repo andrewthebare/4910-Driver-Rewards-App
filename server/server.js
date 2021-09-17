@@ -55,6 +55,7 @@ app.get('/',function (req,res){
 app.post('/newUser',function(req,res){
   console.log('Someone is posting a new user!');
 
+  //Step 1 - connect to the db
   var con = mysql.createConnection({
     host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
     user: "admin",
@@ -67,14 +68,10 @@ app.post('/newUser',function(req,res){
   let body = req.body;
   console.log('body', body);
 
-  ({firstName,lastName} = body);
+  //js short hand parse out the data submitted from the user
+  ({firstName,lastName, username, password, address, email, sponsorKey, type} = body);
 
-  console.log('firstName',firstName)
-  console.log('lastname',lastName)
-
-  //there will be more to parse out eventually
-
-  //Step 3 - make sure all that info is good info
+  //Step 3 - make sure all that info is good info - TODO
 
     //if any of these field are wrong, send a bad data status code, that the front end should tell the user about
     if (firstName === undefined ||
@@ -85,8 +82,11 @@ app.post('/newUser',function(req,res){
   //Step 4 - make the connection and then post the new user to the db
 
   con.connect(function(err) {
-    if (err) throw err;
-    con.query(`insert into Users(FirstName, LastName) values("${firstName}","${lastName}")`, function (err, result, fields) {
+    if (err) throw err; 
+    con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword) 
+              values("${firstName}","${lastName}", "${type}","${address}","${email}","${sponsorKey}","${username}", "${password}")`, 
+      
+      function (err, result, fields) {
       if (err) throw err;
       console.log('result', result);
     });
