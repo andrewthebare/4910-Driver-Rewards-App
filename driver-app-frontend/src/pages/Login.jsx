@@ -33,8 +33,9 @@ export default function Login(){
      if (response.status === 200){
        alert("succesful login");
        window.location.replace("/Profile");
-     }else{
-       alert("Incorrect username or password")
+     }
+     if(response.status === 300){
+      window.location.replace("/Login");
      }
    })
    .catch(function (error) {   //this part catches errors

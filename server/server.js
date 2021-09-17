@@ -123,16 +123,25 @@ app.post('/login',function (req,res){
     if (err) throw err;
     con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
       if (err) throw err;
-      let results = result.body;
-      console.log('results', results)
-      ({firstName,lastName, username, password, address, email, sponsorKey, type, secureQ1, secureA1, secureQ2, secureA2} = results);
-      if (password != passAtmp){
-        res.send({'response': 'invalid username or password'}).status(404);
+      var string=JSON.stringify(result);
+      var json = JSON.parse(string);
+      //console.log('passAtmp', passAtmp);
+      //console.log('result.password', json[0].hashedPassword);
+      let realPass = json[0].hashedPassword;
+      //console.log('realPass', realPass);
+      //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
+      if ( realPass === passAtmp){
+        //console.log('in if');
+        res.status(200);
+        res.send(`"${json}`);
       }
-      console.log('result', result);
+      else{
+        res.sendStatus(300);
+        //console.log('in else');
+      }
     });
   });
 
   //This sends a 200 status message that basically tells the front end client that it was done successfully
-  res.send({"hi":"mom"}).status(200);
+  //res.send({"hi":"mom"}).status(200);
 })
