@@ -26,7 +26,20 @@ export default function Login(){
       username: username,
       password: password,
    }
-   window.location.replace("/Profile")
+   //post it to the server
+   axios.post('http://localhost:8081/newUser', loginAttempt)
+   .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
+     console.log(response);
+     if (response.status === 200){
+       alert("succesful login");
+       window.location.replace("/Profile");
+     }else{
+       alert("Incorrect username or password")
+     }
+   })
+   .catch(function (error) {   //this part catches errors
+     console.log(error);
+   });
   }
 
   return(    
