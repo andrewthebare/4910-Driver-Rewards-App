@@ -100,7 +100,7 @@ app.post('/newUser',function(req,res){
 
 })
 
-app.get('/login',function (req,res){
+app.post('/login',function (req,res){
   console.log('Someone is getting from /login');
 
   //this creates a connection to the DB
@@ -114,14 +114,17 @@ app.get('/login',function (req,res){
   let body = req.body;
   console.log('body', body);
 
-  ({usernameAtmp, passAtmp} = body);
+  let usernameAtmp = body.username;
+  let passAtmp = body.password
+  // ({usernameAtmp, passAtmp} = body);
   
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.connect(function(err) {
     if (err) throw err;
-    con.query("SELECT * FROM Users WHERE username = usernameAtmp", function (err, result, fields) {
+    con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
       if (err) throw err;
       let results = result.body;
+      console.log('results', results)
       ({firstName,lastName, username, password, address, email, sponsorKey, type, secureQ1, secureA1, secureQ2, secureA2} = results);
       if (password != passAtmp){
         res.send({'response': 'invalid username or password'}).status(404);
@@ -131,5 +134,5 @@ app.get('/login',function (req,res){
   });
 
   //This sends a 200 status message that basically tells the front end client that it was done successfully
-  res.send({result}).status(200);
+  res.send({"hi":"mom"}).status(200);
 })

@@ -27,7 +27,7 @@ export default function Login(){
       password: password,
    }
    //post it to the server
-   axios.post('http://localhost:8081/newUser', loginAttempt)
+   axios.post('http://localhost:8081/login', loginAttempt)
    .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
      console.log(response);
      if (response.status === 200){
