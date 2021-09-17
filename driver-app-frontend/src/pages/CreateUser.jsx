@@ -50,12 +50,20 @@ export default function CreateUser(){
     //Step 1 - Make sure that all the necissary fields are filled out
     let firstName = document.getElementById("FirstName").value;
     let lastName = document.getElementById("LastName").value;
-    console.log(firstName);
-    console.log(lastName);
+    let fetchVal = document.getElementById("usertype").value;
+    let type = fetchVal === 'admin'? 0 : fetchVal === 'sponsor'? 1 : 2 ;
+    let sponsor = document.getElementById("sponsorKey").value;
+    let email = document.getElementById("email").value;
+    let address = document.getElementById("address").value;
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
 
     //empty inputs should get stopped here, let the server figure out more complex errors like accounts already existing
-    if (firstName === '' || lastName === ''){
+    if (firstName === '' || lastName === '' || fetchVal === ''
+          || sponsor === '' || type === '' || email === '' || address === ''
+          || username === '' || password === ''){
       //tell the user to try again
+      console.warn('NOT ALL FIELDS FILLED OUT');
 
       return;
     }
@@ -64,7 +72,13 @@ export default function CreateUser(){
     //load up a json object with our data that we're sending
     const newUser = { 
       firstName: firstName,
-      lastName: lastName
+      lastName: lastName,
+      type: type,
+      sponsorKey: sponsor,
+      email: email,
+      address: address,
+      username: username,
+      password: password      
     };
 
     //post it to the server
@@ -84,10 +98,36 @@ export default function CreateUser(){
   return(
     <div>
       <form onSubmit={onFormSubmit}>
+
+        <label htmlFor="usertype">User Type</label>
+        <select id='usertype'>
+          <option value="admin">Admin</option>
+          <option value="sponsor">Sponsor</option>
+          <option value="user">User</option>
+        </select>
+        <label htmlFor="sponsorKey">Sponsor to be associated with</label>   {/*Could defo be a dropdown of sponsors in the future*/}
+        <input id='sponsorKey' type='number'/>
+        
+         <br/>
         <label htmlFor="FirstName">First Name</label>
         <input id='FirstName' type='text'/>
         <label htmlFor="LastName">Last Name</label>
         <input id='LastName' type='text'/><br/>
+
+        <label htmlFor="email">Email</label>
+        <input id='email' type='email'/><br/>
+        <label htmlFor="address">Address</label>
+        <input id='address' type='text'/><br/>
+        <label htmlFor="username">Username</label>
+        <input id='username' type='text'/>
+        <label htmlFor="password">Password</label>
+        <input id='password' type='text'/> <br/>
+        
+        <h3 style={{"display":"none"}}>User Created Successfully</h3>
+        
+        <br/>
+        <br/>
+        <br/>
         <label htmlFor="Security Question 1">Security Question 1</label>
         <input id='Security Question 1' type='text'/><br/>
         <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>
