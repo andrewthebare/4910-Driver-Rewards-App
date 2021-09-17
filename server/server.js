@@ -69,7 +69,7 @@ app.post('/newUser',function(req,res){
   console.log('body', body);
 
   //js short hand parse out the data submitted from the user
-  ({firstName,lastName, username, password, address, email, sponsorKey, type} = body);
+  ({firstName,lastName, username, password, address, email, sponsorKey, type, secureQ1, secureA1, secureQ2, secureA2} = body);
 
   //Step 3 - make sure all that info is good info - TODO
 
@@ -83,8 +83,8 @@ app.post('/newUser',function(req,res){
 
   con.connect(function(err) {
     if (err) throw err; 
-    con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword) 
-              values("${firstName}","${lastName}", "${type}","${address}","${email}","${sponsorKey}","${username}", "${password}")`, 
+    con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword, secureQ1, secureA1,secureQ2, secureA2,) 
+              values("${firstName}","${lastName}", "${type}","${address}","${email}","${sponsorKey}","${username}", "${password}", "${secureQ1}", "${secureA1}", "${secureQ2}", "${secureA2}")`, 
       
       function (err, result, fields) {
       if (err) throw err;
@@ -98,4 +98,38 @@ app.post('/newUser',function(req,res){
   //Step 6 - this sends a json response back to the front end as well as a 200 status code
   res.send({'response':'Thanks'}).status(200);
 
+})
+
+app.get('/login',function (req,res){
+  console.log('Someone is getting from /login');
+
+  //this creates a connection to the DB
+  var con = mysql.createConnection({
+    host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "Team3Test",
+    database: "mydb"
+  });
+
+  let body = req.body;
+  console.log('body', body);
+
+  ({usernameAtmp, passAtmp} = body);
+  
+  //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
+  con.connect(function(err) {
+    if (err) throw err;
+    con.query("SELECT * FROM Users WHERE username = usernameAtmp", function (err, result, fields) {
+      if (err) throw err;
+      let results = result.body;
+      ({firstName,lastName, username, password, address, email, sponsorKey, type, secureQ1, secureA1, secureQ2, secureA2} = results);
+      if (password != passAtmp){
+        res.send({'response': 'invalid username or password'}).status(404);
+      }
+      console.log('result', result);
+    });
+  });
+
+  //This sends a 200 status message that basically tells the front end client that it was done successfully
+  res.send({result}).status(200);
 })
