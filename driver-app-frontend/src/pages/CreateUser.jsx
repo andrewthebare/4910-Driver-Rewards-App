@@ -85,6 +85,11 @@ export default function CreateUser(){
     axios.post('http://localhost:8081/newUser', newUser)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log(response);
+      if (response.status === 200){
+        alert("Account created successfully");
+      }else{
+        alert("Account Creation was unsuccessful")
+      }
     })
     .catch(function (error) {   //this part catches errors
       console.log(error);
@@ -124,7 +129,7 @@ export default function CreateUser(){
         <input id='password' type='text'/> <br/>
         
         <h3 style={{"display":"none"}}>User Created Successfully</h3>
-        
+
         <br/>
         <br/>
         <br/>
