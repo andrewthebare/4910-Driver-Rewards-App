@@ -51,6 +51,49 @@ app.get('/',function (req,res){
   res.send(200);
 })
 
+
+app.get('/fetchUsers',function (req,res){
+  console.log('Fetching all the Users');
+
+  //this creates a connection to the DB
+  var con = mysql.createConnection({
+    host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "Team3Test",
+    database: "mydb"
+  });
+
+  
+  //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
+  con.connect(function(err) {
+    if (err) throw err;
+    con.query("SELECT * FROM Users", function (err, result, fields) {
+      if (err) throw err;
+
+      //data packet to send back
+      let dataPacket = {};
+
+      console.log('result', result);
+
+      //fill up that data packet
+      for (i in result){
+        let user = result[i];
+        dataPacket[i] = {
+          firstName:user.FirstName,
+          lastName:user.LastName,
+          username:user.username,
+          userID: user.UserID,
+        }
+      }
+      
+      //send that data packet
+      console.log('dataPacket',dataPacket)
+      res.send(dataPacket).status(200);
+    });
+  });
+})
+
+
 //this collects all post messages sent to <connectionaddress>/newUser
 app.post('/newUser',function(req,res){
   console.log('Someone is posting a new user!');
