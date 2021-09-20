@@ -1,5 +1,9 @@
 import React from "react";
-
+function get(){
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  console.log("userInfo: ", userInfo);
+}
+window.onload = get();
 function Profile() {
   return (
     <div className="profile">

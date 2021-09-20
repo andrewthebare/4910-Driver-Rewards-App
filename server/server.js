@@ -124,16 +124,18 @@ app.post('/login',function (req,res){
     con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
       if (err) throw err;
       var string=JSON.stringify(result);
-      var json = JSON.parse(string);
+      var json1 = JSON.parse(string);
       //console.log('passAtmp', passAtmp);
       //console.log('result.password', json[0].hashedPassword);
-      let realPass = json[0].hashedPassword;
+      let realPass = json1[0].hashedPassword;
       //console.log('realPass', realPass);
       //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
       if ( realPass === passAtmp){
         //console.log('in if');
-        res.status(200);
-        res.send(`"${json}`);
+        res.object = json1;
+        console.log("res.object: ", res.object);
+        res.status(200).json(json1);
+        //res.send(`"${json}`);
       }
       else{
         res.sendStatus(300);

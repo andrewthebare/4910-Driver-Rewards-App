@@ -29,9 +29,13 @@ export default function Login(){
    //post it to the server
    axios.post('http://localhost:8081/login', loginAttempt)
    .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
-     console.log(response);
+     console.log("response is:", response);
+     var result = response.data[0];
+     console.log("object:", result);
      if (response.status === 200){
-       alert("succesful login");
+       sessionStorage.setItem("userInfo", JSON.stringify(result));
+       //console.log("test: ", test);
+       alert("Successful login");
        window.location.replace("/Profile");
      }
      if(response.status === 300){
