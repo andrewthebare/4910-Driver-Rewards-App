@@ -80,7 +80,17 @@ function Profile() {
               )
             }
           })()}
-          First Name: <span id="fname"></span>
+          UserID: {userInfo.UserID} <br></br>
+          First Name: {userInfo.FirstName}<br></br>
+          Last Name: {userInfo.LastName}<br></br>
+          Points: {userInfo.Points}<br></br>
+          Address: {userInfo.address}<br></br>
+          Email: {userInfo.email}<br></br>
+          Username: {userInfo.username}<br></br>
+          Password: {userInfo.hashedPassword}<br></br>
+          Sponsor ID: {userInfo.sponsorKey}<br></br>
+
+
           </p>
           <script>
             document.getElementById('fname').innerHTML = userInfo.FirstName; 
