@@ -7,7 +7,7 @@ export default function AdminDashboard(){
     <div>
       <center>
       <h1> Administrator Dashboard </h1>
-      <table>
+      <table class = "adminTable">
         <tr>
           <td>
             <button>

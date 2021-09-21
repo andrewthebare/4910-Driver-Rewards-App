@@ -37,7 +37,7 @@ function Profile() {
       <br/>
       <h2> {userInfo.FirstName} {userInfo.LastName}</h2><br/>
 
-      <table>
+      <table class="profile">
         <tr>
           <th>
             User Type
