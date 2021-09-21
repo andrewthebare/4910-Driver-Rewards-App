@@ -1,11 +1,24 @@
 import React from "react";
 import axios from 'axios';
+<<<<<<< HEAD
 import './Profile.css';
 // function get(){
 //   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 //   console.log("userInfo: ", userInfo);
 //   Profile(userInfo);
 // }
+=======
+ function updateUser(){
+   window.location.replace("/Profile/EditProfile");
+   return false;
+}
+function submitUpdate(){
+
+}
+function cancelUpdate(){
+  window.location.replace("/Profile");
+}
+>>>>>>> f2ed8e9a73515b936c01aacd83c31771a8e1164d
 // function renderUserType(userInfo){
 
 //   if(userInfo.userType === 0) {
@@ -37,6 +50,7 @@ function Profile() {
       <br/>
       <h2> {userInfo.FirstName} {userInfo.LastName}</h2><br/>
 
+<<<<<<< HEAD
       <table class="profile">
         <tr>
           <th>
@@ -93,6 +107,48 @@ function Profile() {
             document.getElementById('fname').innerHTML = userInfo.FirstName;
           </script>
       </center>
+=======
+          </p>
+          <div class="col-lg-5">
+            
+            <p>{(()=>{
+            if(userInfo.userType === 0){
+              return(
+                <div>User Type: Admin</div>
+              )
+            } else if(userInfo.userType === 1){
+              return(
+                <div>User Type: Sponsor</div>
+              )
+            } else if(userInfo.userType === 2){
+              return(
+                <div>User Type: Driver</div>
+              )
+            }else{
+              return(
+                <div>Didnt hit any</div>
+              )
+            }
+          })()}
+          UserID: {userInfo.UserID} <br></br>
+          First Name: {userInfo.FirstName}<br></br>
+          Last Name: {userInfo.LastName}<br></br>
+          Points: {userInfo.Points}<br></br>
+          Address: {userInfo.address}<br></br>
+          Email: {userInfo.email}<br></br>
+          Username: {userInfo.username}<br></br>
+          Password: {userInfo.hashedPassword}<br></br>
+          Sponsor ID: {userInfo.sponsorKey}<br></br>
+
+
+          </p>
+          <button onClick={updateUser}>Edit</button>
+    
+         
+          
+          </div>
+        </div>
+>>>>>>> f2ed8e9a73515b936c01aacd83c31771a8e1164d
       </div>
   );
 }

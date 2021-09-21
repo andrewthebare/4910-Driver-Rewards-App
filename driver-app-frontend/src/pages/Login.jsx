@@ -39,6 +39,7 @@ export default function Login(){
        window.location.replace("/Profile");
      }
      if(response.status === 300){
+       console.log("in here");
       window.location.replace("/Login");
      }
    })
