@@ -8,18 +8,13 @@ function Home() {
           <div class="col-lg-7">
             <img
               class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/900x400"
-              alt=""
+              src="https://p1.pxfuel.com/preview/147/770/467/truck-semi-transportation-semi-truck.jpg"
+              alt="Trucks"
             />
           </div>
           <div class="col-lg-5">
-            <h1 class="font-weight-light">Home</h1>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
+            <h2> Welcome to Good Driver Incentives </h2>
+            <p> Please login to continue </p>
           </div>
         </div>
       </div>

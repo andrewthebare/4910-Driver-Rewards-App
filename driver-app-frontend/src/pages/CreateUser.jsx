@@ -5,7 +5,7 @@ export default function CreateUser(){
 
   //infrastructure function that just fetches the DB
   const fetchDB = () =>{
-    const newUser = { 
+    const newUser = {
       firstName: 'Fred',
       lastName: 'Flinstone'
     };
@@ -26,9 +26,9 @@ export default function CreateUser(){
    * This function is called when I click on the Add Fred Flinstone button
    */
   const addFred = () =>{
-    
+
     //load up a json object with our data that we're sending
-    const newUser = { 
+    const newUser = {
       firstName: 'Fred',
       lastName: 'Flinstone'
     };
@@ -74,7 +74,7 @@ export default function CreateUser(){
 
     //Step 2 - Send the data along to the server
     //load up a json object with our data that we're sending
-    const newUser = { 
+    const newUser = {
       firstName: firstName,
       lastName: lastName,
       type: type,
@@ -82,11 +82,11 @@ export default function CreateUser(){
       email: email,
       address: address,
       username: username,
-      password: password,  
+      password: password,
       secureQ1: secureQ1,
       secureA1: secureA1,
       secureQ2: secureQ2,
-      secureA2: secureA2,    
+      secureA2: secureA2,
     };
 
     //post it to the server
@@ -102,7 +102,7 @@ export default function CreateUser(){
     .catch(function (error) {   //this part catches errors
       console.log(error);
     });
-    
+
 
     //step 3 - listen for a response from the server (This is the .then function above)
     //Step 4 - react to the response given to the server (this is will be the body of the .then function above)
@@ -110,44 +110,46 @@ export default function CreateUser(){
 
   return(
     <div>
+      <center>
+      <h1> Create User </h1>
       <form onSubmit={onFormSubmit}>
 
         <label htmlFor="usertype">User Type</label>
+        <br/>
         <select id='usertype'>
           <option value="admin">Admin</option>
           <option value="sponsor">Sponsor</option>
           <option value="user">User</option>
         </select>
+        <br/>
         <label htmlFor="sponsorKey">Sponsor to be associated with</label>   {/*Could defo be a dropdown of sponsors in the future*/}
+        <br/>
         <input id='sponsorKey' type='number'/>
-        
          <br/>
-        <label htmlFor="FirstName">First Name</label>
+        <label htmlFor="FirstName">First Name</label><br/>
         <input id='FirstName' type='text'/>
-        <label htmlFor="LastName">Last Name</label>
+        <br/>
+        <label htmlFor="LastName">Last Name</label><br/>
         <input id='LastName' type='text'/><br/>
-
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Email</label><br/>
         <input id='email' type='email'/><br/>
-        <label htmlFor="address">Address</label>
+        <label htmlFor="address">Address</label><br/>
         <input id='address' type='text'/><br/>
-        <label htmlFor="username">Username</label>
-        <input id='username' type='text'/>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="username">Username</label><br/>
+        <input id='username' type='text'/><br/>
+        <label htmlFor="password">Password</label><br/>
         <input id='password' type='text'/> <br/>
-        
+
         <h3 style={{"display":"none"}}>User Created Successfully</h3>
 
         <br/>
-        <br/>
-        <br/>
-        <label htmlFor="Security Question 1">Security Question 1</label>
+        <label htmlFor="Security Question 1">Security Question 1</label><br/>
         <input id='Security Question 1' type='text'/><br/>
-        <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>
+        <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label><br/>
         <input id='Security Question 1 Answer' type='text'/><br/><br/>
-        <label htmlFor="Security Question 2">Security Question 2</label>
+        <label htmlFor="Security Question 2">Security Question 2</label><br/>
         <input id='Security Question 2' type='text'/><br/>
-        <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>
+        <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label><br/>
         <input id='Security Question 2 Answer' type='text'/><br/><br/>
 
         <button type='submit'>Submit</button>
@@ -155,6 +157,7 @@ export default function CreateUser(){
       <button onClick={addFred}>Add Fred Flinstone</button>
       <button onClick={onFormSubmit}>Dummy Submit</button>
       <button onClick={fetchDB}>Fetch DB</button>
+      </center>
     </div>
   )
 }
