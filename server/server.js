@@ -3,6 +3,7 @@ var mysql = require('mysql');
 
 var app = express();
 var fs = require("fs");
+const { response } = require('express');
 
 //Creates the connection
 var server = app.listen(8081, function () {
@@ -93,6 +94,33 @@ app.get('/fetchUsers',function (req,res){
   });
 })
 
+app.post('/oneUser',function (req,res){
+  console.log('Fetching one user');
+
+  //make sure a user there to be fetched
+  let userID = req.body.userID;
+
+  //connect to the DB
+  var con = mysql.createConnection({
+    host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "Team3Test",
+    database: "mydb"
+  });
+
+  con.connect(function(err) {
+    if (err) throw err;
+    con.query(`SELECT * FROM Users WHERE UserID = ${userID}`, function (err, result, fields) {
+      if (err) throw err;
+      console.log('result', result);
+      res.send(result[0]).status(200);
+    });
+  });
+  
+  
+
+})
+
 
 //this collects all post messages sent to <connectionaddress>/newUser
 app.post('/newUser',function(req,res){
@@ -126,8 +154,8 @@ app.post('/newUser',function(req,res){
 
   con.connect(function(err) {
     if (err) throw err; 
-    con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword, secureQ1, secureA1,secureQ2, secureA2,) 
-              values("${firstName}","${lastName}", "${type}","${address}","${email}","${sponsorKey}","${username}", "${password}", "${secureQ1}", "${secureA1}", "${secureQ2}", "${secureA2}")`, 
+    con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword) 
+              values("${firstName}","${lastName}", "${type}","${address}","${email}","${sponsorKey}","${username}", "${password}")`, 
       
       function (err, result, fields) {
       if (err) throw err;

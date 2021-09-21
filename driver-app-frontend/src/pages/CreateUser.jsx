@@ -57,10 +57,10 @@ export default function CreateUser(){
     let address = document.getElementById("address").value;
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
-    let secureQ1 = document.getElementById("Security Question 1").value;
-    let secureA1 = document.getElementById("Security Answer 1").value;
-    let secureQ2 = document.getElementById("Security Question 2").value;
-    let secureA2 = document.getElementById("Security Answer 2").value;
+    // let secureQ1 = document.getElementById("Security Question 1").value;
+    // let secureA1 = document.getElementById("Security Answer 1").value;
+    // let secureQ2 = document.getElementById("Security Question 2").value;
+    // let secureA2 = document.getElementById("Security Answer 2").value;
 
     //empty inputs should get stopped here, let the server figure out more complex errors like accounts already existing
     if (firstName === '' || lastName === '' || fetchVal === ''
@@ -83,10 +83,10 @@ export default function CreateUser(){
       address: address,
       username: username,
       password: password,  
-      secureQ1: secureQ1,
-      secureA1: secureA1,
-      secureQ2: secureQ2,
-      secureA2: secureA2,    
+      // secureQ1: secureQ1,
+      // secureA1: secureA1,
+      // secureQ2: secureQ2,
+      // secureA2: secureA2,    
     };
 
     //post it to the server
