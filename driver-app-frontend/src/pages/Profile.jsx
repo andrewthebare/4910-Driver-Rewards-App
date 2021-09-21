@@ -1,10 +1,15 @@
 import React from "react";
 import axios from 'axios';
-// function get(){
-//   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-//   console.log("userInfo: ", userInfo);
-//   Profile(userInfo);
-// }
+ function updateUser(){
+   window.location.replace("/Profile/EditProfile");
+   return false;
+}
+function submitUpdate(){
+
+}
+function cancelUpdate(){
+  window.location.replace("/Profile");
+}
 // function renderUserType(userInfo){
   
 //   if(userInfo.userType === 0) {
@@ -25,7 +30,6 @@ function Profile() {
   console.log("userInfo inside profile: ",userInfo);
   console.log("First Name: ", userInfo.FirstName);
   console.log("Last Name: ",userInfo.LastName);
-  
   return (
     <div className="profile">
       <div class="container">
@@ -92,9 +96,7 @@ function Profile() {
 
 
           </p>
-          <script>
-            document.getElementById('fname').innerHTML = userInfo.FirstName; 
-          </script>
+          <button onClick={updateUser}>Edit</button>
     
          
           
