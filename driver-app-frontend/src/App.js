@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile } from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, EditProfile } from "./pages";
 
 /**
  * Every Page we create must be listed as a Route with a unique path in this file, with the page 
@@ -21,6 +21,7 @@ function App() {
           <Route path="/adminDashboard/createUser" exact component={() => <CreateUser />} />
           <Route path="/Login" exact component={() => <Login />} />
           <Route path="/Profile" exact component={() => <Profile />} />
+          <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
 	</Switch>
       </Router>
     </div>
