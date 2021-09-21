@@ -132,7 +132,13 @@ app.post('/login',function (req,res){
       var json1 = JSON.parse(string);
       //console.log('passAtmp', passAtmp);
       //console.log('result.password', json[0].hashedPassword);
-      let realPass = json1[0].hashedPassword;
+      var realPass = '';
+      try {
+        var realPass = json1[0].hashedPassword;
+      } catch (error) {
+        console.error(error);
+      }
+      
       //console.log('realPass', realPass);
       //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
       if ( realPass === passAtmp){
