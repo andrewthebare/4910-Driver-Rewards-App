@@ -1,5 +1,11 @@
 import React from "react";
 import axios from 'axios';
+import './Profile.css';
+// function get(){
+//   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+//   console.log("userInfo: ", userInfo);
+//   Profile(userInfo);
+// }
  function updateUser(){
    window.location.replace("/Profile/EditProfile");
    return false;
