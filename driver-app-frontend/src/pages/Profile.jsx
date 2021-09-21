@@ -1,12 +1,23 @@
 import React from "react";
 import axios from 'axios';
+import './Profile.css';
 // function get(){
 //   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 //   console.log("userInfo: ", userInfo);
 //   Profile(userInfo);
 // }
+ function updateUser(){
+   window.location.replace("/Profile/EditProfile");
+   return false;
+}
+function submitUpdate(){
+
+}
+function cancelUpdate(){
+  window.location.replace("/Profile");
+}
 // function renderUserType(userInfo){
-  
+
 //   if(userInfo.userType === 0) {
 //     console.log("UserType: Admin");
 //     return <div>Admin</div>;
@@ -17,7 +28,7 @@ import axios from 'axios';
 //     if(userInfo.userType === 1){
 //       return <div>Driver</div>;
 //     }
-    
+
 // }
 //window.onload = get();
 function Profile() {
@@ -25,39 +36,75 @@ function Profile() {
   console.log("userInfo inside profile: ",userInfo);
   console.log("First Name: ", userInfo.FirstName);
   console.log("Last Name: ",userInfo.LastName);
-  
   return (
-    <div className="profile">
-      <div class="container">
-        <div class="row align-items-center my-5">
-          <div class="col-lg-7">
-            <img
-              class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/200x200"
-              alt=""
-            />
-          </div>
-          <p>
-          {(()=>{
-            if(userInfo.userType === 0){
-              return(
-                <div>Admin</div>
-              )
-            } else if(userInfo.userType === 1){
-              return(
-                <div>Sponsor</div>
-              )
-            } else if(userInfo.userType === 2){
-              return(
-                <div>Driver</div>
-              )
-            }else{
-              return(
-                <div>Didnt hit any</div>
-              )
-            }
-          })()}
+    <div>
+      <center>
+        <img
+          class="img-fluid rounded mb-4 mb-lg-0"
+          src="http://placehold.it/200x200"
+          alt=""
+        />
+      <br/>
+      <h2> {userInfo.FirstName} {userInfo.LastName}</h2><br/>
 
+<<<<<<< HEAD
+      <table class="profile">
+        <tr>
+          <th>
+            User Type
+          </th>
+          <td>
+          {(()=>{
+                if(userInfo.userType === 0){
+                  return(
+                    <div>Admin</div>
+                  )
+                } else if(userInfo.userType === 1){
+                  return(
+                    <div>Sponsor</div>
+                  )
+                } else if(userInfo.userType === 2){
+                  return(
+                    <div>Driver</div>
+                  )
+                }else{
+                  return(
+                    <div>Didnt hit any</div>
+                  )
+                }
+              })()}
+          </td>
+        </tr>
+        <tr>
+          <th> User Id </th>
+          <td> {userInfo.UserID} </td>
+        </tr>
+        <tr>
+          <th> Points </th>
+          <td> {userInfo.Points} </td>
+        </tr>
+        <tr>
+          <th> Address </th>
+          <td> {userInfo.address} </td>
+        </tr>
+        <tr>
+          <th> Email </th>
+          <td> {userInfo.email} </td>
+        </tr>
+        <tr>
+          <th> Username </th>
+          <td> {userInfo.username} </td>
+        </tr>
+        <tr>
+          <th> Sponsor ID </th>
+          <td> {userInfo.sponsorKey} </td>
+        </tr>
+      </table>
+          <script>
+            document.getElementById('fname').innerHTML = userInfo.FirstName;
+          </script>
+      </center>
+=======
           </p>
           <div class="col-lg-5">
             
@@ -92,16 +139,14 @@ function Profile() {
 
 
           </p>
-          <script>
-            document.getElementById('fname').innerHTML = userInfo.FirstName; 
-          </script>
+          <button onClick={updateUser}>Edit</button>
     
          
           
           </div>
         </div>
+>>>>>>> f2ed8e9a73515b936c01aacd83c31771a8e1164d
       </div>
-    </div>
   );
 }
 
