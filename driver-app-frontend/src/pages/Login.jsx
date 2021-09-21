@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { Link, withRouter } from "react-router-dom";
-import './Login.css';
+
 export default function Login(){
    const onFormSubmit = ()=>{
-
+    
   }
   function redirect() {
     //Step 1 - Make sure that all the necissary fields are filled out
@@ -12,23 +12,17 @@ export default function Login(){
     let password = document.getElementById("Password").value;
     console.log(username);
     console.log(password);
-    
-    //Empty inputs are stopped here
-    var error = document.getElementById("error")
-    if (document.getElementById("Username").value === '' || document.getElementById("Password").value === '') 
-    {
-        error.textContent = "Please fill out all fields"
-        error.style.color = "red"
 
-        return;
-    } else {
-        error.textContent = ""
+    //empty inputs should get stopped here, let the server figure out more complex errors like accounts already existing
+    if (username === '' || password === ''){
+      //tell the user to try again
+      
+      return;
     }
-    //Source: GfG "Error message w/o alert box"
 
     //Step 2 - Send the data along to the server
     //load up a json object with our data that we're sending
-    const loginAttempt = {
+    const loginAttempt = { 
       username: username,
       password: password,
    }
@@ -44,33 +38,27 @@ export default function Login(){
        alert("Successful login");
        window.location.replace("/Profile");
      }
-
+     if(response.status === 300){
+       console.log("in here");
+      window.location.replace("/Login");
+     }
    })
-   .catch(function (error) {   //Error catch and Statement
-    var error = document.getElementById("error")
-    error.textContent = "Incorrect Username or Password"
-    error.style.color = "red"
-    console.log(error);
+   .catch(function (error) {   //this part catches errors
+     console.log(error);
    });
   }
 
-  return(
+  return(    
     <div>
-      <center>
-      <h1>Login</h1>
-      <br></br>
+      <h3>Login</h3>
       <form onSubmit={onFormSubmit}>
-        <label htmlFor="Username">Username </label>
-        <br></br>
+        <label htmlFor="Username">Username</label>
 	      <input id='Username' type='text'/>
-        <br></br>
 	      <label htmlFor="Password"> Password </label>
-	      <input id='Password' type='password'/>
-        <br /><span id="error"></span>
+	      <input id='Password' type='text'/>
 	      {/* <button onClick={redirect}>Login</button> */}
-      </form>
-      <button class="loginButton" onClick={redirect}>Login</button>
-      </center>
-   </div>
+      </form>   
+      <button onClick={redirect}>Login</button>
+   </div>     
   )
 }
