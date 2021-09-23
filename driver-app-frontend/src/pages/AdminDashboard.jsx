@@ -61,6 +61,14 @@ export default function AdminDashboard(){
             </Link>
           </button>
         </td>
+        <td>
+          <button>
+            <Link class="nav-link" to="/adminDashboard/editUser">
+              Edit User
+              <span class="sr-only">(current)</span>
+            </Link>
+          </button>
+        </td>
         </tr>
       </table>
       </center>

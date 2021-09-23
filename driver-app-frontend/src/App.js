@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile } from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser } from "./pages";
 // import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, Error } from "./pages";
 // import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, EditProfile } from "./pages";
 
@@ -21,16 +21,14 @@ function App() {
           <Route path="/contact" exact component={() => <Contact />} />
           <Route path="/adminDashboard" exact component={() => <AdminDashboard />} />
           <Route path="/adminDashboard/createUser" exact component={() => <CreateUser />} />
+          <Route path="/adminDashboard/editUser" exact component={() => <AdminEditUser />} />
           <Route path="/Login" exact component={() => <Login />} />
           <Route path="/Profile" exact component={() => <Profile />} />
           <Route path="/SecurityQuestions" exact component={() => <SecurityQuestions />} />
 
           <Route Path="/Error" exact component={() => <Error />} />
-=======
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
->>>>>>> f2ed8e9a73515b936c01aacd83c31771a8e1164d
->>>>>>> 590d49749630378dc64d4b468b324bcb2d616c41
-	</Switch>
+	      </Switch>
       </Router>
     </div>
   );

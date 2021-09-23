@@ -1,9 +1,12 @@
 var express = require('express');
 var mysql = require('mysql');
 
+// enable CORS using npm package
+var cors = require('cors');
+
 var app = express();
 var fs = require("fs");
-
+const { response } = require('express');
 let dbHost = 'sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com'
 let dbuName = 'admin'
 let dbpWord = 'Team3Test'
@@ -26,10 +29,11 @@ var con = mysql.createConnection({
 
 
 //This is necissary to allow json to be passed in our messages
+app.use(cors());
 app.use(express.json());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+  res.header("Access-Control-Allow-Methods", "DELETE, POST, PUT, GET, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
   // if (r.Method == "OPTIONS") {
@@ -48,6 +52,8 @@ app.use(function(req, res, next) {
 //        send a status code to tell the original sender about the status of their message. ex: 200 is success 404 means does not exist
 app.get('/',function (req,res){
   console.log('Someone is getting from /');
+
+  //this creates a connection to the DB
   
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.connect(function(err) {
@@ -61,6 +67,111 @@ app.get('/',function (req,res){
   //This sends a 200 status message that basically tells the front end client that it was done successfully
   res.send(200);
 })
+
+
+app.get('/fetchUsers',function (req,res){
+  console.log('Fetching all the Users');
+
+  //this creates a connection to the DB
+  var con = mysql.createConnection({
+    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "Team3Test",
+    database: "mydb"
+  });
+
+  
+  //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
+  con.connect(function(err) {
+    if (err) throw err;
+    con.query("SELECT * FROM Users", function (err, result, fields) {
+      if (err) throw err;
+
+      //data packet to send back
+      let dataPacket = {};
+
+      console.log('result', result);
+
+      //fill up that data packet
+      for (i in result){
+        let user = result[i];
+        dataPacket[i] = {
+          firstName:user.FirstName,
+          lastName:user.LastName,
+          username:user.username,
+          userID: user.UserID,
+        }
+      }
+      
+      //send that data packet
+      console.log('dataPacket',dataPacket)
+      res.send(dataPacket).status(200);
+    });
+  });
+})
+
+app.post('/oneUser',function (req,res){
+  console.log('Fetching one user');
+
+  //make sure a user there to be fetched
+  let userID = req.body.userID;
+
+  //connect to the DB
+  var con = mysql.createConnection({
+    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "Team3Test",
+    database: "mydb"
+  });
+
+  con.connect(function(err) {
+    if (err) throw err;
+    con.query(`SELECT * FROM Users WHERE UserID = ${userID}`, function (err, result, fields) {
+      if (err) throw err;
+      console.log('result', result);
+      res.send(result[0]).status(200);
+    });
+  });
+  
+  
+
+})
+
+app.post('/updateUser',function (req,res){
+  console.log('Updating USER');
+
+  let body = req.body;
+  console.log('body', body);
+  ({UserID, firstName, lastName, username, password, address, email, sponsorKey, userType, secureQ1, secureA1, secureQ2, secureA2} = body);
+
+  var con = mysql.createConnection({
+    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "Team3Test",
+    database: "mydb"
+  });
+
+
+
+  con.connect(function(err) {
+    if (err) throw err;
+    con.query(`Update Users
+        set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}", userType = "${userType}"
+        where UserID = ${UserID};`, 
+        function (err, result, fields) {
+          if (!err){
+            console.log('result',result)
+            res.sendStatus(200);
+          }
+          else{
+            res.sendStatus(400);
+          }
+          if (err) throw err;      
+    });
+  });
+
+})
+
 
 //this collects all post messages sent to <connectionaddress>/newUser
 app.post('/newUser',function(req,res){

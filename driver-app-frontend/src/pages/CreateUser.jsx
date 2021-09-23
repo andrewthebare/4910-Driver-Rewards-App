@@ -83,10 +83,6 @@ export default function CreateUser(){
       address: address,
       username: username,
       password: password,
-      // secureQ1: secureQ1,
-      // secureA1: secureA1,
-      // secureQ2: secureQ2,
-      // secureA2: secureA2,
     };
 
     //post it to the server
