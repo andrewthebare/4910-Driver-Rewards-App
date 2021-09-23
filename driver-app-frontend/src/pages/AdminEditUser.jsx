@@ -145,7 +145,6 @@ export default function EditUser() {
       <select id="userSelect">
         {populateUserList()}
       </select>
-      <button onClick={()=>{console.log('users',users)}}>check users</button>
       <button onClick={()=>setUserEdit()}>Edit User</button>
 
       <form>
@@ -157,22 +156,22 @@ export default function EditUser() {
           <option value="user">User</option>
         </select>
         <label htmlFor="sponsorKey">Sponsor to be associated with</label>   {/*Could defo be a dropdown of sponsors in the future*/}
-        <input id='sponsorKey' type='number' value={userData.sponsorKey}/>
+        <input id='sponsorKey' type='number' defaultValue={userData.sponsorKey}/>
 
         <br/>
         <label htmlFor="FirstName">First Name</label>
         <input id='FirstName' type='text' defaultValue={userData.FirstName}/>
         <label htmlFor="LastName">Last Name</label>
-        <input id='LastName' type='text' value={userData.LastName}/><br/>
+        <input id='LastName' type='text' defaultValue={userData.LastName}/><br/>
 
         <label htmlFor="email">Email</label>
-        <input id='email' type='email' value={userData.email}/><br/>
+        <input id='email' type='email' defaultValue={userData.email}/><br/>
         <label htmlFor="address">Address</label>
-        <input id='address' type='text' value={userData.address}/><br/>
+        <input id='address' type='text' defaultValue={userData.address}/><br/>
         <label htmlFor="username">Username</label>
-        <input id='username' type='text' value={userData.username}/>
+        <input id='username' type='text' defaultValue={userData.username}/>
         <label htmlFor="password">Password</label>
-        <input id='password' type='text' value={userData.hashedPassword}/> <br/>
+        <input id='password' type='text' defaultValue={userData.hashedPassword}/> <br/>
 
         <h3 style={{"display":"none"}}>User Created Successfully</h3>
 

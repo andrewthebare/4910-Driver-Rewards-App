@@ -18,54 +18,46 @@ export default function AdminDashboard(){
             </button>
           </td>
           <td>
-            <button>
-              <Link class="adminButton" to="/Error">
-                Placeholder
-              <span class="sr-only">(current)</span>
-              </Link>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button>
-              <Link class="adminButton" to="/Error">
-                Placeholder
-              <span class="sr-only">(current)</span>
-              </Link>
-            </button>
-          </td>
-          <td>
-            <button>
-              <Link class="adminButton" to="/Error">
-                Placeholder
-              <span class="sr-only">(current)</span>
-              </Link>
-            </button>
-          </td>
-        </tr>
-        <tr>
-        <td>
-          <button>
-            <Link class="adminButton" to="/Error">
-              Placeholder
-            <span class="sr-only">(current)</span>
-            </Link>
-          </button>
-        </td>
-        <td>
-          <button>
-            <Link class="adminButton" to="/Error">
-              Placeholder
-            <span class="sr-only">(current)</span>
-            </Link>
-          </button>
-        </td>
-        <td>
           <button>
             <Link class="nav-link" to="/adminDashboard/editUser">
               Edit User
               <span class="sr-only">(current)</span>
+            </Link>
+          </button>
+        </td>
+        </tr>
+        <tr>
+          <td>
+            <button>
+              <Link class="adminButton" to="/Error">
+                Placeholder
+              <span class="sr-only">(current)</span>
+              </Link>
+            </button>
+          </td>
+          <td>
+            <button>
+              <Link class="adminButton" to="/Error">
+                Placeholder
+              <span class="sr-only">(current)</span>
+              </Link>
+            </button>
+          </td>
+        </tr>
+        <tr>
+        <td>
+          <button>
+            <Link class="adminButton" to="/Error">
+              Placeholder
+            <span class="sr-only">(current)</span>
+            </Link>
+          </button>
+        </td>
+        <td>
+          <button>
+            <Link class="adminButton" to="/Error">
+              Placeholder
+            <span class="sr-only">(current)</span>
             </Link>
           </button>
         </td>
