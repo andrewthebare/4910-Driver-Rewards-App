@@ -1,6 +1,9 @@
 var express = require('express');
 var mysql = require('mysql');
 
+// enable CORS using npm package
+var cors = require('cors');
+
 var app = express();
 var fs = require("fs");
 const { response } = require('express');
@@ -13,9 +16,11 @@ var server = app.listen(8081, function () {
 })
 
 //This is necissary to allow json to be passed in our messages
+app.use(cors());
 app.use(express.json());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Methods", "DELETE, POST, PUT, GET, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -32,12 +37,6 @@ app.get('/',function (req,res){
   console.log('Someone is getting from /');
 
   //this creates a connection to the DB
-  var con = mysql.createConnection({
-    host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
-    user: "admin",
-    password: "Team3Test",
-    database: "mydb"
-  });
   
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.connect(function(err) {
@@ -118,6 +117,41 @@ app.post('/oneUser',function (req,res){
   });
   
   
+
+})
+
+app.post('/updateUser',function (req,res){
+  console.log('Updating USER');
+
+  let body = req.body;
+  console.log('body', body);
+  ({UserID, firstName, lastName, username, password, address, email, sponsorKey, userType, secureQ1, secureA1, secureQ2, secureA2} = body);
+
+  var con = mysql.createConnection({
+    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "Team3Test",
+    database: "mydb"
+  });
+
+
+
+  con.connect(function(err) {
+    if (err) throw err;
+    con.query(`Update Users
+        set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}", userType = "${userType}"
+        where UserID = ${UserID};`, 
+        function (err, result, fields) {
+          if (!err){
+            console.log('result',result)
+            res.sendStatus(200);
+          }
+          else{
+            res.sendStatus(400);
+          }
+          if (err) throw err;      
+    });
+  });
 
 })
 

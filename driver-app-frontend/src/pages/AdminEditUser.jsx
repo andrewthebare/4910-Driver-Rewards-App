@@ -74,6 +74,70 @@ export default function EditUser() {
 
   }
 
+  const submit = ()=>{
+    console.log('SUBMIT')
+
+    //Step 1 - Make sure that all the necissary fields are filled out
+    let firstName = document.getElementById("FirstName").value;
+    let lastName = document.getElementById("LastName").value;
+    let fetchVal = document.getElementById("usertype").value;
+    let type = fetchVal === 'admin'? 0 : fetchVal === 'sponsor'? 1 : 2 ;
+    let sponsor = document.getElementById("sponsorKey").value;
+    let email = document.getElementById("email").value;
+    let address = document.getElementById("address").value;
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    // let secureQ1 = document.getElementById("Security Question 1").value;
+    // let secureA1 = document.getElementById("Security Answer 1").value;
+    // let secureQ2 = document.getElementById("Security Question 2").value;
+    // let secureA2 = document.getElementById("Security Answer 2").value;
+
+    //empty inputs should get stopped here, let the server figure out more complex errors like accounts already existing
+    if (firstName === '' || lastName === '' || fetchVal === ''
+          || sponsor === '' || type === '' || email === '' || address === ''
+          || username === '' || password === ''){
+      //tell the user to try again
+      alert('NOT ALL FIELDS FILLED OUT');
+
+      return;
+    }
+
+    //Step 2 - Send the data along to the server
+    //load up a json object with our data that we're sending
+    console.log('userData',userData)
+    const updatedUser = {
+      UserID: userData.UserID,
+      firstName: firstName,
+      lastName: lastName,
+      type: type,
+      sponsorKey: sponsor,
+      email: email,
+      address: address,
+      username: username,
+      password: password,  
+      // secureQ1: secureQ1,
+      // secureA1: secureA1,
+      // secureQ2: secureQ2,
+      // secureA2: secureA2,    
+    };
+
+    console.log('userData', userData)
+
+    //post it to the server
+    axios.post('http://localhost:8081/updateUser', updatedUser)
+    .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
+      console.log(response);
+      if (response.status === 200){
+        alert("Account Updated successfully");
+      }else{
+        alert("Account Update was unsuccessful");
+      }
+    })
+    .catch(function (error) {   //this part catches errors
+      console.log(error);
+    });
+
+  }
 
   return(
     <div>
@@ -87,7 +151,7 @@ export default function EditUser() {
       <form>
 
         <label htmlFor="usertype">User Type</label>
-        <select id='usertype' placeholder={userData.userType}>
+        <select id='usertype' selection={userData.userType}>
           <option value="admin">Admin</option>
           <option value="sponsor">Sponsor</option>
           <option value="user">User</option>
@@ -97,7 +161,7 @@ export default function EditUser() {
 
         <br/>
         <label htmlFor="FirstName">First Name</label>
-        <input id='FirstName' type='text' value={userData.FirstName}/>
+        <input id='FirstName' type='text' defaultValue={userData.FirstName}/>
         <label htmlFor="LastName">Last Name</label>
         <input id='LastName' type='text' value={userData.LastName}/><br/>
 
@@ -115,8 +179,9 @@ export default function EditUser() {
         <br/>
         <br/>
         <br/>
-        <button type='submit'>Submit</button>
+        
     </form>
+    <button type='submit' onClick={()=> submit()}>Submit</button>
 
     </div>
   )
