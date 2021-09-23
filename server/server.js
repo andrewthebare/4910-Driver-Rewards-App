@@ -58,7 +58,7 @@ app.get('/fetchUsers',function (req,res){
 
   //this creates a connection to the DB
   var con = mysql.createConnection({
-    host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
+    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
     user: "admin",
     password: "Team3Test",
     database: "mydb"
@@ -102,7 +102,7 @@ app.post('/oneUser',function (req,res){
 
   //connect to the DB
   var con = mysql.createConnection({
-    host: "db-prod.cjpjh4cuj9z5.us-east-1.rds.amazonaws.com",
+    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
     user: "admin",
     password: "Team3Test",
     database: "mydb"

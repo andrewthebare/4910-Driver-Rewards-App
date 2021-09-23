@@ -7,6 +7,16 @@ export default function EditUser() {
   //  when you update a hook, the whole page redraws. So, with that in mind, I wrote this code in a way that updates this variable with the data from the server
   //  so when the query comes back, everything gets redrawn, but with the new values now populating the list
   const [users, setUsers] = useState({});
+  const [userData, setUserData]=useState({
+    userType:2,
+    FirstName:'',
+    LastName:'',
+    username:'',
+    hashedPassword:'',
+    sponsorKey:0,
+    email:'',
+    address:''
+  })
 
   //asks for all the users from DB, and then fills in users variable with response
   const fetchDB = () =>{
@@ -49,7 +59,13 @@ export default function EditUser() {
     axios.post('http://localhost:8081/oneUser', {userID:selection})
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log('response Data',response);
-      setUsers(response.data)
+
+      //pull it down and populate a new JSON 
+      let data = response.data;
+      console.log('data',data)
+      setUserData(data);
+
+
     })
     .catch(function (error) {   //this part catches errors
       console.log(error);
@@ -71,43 +87,34 @@ export default function EditUser() {
       <form>
 
         <label htmlFor="usertype">User Type</label>
-        <select id='usertype'>
+        <select id='usertype' placeholder={userData.userType}>
           <option value="admin">Admin</option>
           <option value="sponsor">Sponsor</option>
           <option value="user">User</option>
         </select>
         <label htmlFor="sponsorKey">Sponsor to be associated with</label>   {/*Could defo be a dropdown of sponsors in the future*/}
-        <input id='sponsorKey' type='number'/>
+        <input id='sponsorKey' type='number' value={userData.sponsorKey}/>
 
         <br/>
         <label htmlFor="FirstName">First Name</label>
-        <input id='FirstName' type='text'/>
+        <input id='FirstName' type='text' value={userData.FirstName}/>
         <label htmlFor="LastName">Last Name</label>
-        <input id='LastName' type='text'/><br/>
+        <input id='LastName' type='text' value={userData.LastName}/><br/>
 
         <label htmlFor="email">Email</label>
-        <input id='email' type='email'/><br/>
+        <input id='email' type='email' value={userData.email}/><br/>
         <label htmlFor="address">Address</label>
-        <input id='address' type='text'/><br/>
+        <input id='address' type='text' value={userData.address}/><br/>
         <label htmlFor="username">Username</label>
-        <input id='username' type='text'/>
+        <input id='username' type='text' value={userData.username}/>
         <label htmlFor="password">Password</label>
-        <input id='password' type='text'/> <br/>
+        <input id='password' type='text' value={userData.hashedPassword}/> <br/>
 
         <h3 style={{"display":"none"}}>User Created Successfully</h3>
 
         <br/>
         <br/>
         <br/>
-        <label htmlFor="Security Question 1">Security Question 1</label>
-        <input id='Security Question 1' type='text'/><br/>
-        <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>
-        <input id='Security Question 1 Answer' type='text'/><br/><br/>
-        <label htmlFor="Security Question 2">Security Question 2</label>
-        <input id='Security Question 2' type='text'/><br/>
-        <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>
-        <input id='Security Question 2 Answer' type='text'/><br/><br/>
-
         <button type='submit'>Submit</button>
     </form>
 
