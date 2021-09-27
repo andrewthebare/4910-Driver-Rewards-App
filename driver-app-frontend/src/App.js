@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser } from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings} from "./pages";
 // import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, Error } from "./pages";
 // import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, EditProfile } from "./pages";
 
@@ -25,9 +25,9 @@ function App() {
           <Route path="/Login" exact component={() => <Login />} />
           <Route path="/Profile" exact component={() => <Profile />} />
           <Route path="/SecurityQuestions" exact component={() => <SecurityQuestions />} />
-
-          <Route Path="/Error" exact component={() => <Error />} />
+          <Route path="/Settings" exact component={() => <Settings />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
+          <Route Path="/Error" exact component={() => <Error />} /> {/*must be at the buttom*/}
 	      </Switch>
       </Router>
     </div>

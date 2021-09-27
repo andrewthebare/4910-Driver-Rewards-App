@@ -10,4 +10,5 @@ export { default as Profile} from "./Profile";
 export { default as SecurityQuestions} from "./SecurityQuestions";
 export { default as Error} from "./Error"
 export { default as EditProfile} from "./EditProfile";
+export { default as Settings} from "./Settings";
 
