@@ -11,4 +11,6 @@ export { default as SecurityQuestions} from "./SecurityQuestions";
 export { default as Error} from "./Error"
 export { default as EditProfile} from "./EditProfile";
 export { default as Settings} from "./Settings";
-
+export { default as Messaging} from "./Messaging";
+export { default as SendMessage} from "./SendMessage";
+export {default as SponsorGroupMessage} from "./SponsorGroupMessage";
