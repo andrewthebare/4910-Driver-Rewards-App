@@ -10,8 +10,9 @@ import './Profile.css';
    window.location.replace("/Profile/EditProfile");
    return false;
 }
-function submitUpdate(){
-
+function settings(){
+  window.location.replace("/Settings");
+  return false;
 }
 function cancelUpdate(){
   window.location.replace("/Profile");
@@ -103,6 +104,7 @@ function Profile() {
 
           </p>
           <button onClick={updateUser}>Edit</button>
+          <button onClick={settings}>Settings</button>
     
          
           
