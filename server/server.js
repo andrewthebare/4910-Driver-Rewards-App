@@ -42,6 +42,20 @@ app.use(function(req, res, next) {
   // }
 });
 
+//Event Handling
+let QueryEvent = (type, userID, data)=>{
+  con.connect(function(err){
+    con.query(`INSERT into Event 
+    SET 
+    EventType = ${type},
+    UserID = ${userID},
+    Content = '${JSON.stringify(data)}'`, 
+    function(err,result,fields){
+      if (err) throw err;
+    });
+  });
+}
+
 //----------------------Basic Get Format --------------------------------------------------
 
 //this collects every get message sent to the defined address
@@ -140,17 +154,11 @@ app.post('/oneUser',function (req,res){
 app.post('/updateUser',function (req,res){
   console.log('Updating USER');
 
+  let success = false;
+
   let body = req.body;
   console.log('body', body);
   ({UserID, firstName, lastName, username, password, address, email, sponsorKey, userType, secureQ1, secureA1, secureQ2, secureA2} = body);
-
-  var con = mysql.createConnection({
-    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
-    user: "admin",
-    password: "Team3Test",
-    database: "mydb"
-  });
-
 
 
   con.connect(function(err) {
@@ -162,6 +170,7 @@ app.post('/updateUser',function (req,res){
           if (!err){
             console.log('result',result)
             res.sendStatus(200);
+            QueryEvent(1,UserID,body);
           }
           else{
             res.sendStatus(400);
@@ -169,7 +178,6 @@ app.post('/updateUser',function (req,res){
           if (err) throw err;      
     });
   });
-
 })
 
 
