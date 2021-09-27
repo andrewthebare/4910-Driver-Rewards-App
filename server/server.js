@@ -27,6 +27,11 @@ var con = mysql.createConnection({
   database: dbSchema
 });
 
+con.connect(function(err) {
+  if (err) throw err;
+});
+
+
 
 //This is necissary to allow json to be passed in our messages
 app.use(cors());
@@ -52,15 +57,13 @@ let QueryEvent = (type, userID, data)=>{
   // console.log('QUERYING');
   // console.log('id',userID);
   // console.log('data', data);
-  con.connect(function(err){
-    con.query(`INSERT into Event 
-    SET 
-    EventType = ${type},
-    UserID = ${userID},
-    Content = '${JSON.stringify(data)}'`, 
-    function(err,result,fields){
-      if (err) throw err;
-    });
+  con.query(`INSERT into Event 
+  SET 
+  EventType = ${type},
+  UserID = ${userID},
+  Content = '${JSON.stringify(data)}'`, 
+  function(err,result,fields){
+    if (err) throw err;
   });
 }
 
@@ -97,32 +100,30 @@ app.get('/fetchUsers',function (req,res){
   //this creates a connection to the DB
   
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.connect(function(err) {
+  con.query("SELECT * FROM Users", function (err, result, fields) {
     if (err) throw err;
-    con.query("SELECT * FROM Users", function (err, result, fields) {
-      if (err) throw err;
 
-      //data packet to send back
-      let dataPacket = {};
+    //data packet to send back
+    let dataPacket = {};
 
-      console.log('result', result);
+    console.log('result', result);
 
-      //fill up that data packet
-      for (i in result){
-        let user = result[i];
-        dataPacket[i] = {
-          firstName:user.FirstName,
-          lastName:user.LastName,
-          username:user.username,
-          userID: user.UserID,
-        }
+    //fill up that data packet
+    for (i in result){
+      let user = result[i];
+      dataPacket[i] = {
+        firstName:user.FirstName,
+        lastName:user.LastName,
+        username:user.username,
+        userID: user.UserID,
       }
-      
-      //send that data packet
-      console.log('dataPacket',dataPacket)
-      res.send(dataPacket).status(200);
-    });
+    }
+    
+    //send that data packet
+    console.log('dataPacket',dataPacket)
+    res.send(dataPacket).status(200);
   });
+
 })
 
 app.post('/oneUser',function (req,res){
@@ -131,14 +132,12 @@ app.post('/oneUser',function (req,res){
   //make sure a user there to be fetched
   let userID = req.body.userID;
 
-  con.connect(function(err) {
+  con.query(`SELECT * FROM Users WHERE UserID = ${userID}`, function (err, result, fields) {
     if (err) throw err;
-    con.query(`SELECT * FROM Users WHERE UserID = ${userID}`, function (err, result, fields) {
-      if (err) throw err;
-      console.log('result', result);
-      res.send(result[0]).status(200);
-    });
+    console.log('result', result);
+    res.send(result[0]).status(200);
   });
+
   
   
 
@@ -154,23 +153,21 @@ app.post('/updateUser',function (req,res){
   ({UserID, firstName, lastName, username, password, address, email, sponsorKey, userType, secureQ1, secureA1, secureQ2, secureA2} = body);
 
 
-  con.connect(function(err) {
-    if (err) throw err;
-    con.query(`Update Users
-        set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}", userType = "${userType}"
-        where UserID = ${UserID};`, 
-        function (err, result, fields) {
-          if (!err){
-            console.log('result',result)
-            res.sendStatus(200);
-            QueryEvent(1,UserID,body);
-          }
-          else{
-            res.sendStatus(400);
-          }
-          if (err) throw err;      
-    });
-  });
+  con.query(`Update Users
+  set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}", userType = "${userType}"
+  where UserID = ${UserID};`, 
+  function (err, result, fields) {
+    if (!err){
+      console.log('result',result)
+      res.sendStatus(200);
+      QueryEvent(1,UserID,body);
+    }
+    else{
+      res.sendStatus(400);
+    }
+    if (err) throw err;      
+});
+
 })
 
 
@@ -198,22 +195,19 @@ app.post('/newUser',function(req,res){
 
   //Step 4 - make the connection and then post the new user to the db
 
-  con.connect(function(err) {
-    if (err) throw err; 
-    con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword) 
-              values("${firstName}","${lastName}", ${type},"${address}","${email}","${sponsorKey}","${username}", "${password}")`, 
-      
-      function (err, result, fields) {
-      if (err) throw err;
-      console.log('result', result);
-
-      //Step 5 - Listen for a response from the DB
-      //          currently there is no logic for error
+  con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword) 
+            values("${firstName}","${lastName}", ${type},"${address}","${email}","${sponsorKey}","${username}", "${password}")`, 
     
-      QueryEvent(0, result.insertId, body)
-      //Step 6 - this sends a json response back to the front end as well as a 200 status code
-      res.send({'response':'Thanks'}).status(200);
-    });
+    function (err, result, fields) {
+    if (err) throw err;
+    console.log('result', result);
+
+    //Step 5 - Listen for a response from the DB
+    //          currently there is no logic for error
+  
+    QueryEvent(0, result.insertId, body)
+    //Step 6 - this sends a json response back to the front end as well as a 200 status code
+    res.send({'response':'Thanks'}).status(200);
   });
 })
 
@@ -228,37 +222,34 @@ app.post('/login',function (req,res){
   // ({usernameAtmp, passAtmp} = body);
   
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.connect(function(err) {
+  con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
     if (err) throw err;
-    con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
-      if (err) throw err;
-      var string=JSON.stringify(result);
-      var json1 = JSON.parse(string);
-      //console.log('passAtmp', passAtmp);
-      //console.log('result.password', json[0].hashedPassword);
-      var realPass = '';
-      try {
-        var realPass = json1[0].hashedPassword;
-      } catch (error) {
-        console.error(error);
-      }
-      
-      //console.log('realPass', realPass);
-      //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
-      if ( realPass === passAtmp){
-        QueryEvent(10,json1[0].UserID,{})
-        //console.log('in if');
-        res.object = json1;
-        console.log("res.object: ", res.object);
-        res.status(200).json(json1);
-        //res.send(`"${json}`);
-      }
-      else{
-        QueryEvent(11,json1[0].UserID,{})
-        res.sendStatus(300);
-        //console.log('in else');
-      }
-    });
+    var string=JSON.stringify(result);
+    var json1 = JSON.parse(string);
+    //console.log('passAtmp', passAtmp);
+    //console.log('result.password', json[0].hashedPassword);
+    var realPass = '';
+    try {
+      var realPass = json1[0].hashedPassword;
+    } catch (error) {
+      console.error(error);
+    }
+    
+    //console.log('realPass', realPass);
+    //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
+    if ( realPass === passAtmp){
+      QueryEvent(10,json1[0].UserID,{})
+      //console.log('in if');
+      res.object = json1;
+      console.log("res.object: ", res.object);
+      res.status(200).json(json1);
+      //res.send(`"${json}`);
+    }
+    else{
+      QueryEvent(11,json1[0].UserID,{})
+      res.sendStatus(300);
+      //console.log('in else');
+    }
   });
 
   //This sends a 200 status message that basically tells the front end client that it was done successfully
@@ -289,15 +280,12 @@ app.post('/Profile/EditProfile',function(req,res){
 
   //Step 4 - make the connection and then post the new user to the db
 
-  con.connect(function(err) {
-    if (err) throw err; 
-    con.query(`UPDATE Users(Deleted, FirstName, LastName, address, email, username, hashedPassword, secureQ1, secureA1,secureQ2, secureA2,) 
-              values("${deleted}", "${firstName}","${lastName}", "${type}","${address}","${email}","${sponsorKey}","${username}", "${password}", "${secureQ1}", "${secureA1}", "${secureQ2}", "${secureA2}") WHERE UserID = "${UserID}"`, 
-      
-      function (err, result, fields) {
-      if (err) throw err;
-      console.log('result', result);
-    });
+  con.query(`UPDATE Users(Deleted, FirstName, LastName, address, email, username, hashedPassword, secureQ1, secureA1,secureQ2, secureA2,) 
+            values("${deleted}", "${firstName}","${lastName}", "${type}","${address}","${email}","${sponsorKey}","${username}", "${password}", "${secureQ1}", "${secureA1}", "${secureQ2}", "${secureA2}") WHERE UserID = "${UserID}"`, 
+    
+    function (err, result, fields) {
+    if (err) throw err;
+    console.log('result', result);
   });
 
   //Step 5 - Listen for a response from the DB
