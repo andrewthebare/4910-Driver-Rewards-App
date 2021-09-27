@@ -1,9 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-import {AdminLogViewer} from "./pages"
-// import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, Error } from "./pages";
-// import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, EditProfile } from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings} from "./pages";
+import {AdminLogViewer} from "./pages"  //found out we can import like this to avoid merge conflicts
 
 /**
  * Every Page we create must be listed as a Route with a unique path in this file, with the page 
