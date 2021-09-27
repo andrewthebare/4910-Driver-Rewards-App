@@ -19,7 +19,7 @@ export default function AdminDashboard(){
           </td>
           <td>
           <button>
-            <Link class="nav-link" to="/adminDashboard/editUser">
+            <Link class="adminButton" to="/adminDashboard/editUser">
               Edit User
               <span class="sr-only">(current)</span>
             </Link>
@@ -29,8 +29,8 @@ export default function AdminDashboard(){
         <tr>
           <td>
             <button>
-              <Link class="adminButton" to="/Error">
-                Placeholder
+              <Link class="adminButton" to="/adminDashboard/Logs">
+                View Logs
               <span class="sr-only">(current)</span>
               </Link>
             </button>

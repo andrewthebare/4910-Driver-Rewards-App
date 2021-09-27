@@ -1,0 +1,17 @@
+.LogEvent{
+  display: block;
+  width: 100%;
+
+  background-color: bisque;
+
+  margin-bottom: 5px;
+}
+
+.logHolder{
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  max-width:80%;
+
+  border: 2pt solid black;
+}

@@ -8,6 +8,7 @@ export { default as AdminEditUser } from "./AdminEditUser";
 export { default as Login } from "./Login";
 export { default as Profile} from "./Profile";
 export { default as SecurityQuestions} from "./SecurityQuestions";
+export { default as AdminLogViewer} from "./AdminLogViewer";
 export { default as Error} from "./Error"
 export { default as EditProfile} from "./EditProfile";
 
