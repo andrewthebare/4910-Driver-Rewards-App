@@ -42,8 +42,16 @@ app.use(function(req, res, next) {
   // }
 });
 
-//Event Handling
+/**
+ * Creates an event for a server action
+ * @param {*} type which type, see docs.md
+ * @param {*} userID Make this the acting user, not the user that is supposedly getting changed (could be the same)
+ * @param {JSON} data the data that is associated with the event
+ */
 let QueryEvent = (type, userID, data)=>{
+  // console.log('QUERYING');
+  // console.log('id',userID);
+  // console.log('data', data);
   con.connect(function(err){
     con.query(`INSERT into Event 
     SET 
@@ -87,13 +95,6 @@ app.get('/fetchUsers',function (req,res){
   console.log('Fetching all the Users');
 
   //this creates a connection to the DB
-  var con = mysql.createConnection({
-    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
-    user: "admin",
-    password: "Team3Test",
-    database: "mydb"
-  });
-
   
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.connect(function(err) {
@@ -129,14 +130,6 @@ app.post('/oneUser',function (req,res){
 
   //make sure a user there to be fetched
   let userID = req.body.userID;
-
-  //connect to the DB
-  var con = mysql.createConnection({
-    host: "sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com",
-    user: "admin",
-    password: "Team3Test",
-    database: "mydb"
-  });
 
   con.connect(function(err) {
     if (err) throw err;
@@ -213,15 +206,15 @@ app.post('/newUser',function(req,res){
       function (err, result, fields) {
       if (err) throw err;
       console.log('result', result);
+
+      //Step 5 - Listen for a response from the DB
+      //          currently there is no logic for error
+    
+      QueryEvent(0, result.insertId, body)
+      //Step 6 - this sends a json response back to the front end as well as a 200 status code
+      res.send({'response':'Thanks'}).status(200);
     });
   });
-
-  //Step 5 - Listen for a response from the DB
-  //          currently there is no logic for error
-
-  //Step 6 - this sends a json response back to the front end as well as a 200 status code
-  res.send({'response':'Thanks'}).status(200);
-
 })
 
 app.post('/login',function (req,res){
@@ -253,6 +246,7 @@ app.post('/login',function (req,res){
       //console.log('realPass', realPass);
       //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
       if ( realPass === passAtmp){
+        QueryEvent(10,json1[0].UserID,{})
         //console.log('in if');
         res.object = json1;
         console.log("res.object: ", res.object);
@@ -260,6 +254,7 @@ app.post('/login',function (req,res){
         //res.send(`"${json}`);
       }
       else{
+        QueryEvent(11,json1[0].UserID,{})
         res.sendStatus(300);
         //console.log('in else');
       }
