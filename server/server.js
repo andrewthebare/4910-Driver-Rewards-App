@@ -126,6 +126,16 @@ app.get('/fetchUsers',function (req,res){
 
 })
 
+app.get('/fetchLogData', function (req,res){
+  console.log('Fetching All Log Data')
+  con.query(`SELECT username, EventID, EventType, Event.UserID, Content, DATE_FORMAT(Date, '%e/%c/%Y %H:%i') Date from Event, Users where Event.UserID = Users.UserID`, 
+  function (err, result, fields){
+    if (err) throw err;
+
+    res.send(result).status(200);
+  })
+})
+
 app.post('/oneUser',function (req,res){
   console.log('Fetching one user');
 
