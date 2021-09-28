@@ -27,6 +27,8 @@ function App() {
           <Route path="/Profile" exact component={() => <Profile />} />
           <Route path="/SecurityQuestions" exact component={() => <SecurityQuestions />} />
           <Route path="/Settings" exact component={() => <Settings />} />
+          <Route path="/adminDashboard/Logs" exact component={() => <AdminLogViewer />} />
+
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
           <Route path="/Messaging" exact component={() => <Messaging />} />
           <Route path="/SendMessage" exact component={() => <SendMessage />} />
