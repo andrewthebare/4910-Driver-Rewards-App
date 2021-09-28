@@ -33,7 +33,6 @@ function Navigation(props) {
               </li>
               <li
                 class={`nav-item  ${
-                  props.location.pathname === "/" ? "active" : ""
                   props.location.pathname === "/DriverDashboard" ? "active" : ""
                 }`}
               >
