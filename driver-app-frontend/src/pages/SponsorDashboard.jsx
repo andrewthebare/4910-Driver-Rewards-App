@@ -1,26 +1,26 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import './AdminDashboard.css';
-export default function AdminDashboard(){
+import './SponsorDashboard.css';
+export default function SponsorDashboard(){
 
   return(
     <div>
       <center>
-      <h1> Administrator Dashboard </h1>
-      <table class = "adminTable">
+      <h1> Sponsor Dashboard </h1>
+      <table class = "sponsorTable">
         <tr>
           <td>
             <button>
-              <Link class="adminButton" to="/adminDashboard/createUser">
-                Create User
+              <Link class="sponsorButton" to="/Error">
+                View Drivers
                 <span class="sr-only">(current)</span>
               </Link>
             </button>
           </td>
           <td>
           <button>
-            <Link class="nav-link" to="/adminDashboard/editUser">
-              Edit User
+            <Link class="sponsorButton" to="/Error">
+              Catalog
               <span class="sr-only">(current)</span>
             </Link>
           </button>
@@ -29,16 +29,16 @@ export default function AdminDashboard(){
         <tr>
           <td>
             <button>
-              <Link class="adminButton" to="/Error">
-                Catalog
+              <Link class="sponsorButton" to="/Error">
+                Username Reset
               <span class="sr-only">(current)</span>
               </Link>
             </button>
           </td>
           <td>
             <button>
-              <Link class="adminButton" to="/Error">
-                Reports
+              <Link class="sponsorButton" to="/Error">
+                Password Reset
               <span class="sr-only">(current)</span>
               </Link>
             </button>
@@ -47,16 +47,16 @@ export default function AdminDashboard(){
         <tr>
         <td>
           <button>
-            <Link class="adminButton" to="/Error">
-              Logout
+            <Link class="sponsorButton" to="/">
+              Driver View
             <span class="sr-only">(current)</span>
             </Link>
           </button>
         </td>
         <td>
           <button>
-            <Link class="adminButton" to="/Error">
-              Placeholder
+            <Link class="userButton" to="/Error">
+              Logout
             <span class="sr-only">(current)</span>
             </Link>
           </button>

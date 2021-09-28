@@ -1,26 +1,26 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import './AdminDashboard.css';
-export default function AdminDashboard(){
+import './DriverDashboard.css';
+export default function DriverDashboard(){
 
   return(
     <div>
       <center>
-      <h1> Administrator Dashboard </h1>
-      <table class = "adminTable">
+      <h1> Driver Dashboard </h1>
+      <table class = "driverTable">
         <tr>
           <td>
             <button>
-              <Link class="adminButton" to="/adminDashboard/createUser">
-                Create User
+              <Link class="driverButton" to="/Error">
+                View Points
                 <span class="sr-only">(current)</span>
               </Link>
             </button>
           </td>
           <td>
           <button>
-            <Link class="nav-link" to="/adminDashboard/editUser">
-              Edit User
+            <Link class="driverButton" to="/Error">
+              Catalog
               <span class="sr-only">(current)</span>
             </Link>
           </button>
@@ -29,16 +29,16 @@ export default function AdminDashboard(){
         <tr>
           <td>
             <button>
-              <Link class="adminButton" to="/Error">
-                Catalog
+              <Link class="driverButton" to="/Error">
+                Username Reset
               <span class="sr-only">(current)</span>
               </Link>
             </button>
           </td>
           <td>
             <button>
-              <Link class="adminButton" to="/Error">
-                Reports
+              <Link class="userButton" to="/Error">
+                Password Reset
               <span class="sr-only">(current)</span>
               </Link>
             </button>
@@ -47,7 +47,7 @@ export default function AdminDashboard(){
         <tr>
         <td>
           <button>
-            <Link class="adminButton" to="/Error">
+            <Link class="userButton" to="/">
               Logout
             <span class="sr-only">(current)</span>
             </Link>
@@ -55,7 +55,7 @@ export default function AdminDashboard(){
         </td>
         <td>
           <button>
-            <Link class="adminButton" to="/Error">
+            <Link class="userButton" to="/Error">
               Placeholder
             <span class="sr-only">(current)</span>
             </Link>

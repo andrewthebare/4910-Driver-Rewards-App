@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser } from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser, UserDashboard, SponsorDashBoard, DriverDashboard } from "./pages";
 // import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, Error } from "./pages";
 // import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, EditProfile } from "./pages";
 
@@ -25,7 +25,8 @@ function App() {
           <Route path="/Login" exact component={() => <Login />} />
           <Route path="/Profile" exact component={() => <Profile />} />
           <Route path="/SecurityQuestions" exact component={() => <SecurityQuestions />} />
-
+          <Route path="/DriverDashBoard" exact component={() => <DriverDashboard />} />
+          <Route path="/SponsorDashBoard" exact component={() => <SponsorDashBoard />} />
           <Route Path="/Error" exact component={() => <Error />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
 	      </Switch>
