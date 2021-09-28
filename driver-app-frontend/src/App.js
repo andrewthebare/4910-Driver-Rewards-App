@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, ApplicationEditor} from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings} from "./pages";
 import {AdminLogViewer} from "./pages"  //found out we can import like this to avoid merge conflicts
-
+import ApplicationEditor from "./pages/ApplicationEditor";
 /**
  * Every Page we create must be listed as a Route with a unique path in this file, with the page 
  * imported above and passed as the exact component
@@ -26,11 +26,10 @@ function App() {
           <Route path="/SecurityQuestions" exact component={() => <SecurityQuestions />} />
           <Route path="/Settings" exact component={() => <Settings />} />
           <Route path="/adminDashboard/Logs" exact component={() => <AdminLogViewer />} />
-
+          <Route path="/ApplicationEditor" exact component={() => <ApplicationEditor />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
           <Route Path="/Error" exact component={() => <Error />} /> {/*must be at the buttom*/}
 
-          <Route path="/ApplicationEditor" exact component={() => <ApplicationEditor />} />
 	      </Switch>
       </Router>
     </div>
