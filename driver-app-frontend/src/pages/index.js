@@ -15,3 +15,5 @@ export { default as Settings} from "./Settings";
 export { default as Messaging} from "./Messaging";
 export { default as SendMessage} from "./SendMessage";
 export {default as SponsorGroupMessage} from "./SponsorGroupMessage";
+export { default as DriverDashboard} from "./DriverDashboard";
+export { default as SponsorDashBoard} from "./SponsorDashboard";

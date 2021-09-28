@@ -34,6 +34,26 @@ function Navigation(props) {
               <li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""
+                  props.location.pathname === "/DriverDashboard" ? "active" : ""
+                }`}
+              >
+                <Link class="nav-link" to="/DriverDashboard">
+                  Driver Dashboard
+                </Link>
+              </li>
+              <li
+                class={`nav-item  ${
+                  props.location.pathname === "/SponsorDashboard" ? "active" : ""
+                }`}
+              >
+                <Link class="nav-link" to="/SponsorDashboard">
+                  Sponsor Dashboard
+                </Link>
+              </li>
+
+              <li
+                class={`nav-item  ${
+                  props.location.pathname === "/about" ? "active" : ""
                 }`}
               >
                 <Link class="nav-link" to="/Messaging">

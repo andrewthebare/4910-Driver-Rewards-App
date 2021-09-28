@@ -1,0 +1,21 @@
+button {
+  background-color: #9E9E9E;
+  border: none;
+  color: white;
+  padding: 30px 64px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.adminButton {
+  color: rgb(3, 3, 3);
+  font-size: 16px;
+
+}
+
+.adminTable{
+  border: none;
+  width: 20%;
+}

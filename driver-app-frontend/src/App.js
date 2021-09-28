@@ -1,9 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, Messaging, SendMessage, SponsorGroupMessage} from "./pages";
-//import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings} from "./pages";
-// import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, Error } from "./pages";
-// import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, EditProfile } from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, Messaging, SendMessage, SponsorGroupMessage,UserDashboard, SponsorDashBoard, DriverDashboard} from "./pages";
 import {AdminLogViewer} from "./pages"  //found out we can import like this to avoid merge conflicts
 import ApplicationEditor from "./pages/ApplicationEditor";
 /**
@@ -30,6 +27,8 @@ function App() {
           <Route path="/Settings" exact component={() => <Settings />} />
           <Route path="/adminDashboard/Logs" exact component={() => <AdminLogViewer />} />
           <Route path="/ApplicationEditor" exact component={() => <ApplicationEditor />} />
+          <Route path="/DriverDashBoard" exact component={() => <DriverDashboard />} />
+          <Route path="/SponsorDashBoard" exact component={() => <SponsorDashBoard />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
           <Route path="/Messaging" exact component={() => <Messaging />} />
           <Route path="/SendMessage" exact component={() => <SendMessage />} />
