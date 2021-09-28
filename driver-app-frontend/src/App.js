@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings} from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, Messaging, SendMessage, SponsorGroupMessage} from "./pages";
+//import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings} from "./pages";
 // import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, Error } from "./pages";
 // import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, EditProfile } from "./pages";
 
 /**
- * Every Page we create must be listed as a Route with a unique path in this file, with the page 
+ * Every Page we create must be listed as a Route with a unique path in this file, with the page
  * imported above and passed as the exact component
- * @returns 
+ * @returns
  */
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
           <Route path="/SecurityQuestions" exact component={() => <SecurityQuestions />} />
           <Route path="/Settings" exact component={() => <Settings />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
+          <Route path="/Messaging" exact component={() => <Messaging />} />
+          <Route path="/SendMessage" exact component={() => <SendMessage />} />
+          <Route path="/SponsorGroupMessage" exact component={() => <SponsorGroupMessage />} />
           <Route Path="/Error" exact component={() => <Error />} /> {/*must be at the buttom*/}
 	      </Switch>
       </Router>
