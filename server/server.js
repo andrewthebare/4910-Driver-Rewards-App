@@ -1,5 +1,6 @@
 var express = require('express');
 var mysql = require('mysql');
+import { EventType } from './data/Enums';
 
 // enable CORS using npm package
 var cors = require('cors');
@@ -170,7 +171,7 @@ app.post('/updateUser',function (req,res){
     if (!err){
       console.log('result',result)
       res.sendStatus(200);
-      QueryEvent(1,UserID,body);
+      QueryEvent(EventType.UserEdit,UserID,body);
     }
     else{
       res.sendStatus(400);
@@ -215,7 +216,7 @@ app.post('/newUser',function(req,res){
     //Step 5 - Listen for a response from the DB
     //          currently there is no logic for error
   
-    QueryEvent(0, result.insertId, body)
+    QueryEvent(EventType.UserCreation, result.insertId, body)
     //Step 6 - this sends a json response back to the front end as well as a 200 status code
     res.send({'response':'Thanks'}).status(200);
   });
@@ -248,7 +249,7 @@ app.post('/login',function (req,res){
     //console.log('realPass', realPass);
     //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
     if ( realPass === passAtmp){
-      QueryEvent(10,json1[0].UserID,{})
+      QueryEvent(EventType.SuccessfulLogin,json1[0].UserID,{})
       //console.log('in if');
       res.object = json1;
       console.log("res.object: ", res.object);
@@ -256,7 +257,7 @@ app.post('/login',function (req,res){
       //res.send(`"${json}`);
     }
     else{
-      QueryEvent(11,json1[0].UserID,{})
+      QueryEvent(EventType.UnsuccessfulLogin,json1[0].UserID,{})
       res.sendStatus(300);
       //console.log('in else');
     }
