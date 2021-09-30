@@ -1,5 +1,5 @@
 .LogEvent{
-  display: block;
+  display: flex;
   width: 100%;
 
   background-color: bisque;
@@ -7,11 +7,19 @@
   margin-bottom: 5px;
 }
 
+tr.header {
+  background-color: #121212;
+  color: #fcfcfc;
+  margin: 0;
+}
+
 .logHolder{
   margin-left: auto;
   margin-right: auto;
   display: grid;
   max-width:80%;
+  min-width:70%;
+  padding: 0;
 
   border: 2pt solid black;
 }
