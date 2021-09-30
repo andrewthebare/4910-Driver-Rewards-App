@@ -32,9 +32,16 @@ export default function AdminLogViewer(){
 
   return(
    <div>
-     <div className='logHolder'>
+    <h1>Log Viewer</h1>
+     <table className='logHolder'>
+      <tr className='LogEvent header'>
+        <th>Date</th>
+        <th>Event</th>
+        <th>User</th>
+        <th>Data</th>
+      </tr>
       {populateLog()}
-     </div>
+     </table>
    </div> 
   )
 }

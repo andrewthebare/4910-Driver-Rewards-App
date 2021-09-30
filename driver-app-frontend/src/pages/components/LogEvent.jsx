@@ -7,9 +7,13 @@ export default function LogEvent(props) {
 
 
   return(
-    <div className='LogEvent'>
+    <tr className='LogEvent'>
+      <td>{data.Date}</td>
+      <td>{data.EventType}</td>
+      <td>{data.username}</td>
+      <td>{/*JSON.stringify(data.Content)*/ 'data'}</td>
       
-      <p>{`${data.Date} | ${data.EventType} | ${data.username} |`}</p>
-    </div>
+      {/* <p>{`${data.Date} | ${data.EventType} | ${data.username} |`}</p> */}
+    </tr>
   )
 }
