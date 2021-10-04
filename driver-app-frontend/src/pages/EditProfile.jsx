@@ -1,67 +1,5 @@
 import React from "react";
 import axios from 'axios';
-function submitUpdate(){
-    //Step 1 - Make sure that all the necissary fields are filled out
-    let firstName = document.getElementById("FirstName").value;
-    let lastName = document.getElementById("LastName").value;
-    let fetchVal = document.getElementById("usertype").value;
-    let type = fetchVal === 'admin'? 0 : fetchVal === 'sponsor'? 1 : 2 ;
-    let sponsor = document.getElementById("sponsorKey").value;
-    let email = document.getElementById("email").value;
-    let address = document.getElementById("address").value;
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-    let secureQ1 = document.getElementById("Security Question 1").value;
-    let secureA1 = document.getElementById("Security Answer 1").value;
-    let secureQ2 = document.getElementById("Security Question 2").value;
-    let secureA2 = document.getElementById("Security Answer 2").value;
-
-    //empty inputs should get stopped here, let the server figure out more complex errors like accounts already existing
-    if (firstName === '' || lastName === '' || fetchVal === ''
-          || sponsor === '' || type === '' || email === '' || address === ''
-          || username === '' || password === ''){
-      //tell the user to try again
-      console.warn('NOT ALL FIELDS FILLED OUT');
-
-      return;
-    }
-
-    //Step 2 - Send the data along to the server
-    //load up a json object with our data that we're sending
-    const newUser = { 
-      firstName: firstName,
-      lastName: lastName,
-      type: type,
-      sponsorKey: sponsor,
-      email: email,
-      address: address,
-      username: username,
-      password: password,  
-      secureQ1: secureQ1,
-      secureA1: secureA1,
-      secureQ2: secureQ2,
-      secureA2: secureA2,    
-    };
-
-    //post it to the server
-    axios.post('http://localhost:8081/newUser', newUser)
-    .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
-      console.log(response);
-      if (response.status === 200){
-        alert("Account created successfully");
-      }else{
-        alert("Account Creation was unsuccessful")
-      }
-    })
-    .catch(function (error) {   //this part catches errors
-      console.log(error);
-    });
-    
-
-    //step 3 - listen for a response from the server (This is the .then function above)
-    //Step 4 - react to the response given to the server (this is will be the body of the .then function above)
-  }
-
 
  function EditProfile(){
     var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -84,8 +22,8 @@ function submitUpdate(){
         if(document.getElementById("address").value === ""){document.getElementById("address").value = userInfo.address}
         if(document.getElementById("username").value === ""){document.getElementById("username").value = userInfo.username}
         if(document.getElementById("password").value === ""){document.getElementById("password").value = userInfo.hashedPassword}
-        if(document.getElementById("deleteTab").value ==="on"){document.getElementById("deleteTab").value = 1}
-        else if(document.getElementById("deleteTab").value ==="off"){document.getElementById("deleteTab").value = 0}
+        if(document.getElementById("deleteTab").checked){document.getElementById("deleteTab").value = 1}
+        else{document.getElementById("deleteTab").value = 0}
         
         //Step 1 - Make sure that all the necissary fields are filled out
         let firstName = document.getElementById("FirstName").value;
@@ -113,11 +51,12 @@ function submitUpdate(){
         };
         console.log("pass updateUser: ", updatedUser);
         //post it to the server
-        axios.post('http://localhost:3000/Profile/EditProfile', updatedUser)
+        axios.post('http://localhost:8081/Profile/EditProfile', updatedUser)
         .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
           console.log(response);
           if (response.status === 200){
             alert("Profile Successfully Updated");
+            sessionStorage.setItem("userInfo", JSON.stringify(response));
             window.location= "http://localhost:3000/Profile";
             return false;
           }else{
