@@ -279,7 +279,7 @@ app.post('/Profile/EditProfile',function(req,res){
   console.log('body', body);
 
   //js short hand parse out the data submitted from the user
-  ({UserID, firstName,lastName, username, password, address, email, secureQ1, secureA1, secureQ2, secureA2} = body);
+  ({UserID, firstName,lastName, username, password, address, email, deleted} = body);
 
   //Step 3 - make sure all that info is good info - TODO
 
@@ -290,20 +290,41 @@ app.post('/Profile/EditProfile',function(req,res){
 
   //Step 4 - make the connection and then post the new user to the db
 
-  con.query(`UPDATE Users(Deleted, FirstName, LastName, address, email, username, hashedPassword, secureQ1, secureA1,secureQ2, secureA2,) 
-            values("${deleted}", "${firstName}","${lastName}", "${type}","${address}","${email}","${sponsorKey}","${username}", "${password}", "${secureQ1}", "${secureA1}", "${secureQ2}", "${secureA2}") WHERE UserID = "${UserID}"`, 
+  con.query(`Update Users
+  set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}" 
+  where UserID = ${UserID};`, 
+
+
+
+  // con.query(`UPDATE Users(Deleted, FirstName, LastName, address, email, username, hashedPassword) 
+  //           values("${deleted}", "${firstName}","${lastName}","${address}","${email}","${username}", "${password}") WHERE UserID = "${UserID}"`, 
     
     function (err, result, fields) {
-    if (err) throw err;
-    console.log('result', result);
+      if (!err){
+        console.log('result',result)
+        //res.sendStatus(200);
+        QueryEvent(1,UserID,body);
+        var string=JSON.stringify(result);
+        var json1 = JSON.parse(string);
+        res.object = json1;
+        res.status(200).json(json1);
+      }
+      else{
+        res.sendStatus(400);
+      }
+      if (err) throw err;    
+    // if (err) throw err;
+    // console.log('result', result);
+    // var string=JSON.stringify(result);
+    // var json1 = JSON.parse(string);
+    // res.object = json1;
+    // res.status(200).json(json1);
+  
   });
 
   //Step 5 - Listen for a response from the DB
   //          currently there is no logic for error
 
   //Step 6 - this sends a json response back to the front end as well as a 200 status code
-  var string=JSON.stringify(result);
-  var json1 = JSON.parse(string);
-  res.object = json1;
-  res.status(200).json(json1);
+  
 })
