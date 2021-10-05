@@ -328,3 +328,34 @@ app.post('/Profile/EditProfile',function(req,res){
   //Step 6 - this sends a json response back to the front end as well as a 200 status code
   
 })
+/*
+NEEDS TO BE FIXED: "ERROR_INVALID_JSON_TEXT at pos1"
+app.post('/applicationUpdate',function (req,res){
+  console.log('Updating Application');
+
+  var string = JSON.stringify(req.body);
+  var json1 = JSON.parse(string);
+
+  let body = req.body;
+  console.log('body', body);
+  ({SponsorID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
+  
+
+
+  con.query(`Update Sponsor
+  set Application ="${json1}"
+  where SponsorID = ${SponsorID};`, 
+  function (err, result, fields) {
+    if (!err){
+      console.log('result',result)
+      
+      res.sendStatus(200);
+      QueryEvent(1,SponsorID,body);
+    }
+    else{
+      res.sendStatus(400);
+    }
+    if (err) throw err;      
+});
+
+})*/
