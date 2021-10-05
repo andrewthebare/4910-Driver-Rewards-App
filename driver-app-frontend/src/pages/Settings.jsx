@@ -1,5 +1,29 @@
 import React from "react";
+import axios from 'axios';
 
+function BlockedUser(){
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+
+    let userID = userInfo.UserID;
+    alert("No Blocked Users")
+    // axios.post('http://localhost:8081/Settings', userID)
+    //     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
+    //       console.log(response);
+    //       if (response.status === 200){
+    //         alert("Settings Successfully Updated");
+    //         window.location= "http://localhost:3000/Profile";
+    //         return false;
+    //       }else{
+    //         alert("No Blocked Users")
+    //         window.location= "http://localhost:3000/Settings";
+    //         return false;
+    //       }
+    //     })
+       
+};
+function UnblockAll(){
+    alert("There are no users to unblock")
+};
 function SubChanges(){
     let font = document.getElementById("fontSize").value;
     let darkTheme = document.getElementById("darkThemeTab").value;
@@ -55,6 +79,7 @@ function SetDefault(){
     let colorMes = 'green';
     let profilePicture = null;
     let removePicture = false;
+    
 
     const updatedSet = {
         font: font,
@@ -157,9 +182,19 @@ return(
             <label htmlFor="removePic">Remove Profile Picture</label>
             <input id='removePic' type='checkbox'/>
             <br/>
+            {/* <label htmlFor="Security Question 1">Security Question 1</label>
+            <input id='Security Question 1' type='text'/><br/>
+            <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>
+            <input id='Security Question 1 Answer' type='text'/><br/><br/>
+            <label htmlFor="Security Question 2">Security Question 2</label>
+            <input id='Security Question 2' type='text'/><br/>
+            <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>
+            <input id='Security Question 2 Answer' type='text'/><br/><br/> */}
         <button onClick={SubChanges}>Submit Changes</button>
         <button onClick={SetDefault}>Set to Default</button>
         <button onClick={UndoChanges}>Undo Changes</button>
+        <button onClick={BlockedUser}>Blocked Users</button>
+        <button onClick={UnblockAll}>Unblock All Users</button>
     </div>
 )
 

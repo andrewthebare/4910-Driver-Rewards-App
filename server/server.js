@@ -328,3 +328,59 @@ app.post('/Profile/EditProfile',function(req,res){
   //Step 6 - this sends a json response back to the front end as well as a 200 status code
   
 })
+
+
+app.post('/SecurityQuestions',function(req,res){
+  console.log('Someone is adding security questions!');
+
+  //Step 1 - connect to the db
+  
+  //Step 2 - parse out the info from the message
+  //          The JSON payload that we load is found in req.body
+  let body = req.body;
+  console.log('body', body);
+
+  //js short hand parse out the data submitted from the user
+  ({userID, secureQ1, secureA1, secureQ2, secureA2} = body);
+
+  //Step 3 - make sure all that info is good info - TODO
+
+
+  //Step 4 - make the connection and then post the new user to the db
+
+  con.query(`SELECT * FROM Settings userID = "${userID}"`,    
+    function (err, result, fields) {
+    if (err) {
+      con.query(`insert into Settings(UserID, SecurityQuestion1, SecurityQuestion2, SecurityAnswer1, SecurityAnswer2)values("${userID}","${secureQ1}", "${secureQ2}","${secureA1}","${secureA2}")`, 
+
+      function (err, result, fields) {
+      if (err) throw err;
+      console.log('result for insert', result);
+
+      //Step 5 - Listen for a response from the DB
+      //          currently there is no logic for error
+
+      //QueryEvent(0, result.insertId, body)
+      //Step 6 - this sends a json response back to the front end as well as a 200 status code
+      res.send({'response':'Thanks'}).status(200);
+    });
+  }
+  else if(!err){
+    con.query(`Update Settings
+    set SecurityQuestion1 ="${secureQ1}", SecurityQuestion2 = "${secureQ2}", SecurityAnswer1 = "${secureA1}", SecurityAnswer2 = "${secureA2}" 
+    where UserID = ${userID};`, 
+
+      function (err, result, fields) {
+      if (err) throw err;
+      console.log('result for update', result);
+
+      //Step 5 - Listen for a response from the DB
+      //          currently there is no logic for error
+
+      //QueryEvent(0, result.insertId, body)
+      //Step 6 - this sends a json response back to the front end as well as a 200 status code
+      res.send({'response':'Thanks'}).status(200);
+    });
+  }
+  });
+})
