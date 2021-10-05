@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import './Messaging.css';
+import axios from 'axios';
 
 class Email extends React.Component{
   render(){
@@ -27,7 +28,7 @@ class EmailList extends React.Component{
   render(){
     var email_list = this.props.emails.map(function(mail) {
       return (
-        <EmailListItem key={mail.id}
+        <EmailListItem key={mail.to}
                        from={mail.from}
                        to={mail.to}
                        body={mail.body}
@@ -77,32 +78,87 @@ class EmailListItem extends React.Component{
 
 
 
-
-
-var test = [
-  {
-    id: 1,
-    from: "test2@email.com",
-    to: "test@email.com",
-    date: "9/26/2020",
-    body: "hi",
-    read: "True"
-  },
-  {
-    id: 2,
-    from: "test3@email.com",
-    to: "test@email.com",
-    date: "9/27/2021",
-    body: "hello",
-    read: "False"
-  }
-];
-
 export default function Messaging(){
+
+  let msgs = [];
+
+  const showAll = ()=>{
+    msgs = [];
+    axios.get('http://localhost:8081/showAll')
+    .then((response) => {
+      for (var i in response.data){
+        let msg = response.data[i];
+        let data = {
+          messageID:msg.messageID,
+          SenderID:msg.SenderID,
+          RecipientID:msg.RecipientID,
+          Content:msg.Content,
+          Read:msg.Read,
+          Starred:msg.Starred,
+        }
+        msgs.push(data);
+      }
+      console.log(msgs);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+    console.log(msgs);
+  }
+
+  const showStarred = ()=>{
+    msgs = [];
+    axios.get('http://localhost:8081/showStarred')
+    .then(function (response) {
+      for (var i in response.data){
+        let msg = response.data[i];
+        let data = {
+          messageID:msg.messageID,
+          SenderID:msg.SenderID,
+          RecipientID:msg.RecipientID,
+          Content:msg.Content,
+          Read:msg.Read,
+          Starred:msg.Starred,
+        }
+        msgs.push(data);
+      }
+      console.log(msgs);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  const showUnread = ()=>{
+    msgs = [];
+    axios.get('http://localhost:8081/showUnread')
+    .then(function (response) {
+      for (var i in response.data){
+        let msg = response.data[i];
+        let data = {
+          messageID:msg.messageID,
+          SenderID:msg.SenderID,
+          RecipientID:msg.RecipientID,
+          Content:msg.Content,
+          Read:msg.Read,
+          Starred:msg.Starred,
+        }
+        msgs.push(data);
+      }
+      console.log(msgs);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
     return(
 
       <div>
       <center>
+      <button type='submit' onClick={showAll}>Show All</button>
+      <button type='submit' onClick={showStarred}>Show Starred</button>
+      <button type='submit' onClick={showUnread}>Show Unread</button>
+      <br></br>
       <button>
         <Link class="nav-link" to="/SendMessage">
           Send Message
@@ -116,7 +172,7 @@ export default function Messaging(){
         </Link>
       </button>
       </center>
-        <EmailList emails={test} />
+        <EmailList emails={msgs} />
       </div>
     )
   }
