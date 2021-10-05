@@ -57,11 +57,11 @@ let QueryEvent = (type, userID, data)=>{
   // console.log('QUERYING');
   // console.log('id',userID);
   // console.log('data', data);
-  con.query(`INSERT into Event 
-  SET 
+  con.query(`INSERT into Event
+  SET
   EventType = ${type},
   UserID = ${userID},
-  Content = '${JSON.stringify(data)}'`, 
+  Content = '${JSON.stringify(data)}'`,
   function(err,result,fields){
     if (err) throw err;
   });
@@ -79,7 +79,7 @@ app.get('/',function (req,res){
   console.log('Someone is getting from /');
 
   //this creates a connection to the DB
-  
+
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.connect(function(err) {
     if (err) throw err;
@@ -98,7 +98,7 @@ app.get('/fetchUsers',function (req,res){
   console.log('Fetching all the Users');
 
   //this creates a connection to the DB
-  
+
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.query("SELECT * FROM Users", function (err, result, fields) {
     if (err) throw err;
@@ -118,7 +118,7 @@ app.get('/fetchUsers',function (req,res){
         userID: user.UserID,
       }
     }
-    
+
     //send that data packet
     console.log('dataPacket',dataPacket)
     res.send(dataPacket).status(200);
@@ -128,13 +128,160 @@ app.get('/fetchUsers',function (req,res){
 
 app.get('/fetchLogData', function (req,res){
   console.log('Fetching All Log Data')
-  con.query(`SELECT username, EventID, EventType, Event.UserID, Content, DATE_FORMAT(Date, '%e/%c/%Y %H:%i') Date from Event, Users where Event.UserID = Users.UserID`, 
+  con.query(`SELECT username, EventID, EventType, Event.UserID, Content, DATE_FORMAT(Date, '%e/%c/%Y %H:%i') Date from Event, Users where Event.UserID = Users.UserID`,
   function (err, result, fields){
     if (err) throw err;
 
     res.send(result).status(200);
   })
 })
+
+
+
+app.post('/sendMessage', function(req, res){
+  console.log('Sending a message');
+  let to = req.body.username;
+  let message = req.body.message;
+  var userID = -1;
+  let dt = new Date().toJSON().slice(0, 19).replace('T', ' ');
+  let read = 0;
+  let starred = 0;
+  let from = 0;
+  let messageID = 0;
+  console.log(to);
+  con.query(`SELECT * FROM Users WHERE username = "${to}"`, function(err, result, fields){
+    if (err) throw err;
+    var string=JSON.stringify(result);
+    var json = JSON.parse(string);
+    try{
+      userID = json[0].UserID;
+    } catch(error){
+      console.error(error);
+    }
+  });
+
+
+  con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (1, ${userID}, "${message}", "${dt}");`,
+
+    function (err, result, fields) {
+      if (err) throw err;
+      console.log('result', result);
+    });
+
+});
+
+app.get('/showAll',function (req,res){
+  console.log('Loading All Messages');
+
+  //this creates a connection to the DB
+
+  //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
+  con.query("SELECT * FROM Message ORDER BY Date", function (err, result, fields) {
+    if (err) throw err;
+
+    //data packet to send back
+    let dataPacket = [];
+
+    console.log('result', result);
+
+    //fill up that data packet
+    for (i in result){
+      let msg = result[i];
+      let data = {
+        messageID:msg.messageID,
+        SenderID:msg.SenderID,
+        RecipientID:msg.RecipientID,
+        Content:msg.Content,
+        Unread:msg.Unread,
+        Starred:msg.Starred,
+      }
+      dataPacket.push(data);
+    }
+
+    //send that data packet
+    console.log('dataPacket',dataPacket)
+    res.send(dataPacket).status(200);
+  });
+
+})
+
+
+app.get('/showStarred',function (req,res){
+  console.log('Loading All Starred Messages');
+
+  //this creates a connection to the DB
+
+  //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
+  con.query(`SELECT * FROM Message WHERE Starred = 1;`, function (err, result, fields) {
+    if (err) throw err;
+
+    //data packet to send back
+    let dataPacket = [];
+
+    console.log('result', result);
+
+    //fill up that data packet
+    for (i in result){
+      let msg = result[i];
+      let data = {
+        messageID:msg.messageID,
+        SenderID:msg.SenderID,
+        RecipientID:msg.RecipientID,
+        Content:msg.Content,
+        Unread:msg.Unread,
+        Starred:msg.Starred,
+      }
+      dataPacket.push(data);
+    }
+
+    //send that data packet
+    console.log('dataPacket',dataPacket)
+    res.send(dataPacket).status(200);
+  });
+
+})
+
+
+app.get('/showUnread',function (req,res){
+  console.log('Loading All Unread Messages');
+
+  //this creates a connection to the DB
+
+  //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
+  con.query(`SELECT * FROM Message WHERE Unread = 1;`, function (err, result, fields) {
+    if (err) throw err;
+
+    //data packet to send back
+    let dataPacket = [];
+
+    console.log('result', result);
+
+    //fill up that data packet
+    for (i in result){
+      let msg = result[i];
+      let data = {
+        messageID:msg.messageID,
+        SenderID:msg.SenderID,
+        RecipientID:msg.RecipientID,
+        Content:msg.Content,
+        Unread:msg.Unread,
+        Starred:msg.Starred,
+      }
+      dataPacket.push(data);
+    }
+
+    //send that data packet
+    console.log('dataPacket',dataPacket)
+    res.send(dataPacket).status(200);
+  });
+
+})
+
+
+
+
+
+
 
 app.post('/oneUser',function (req,res){
   console.log('Fetching one user');
@@ -148,8 +295,8 @@ app.post('/oneUser',function (req,res){
     res.send(result[0]).status(200);
   });
 
-  
-  
+
+
 
 })
 
@@ -165,7 +312,7 @@ app.post('/updateUser',function (req,res){
 
   con.query(`Update Users
   set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}", userType = "${userType}"
-  where UserID = ${UserID};`, 
+  where UserID = ${UserID};`,
   function (err, result, fields) {
     if (!err){
       console.log('result',result)
@@ -175,7 +322,7 @@ app.post('/updateUser',function (req,res){
     else{
       res.sendStatus(400);
     }
-    if (err) throw err;      
+    if (err) throw err;
 });
 
 })
@@ -186,7 +333,7 @@ app.post('/newUser',function(req,res){
   console.log('Someone is posting a new user!');
 
   //Step 1 - connect to the db
-  
+
   //Step 2 - parse out the info from the message
   //          The JSON payload that we load is found in req.body
   let body = req.body;
@@ -205,16 +352,16 @@ app.post('/newUser',function(req,res){
 
   //Step 4 - make the connection and then post the new user to the db
 
-  con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword) 
-            values("${firstName}","${lastName}", ${type},"${address}","${email}","${sponsorKey}","${username}", "${password}")`, 
-    
+  con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword)
+            values("${firstName}","${lastName}", ${type},"${address}","${email}","${sponsorKey}","${username}", "${password}")`,
+
     function (err, result, fields) {
     if (err) throw err;
     console.log('result', result);
 
     //Step 5 - Listen for a response from the DB
     //          currently there is no logic for error
-  
+
     QueryEvent(0, result.insertId, body)
     //Step 6 - this sends a json response back to the front end as well as a 200 status code
     res.send({'response':'Thanks'}).status(200);
@@ -230,7 +377,7 @@ app.post('/login',function (req,res){
   let usernameAtmp = body.username;
   let passAtmp = body.password
   // ({usernameAtmp, passAtmp} = body);
-  
+
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
     if (err) throw err;
@@ -244,7 +391,7 @@ app.post('/login',function (req,res){
     } catch (error) {
       console.error(error);
     }
-    
+
     //console.log('realPass', realPass);
     //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
     if ( realPass === passAtmp){
@@ -272,7 +419,7 @@ app.post('/Profile/EditProfile',function(req,res){
   console.log('Someone is updating a profile!');
 
   //Step 1 - connect to the db
-  
+
   //Step 2 - parse out the info from the message
   //          The JSON payload that we load is found in req.body
   let body = req.body;
@@ -291,14 +438,14 @@ app.post('/Profile/EditProfile',function(req,res){
   //Step 4 - make the connection and then post the new user to the db
 
   con.query(`Update Users
-  set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}" 
-  where UserID = ${UserID};`, 
+  set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}"
+  where UserID = ${UserID};`,
 
 
 
-  // con.query(`UPDATE Users(Deleted, FirstName, LastName, address, email, username, hashedPassword) 
-  //           values("${deleted}", "${firstName}","${lastName}","${address}","${email}","${username}", "${password}") WHERE UserID = "${UserID}"`, 
-    
+  // con.query(`UPDATE Users(Deleted, FirstName, LastName, address, email, username, hashedPassword)
+  //           values("${deleted}", "${firstName}","${lastName}","${address}","${email}","${username}", "${password}") WHERE UserID = "${UserID}"`,
+
     function (err, result, fields) {
       if (!err){
         console.log('result',result)
@@ -312,22 +459,23 @@ app.post('/Profile/EditProfile',function(req,res){
       else{
         res.sendStatus(400);
       }
-      if (err) throw err;    
+      if (err) throw err;
     // if (err) throw err;
     // console.log('result', result);
     // var string=JSON.stringify(result);
     // var json1 = JSON.parse(string);
     // res.object = json1;
     // res.status(200).json(json1);
-  
+
   });
 
   //Step 5 - Listen for a response from the DB
   //          currently there is no logic for error
 
   //Step 6 - this sends a json response back to the front end as well as a 200 status code
-  
+
 })
+
 /*
 NEEDS TO BE FIXED: "ERROR_INVALID_JSON_TEXT at pos1"
 app.post('/applicationUpdate',function (req,res){
