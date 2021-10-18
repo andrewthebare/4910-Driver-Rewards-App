@@ -3,6 +3,7 @@ var mysql = require('mysql');
 
 // enable CORS using npm package
 var cors = require('cors');
+const axios = require('axios');
 
 var app = express();
 var fs = require("fs");
@@ -136,7 +137,14 @@ app.get('/fetchLogData', function (req,res){
   })
 })
 
+app.get('/fetchCatalog', function (req,res){
+  axios.get('https://openapi.etsy.com/v2/listings/active?api_key=a4w1wj4ed12dov2etkdgmsv8&keywords=trucker').then(response =>{
+    console.log('Status Code:', response.status);
+    console.log('res', response);
 
+    res.send(response.data.results).status(200);
+  })
+})
 
 app.post('/sendMessage', function(req, res){
   console.log('Sending a message');
