@@ -18,7 +18,7 @@ export default function AdminDashboard(){
             </button>
           </td>
           <td>
-          <button className= "btn2">
+          <button className= "btn2" >
             <Link class="adminButton" to="/adminDashboard/editUser">
               Edit User
               <span class="sr-only">(current)</span>
@@ -37,7 +37,7 @@ export default function AdminDashboard(){
           </td>
           <td>
             <button className= "btn2">
-              <Link class="adminButton" to="/adminDashboard/manageCatalog">              <Link class="adminButton" to="/Error">
+              <Link class="adminButton" to="/adminDashboard/manageCatalog">              
                 Catalog
               <span class="sr-only">(current)</span>
               </Link>

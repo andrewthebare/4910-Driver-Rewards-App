@@ -18,7 +18,7 @@ export default function DriverDashboard(){
             </button>
           </td>
           <td>
-          <button className= "btn3">>
+          <button className= "btn3">
             <Link class="driverButton" to="/catalog">
               Catalog
               <span class="sr-only">(current)</span>
