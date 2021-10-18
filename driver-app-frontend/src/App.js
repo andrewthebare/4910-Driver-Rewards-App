@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, Messaging, SendMessage, SponsorGroupMessage,UserDashboard, SponsorDashBoard, DriverDashboard} from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, Messaging, SendMessage, SponsorGroupMessage,UserDashboard, SponsorDashBoard, DriverDashboard, SponsorCatalogManage} from "./pages";
 import {AdminLogViewer} from "./pages"  //found out we can import like this to avoid merge conflicts
 import ApplicationCreation from "./pages/ApplicationEditor";
 /**
@@ -21,6 +21,7 @@ function App() {
           <Route path="/adminDashboard" exact component={() => <AdminDashboard />} />
           <Route path="/adminDashboard/createUser" exact component={() => <CreateUser />} />
           <Route path="/adminDashboard/editUser" exact component={() => <AdminEditUser />} />
+          <Route path="/adminDashboard/manageCatalog" exact component={() => <SponsorCatalogManage />} />
           <Route path="/Login" exact component={() => <Login />} />
           <Route path="/Profile" exact component={() => <Profile />} />
           <Route path="/SecurityQuestions" exact component={() => <SecurityQuestions />} />

@@ -37,7 +37,7 @@ export default function AdminDashboard(){
           </td>
           <td>
             <button>
-              <Link class="adminButton" to="/Error">
+              <Link class="adminButton" to="/adminDashboard/manageCatalog">
                 Catalog
               <span class="sr-only">(current)</span>
               </Link>
