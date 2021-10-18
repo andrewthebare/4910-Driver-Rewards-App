@@ -17,4 +17,4 @@ export { default as SendMessage} from "./SendMessage";
 export {default as SponsorGroupMessage} from "./SponsorGroupMessage";
 export { default as DriverDashboard} from "./DriverDashboard";
 export { default as SponsorDashBoard} from "./SponsorDashboard";
-export { default as SponsorCatalogManage} from "./SponsorCatalog";
+export { default as CatalogDisplay} from "./CatalogView";

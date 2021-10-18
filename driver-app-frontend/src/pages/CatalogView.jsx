@@ -1,8 +1,8 @@
 import axios from "axios";
 import {React, useState, useEffect} from "react";
 
-export default function SponsorCatalogManage(){
-  // const useMountEffect = (fun) => useEffect(fun, [])
+export default function CatalogDisplay(){
+  const useMountEffect = (fun) => useEffect(fun, [])
 
   const [catalogItems, setItems] = useState([{id: -1, selected: true, name: 'Test Item', price: 100.25},{id: -2, selected: false, name: 'Test False Item', price: 30.50}])
   const [query, setQuery] = useState('');
@@ -32,9 +32,9 @@ export default function SponsorCatalogManage(){
       //TODO regex the title and take just the first one
       rows.push(
       <tr>
-        <td><input type='checkbox' checked={item.selected}/></td>
+        {/* <td><input type='checkbox' checked={item.selected}/></td> */}
+        <td><a href={item.url}><img src={item.MainImage? item.MainImage.url_170x135: null}/></a></td>
         <td>{item.title}</td>
-        <td><a href={item.url}><img src={item.MainImage.url_170x135}/></a></td>
         <td>{item.price}</td>
       </tr>
       )
@@ -43,7 +43,7 @@ export default function SponsorCatalogManage(){
     return rows;
   }
 
-  // useMountEffect(fetchProductData)
+  useMountEffect(fetchProductData)
 
 
   return(
@@ -52,11 +52,10 @@ export default function SponsorCatalogManage(){
       <h3>Search</h3>
       <input id="queryInput" onChange={handleInput} type="text" />
       <button onClick={fetchProductData}>Search</button>
-      <table>
+      <table style={{'width': '90%'}}>
         <tr>
-          <th>Selected</th>
-          <th>Item</th>
           <th>Link</th>
+          <th>Item</th>
           <th>Price</th>
         </tr>
         {fillTableItems()}
