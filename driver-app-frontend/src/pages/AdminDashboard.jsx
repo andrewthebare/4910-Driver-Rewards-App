@@ -10,7 +10,7 @@ export default function AdminDashboard(){
       <table class = "adminTable">
         <tr>
           <td>
-            <button>
+            <button className= "btn2">
               <Link class="adminButton" to="/adminDashboard/createUser">
                 Create User
                 <span class="sr-only">(current)</span>
@@ -18,7 +18,7 @@ export default function AdminDashboard(){
             </button>
           </td>
           <td>
-          <button>
+          <button className= "btn2">
             <Link class="adminButton" to="/adminDashboard/editUser">
               Edit User
               <span class="sr-only">(current)</span>
@@ -28,7 +28,7 @@ export default function AdminDashboard(){
         </tr>
         <tr>
           <td>
-            <button>
+            <button className= "btn2">
               <Link class="adminButton" to="/adminDashboard/Logs">
                 View Logs
               <span class="sr-only">(current)</span>
@@ -36,7 +36,7 @@ export default function AdminDashboard(){
             </button>
           </td>
           <td>
-            <button>
+            <button className= "btn2">
               <Link class="adminButton" to="/Error">
                 Catalog
               <span class="sr-only">(current)</span>
@@ -46,7 +46,7 @@ export default function AdminDashboard(){
         </tr>
         <tr>
         <td>
-          <button>
+          <button className= "btn2">
             <Link class="adminButton" to="/Error">
               Logout
             <span class="sr-only">(current)</span>
@@ -54,7 +54,7 @@ export default function AdminDashboard(){
           </button>
         </td>
         <td>
-          <button>
+          <button className= "btn2">
             <Link class="adminButton" to="/Error">
               Placeholder
             <span class="sr-only">(current)</span>

@@ -10,7 +10,7 @@ export default function DriverDashboard(){
       <table class = "driverTable">
         <tr>
           <td>
-            <button>
+            <button className= "btn3">
               <Link class="driverButton" to="/Error">
                 View Points
                 <span class="sr-only">(current)</span>
@@ -18,7 +18,7 @@ export default function DriverDashboard(){
             </button>
           </td>
           <td>
-          <button>
+          <button className= "btn3">
             <Link class="driverButton" to="/Error">
               Catalog
               <span class="sr-only">(current)</span>
@@ -28,7 +28,7 @@ export default function DriverDashboard(){
         </tr>
         <tr>
           <td>
-            <button>
+            <button className= "btn3">
               <Link class="driverButton" to="/Error">
                 Username Reset
               <span class="sr-only">(current)</span>
@@ -36,7 +36,7 @@ export default function DriverDashboard(){
             </button>
           </td>
           <td>
-            <button>
+            <button className= "btn3">
               <Link class="userButton" to="/Error">
                 Password Reset
               <span class="sr-only">(current)</span>
@@ -46,7 +46,7 @@ export default function DriverDashboard(){
         </tr>
         <tr>
         <td>
-          <button>
+          <button className= "btn3">
             <Link class="userButton" to="/">
               Logout
             <span class="sr-only">(current)</span>
@@ -54,7 +54,7 @@ export default function DriverDashboard(){
           </button>
         </td>
         <td>
-          <button>
+          <button className= "btn3">
             <Link class="userButton" to="/Error">
               Placeholder
             <span class="sr-only">(current)</span>

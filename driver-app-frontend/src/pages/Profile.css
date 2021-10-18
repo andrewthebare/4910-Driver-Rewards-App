@@ -4,3 +4,8 @@ table, th, td {
   width: 30%;
 
 }
+
+.dark-mode {
+  background-color: #222222;
+  color: white;
+}

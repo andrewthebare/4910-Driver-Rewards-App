@@ -40,7 +40,6 @@ export default function Login(){
      console.log("object:", result);
      if (response.status === 200){
        sessionStorage.setItem("userInfo", JSON.stringify(result));
-       //console.log("test: ", test);
        alert("Successful login");
        window.location.replace("/Profile");
      }
@@ -59,6 +58,7 @@ export default function Login(){
       <form onSubmit={onFormSubmit}>
         <label htmlFor="Username">Username</label>
 	      <input id='Username' type='text'/>
+        <br></br>
 	      <label htmlFor="Password"> Password </label>
 	      <input id='Password' type='password'/>
         <br /><span id="error"></span>

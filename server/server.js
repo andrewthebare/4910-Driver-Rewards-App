@@ -6,7 +6,7 @@ var cors = require('cors');
 
 var app = express();
 var fs = require("fs");
-const { response } = require('express');
+const { response, json } = require('express');
 let dbHost = 'sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com'
 let dbuName = 'admin'
 let dbpWord = 'Team3Test'
@@ -377,13 +377,21 @@ app.post('/login',function (req,res){
   let usernameAtmp = body.username;
   let passAtmp = body.password
   // ({usernameAtmp, passAtmp} = body);
-
+  // var string1;
+  // var json1;
+  // var string2;
+  // var json2;
+  
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
+    var string1;
+    var json1;
+    var string2;
+    var json2;
     if (err) throw err;
-    var string=JSON.stringify(result);
-    var json1 = JSON.parse(string);
-    //console.log('passAtmp', passAtmp);
+    string1=JSON.stringify(result);
+    json1 = JSON.parse(string1);
+    console.log('json1:', json1);
     //console.log('result.password', json[0].hashedPassword);
     var realPass = '';
     try {
@@ -395,12 +403,34 @@ app.post('/login',function (req,res){
     //console.log('realPass', realPass);
     //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
     if ( realPass === passAtmp){
+
       QueryEvent(10,json1[0].UserID,{})
-      //console.log('in if');
+      con.query(`SELECT * FROM Settings WHERE userID = "${json1[0].UserID}"`,    
+        function (err, result, fields) {
+          if (err) {
+            console.log("got an error ");
+            json2 = {
+              "displayMode": 0, 
+              "2stepAuth": 0,
+              "SecurityQuestion1": " ",
+              "SecurityQuestion2": " ",
+              "SecurityAnswer1": " ",
+              "SecurityAnswer2": " ",
+              "SecurityQuestionsLogin": 0,
+              "ReadReciepts": 0,
+              "BlockedUsers": []
+            }
+          }
+  
+          else if(!err){
+            string2=JSON.stringify(result);
+            json2 = JSON.parse(string2);
+          }
+      });
+      json1[0].displayMode = 0;
       res.object = json1;
       console.log("res.object: ", res.object);
       res.status(200).json(json1);
-      //res.send(`"${json}`);
     }
     else{
       QueryEvent(11,json1[0].UserID,{})
