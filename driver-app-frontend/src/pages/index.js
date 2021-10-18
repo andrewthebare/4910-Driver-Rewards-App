@@ -18,3 +18,4 @@ export {default as SponsorGroupMessage} from "./SponsorGroupMessage";
 export { default as DriverDashboard} from "./DriverDashboard";
 export { default as SponsorDashBoard} from "./SponsorDashboard";
 export { default as CatalogDisplay} from "./CatalogView";
+export { default as SponsorEditCatalog} from "./SponsorCatalogEdit";

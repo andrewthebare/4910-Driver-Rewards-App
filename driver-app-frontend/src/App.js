@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, Messaging, SendMessage, SponsorGroupMessage,UserDashboard, SponsorDashBoard, DriverDashboard} from "./pages";
 import {AdminLogViewer} from "./pages"  //found out we can import like this to avoid merge conflicts
 import { CatalogDisplay } from "./pages";
+import { SponsorEditCatalog } from "./pages";
 import ApplicationCreation from "./pages/ApplicationEditor";
 /**
  * Every Page we create must be listed as a Route with a unique path in this file, with the page
@@ -22,6 +23,7 @@ function App() {
           <Route path="/adminDashboard" exact component={() => <AdminDashboard />} />
           <Route path="/adminDashboard/createUser" exact component={() => <CreateUser />} />
           <Route path="/adminDashboard/editUser" exact component={() => <AdminEditUser />} />
+          <Route path="/sponsorDashboard/editCatalog" exact component={() => <SponsorEditCatalog />} />
           <Route path="/catalog" exact component={() => <CatalogDisplay />} />
           <Route path="/Login" exact component={() => <Login />} />
           <Route path="/Profile" exact component={() => <Profile />} />

@@ -19,7 +19,7 @@ export default function SponsorDashboard(){
           </td>
           <td>
           <button>
-            <Link class="sponsorButton" to="/Error">
+            <Link class="sponsorButton" to="/sponsorDashboard/editCatalog">
               Catalog
               <span class="sr-only">(current)</span>
             </Link>
