@@ -34,6 +34,10 @@ function cancelUpdate(){
 //window.onload = get();
 function Profile() {
   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  if(userInfo.displayMode === 1){
+    var element = document.body;
+    element.classList.toggle("dark-mode");
+  }
   console.log("userInfo inside profile: ",userInfo);
   console.log("First Name: ", userInfo.FirstName);
   console.log("Last Name: ",userInfo.LastName);

@@ -1,8 +1,8 @@
-button {
+.btn2 {
   background-color: #9E9E9E;
   border: none;
   color: white;
-  padding: 30px 64px;
+  padding: 6vw 10vw;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -17,5 +17,5 @@ button {
 
 .adminTable{
   border: none;
-  width: 20%;
+  width: 75vw;
 }

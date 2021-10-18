@@ -2,6 +2,7 @@ import {React, useState, useEffect} from "react";
 import LogEvent from "./components/LogEvent";
 import axios from 'axios';
 
+
 export default function AdminLogViewer(){
   const [logData, setLogData] = useState([]);
   const useMountEffect = (fun) => useEffect(fun, [])

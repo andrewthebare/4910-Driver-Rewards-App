@@ -10,7 +10,7 @@ export default function SponsorDashboard(){
       <table class = "sponsorTable">
         <tr>
           <td>
-            <button>
+            <button className= "btn4">
               <Link class="sponsorButton" to="/Error">
                 View Drivers
                 <span class="sr-only">(current)</span>
@@ -18,7 +18,7 @@ export default function SponsorDashboard(){
             </button>
           </td>
           <td>
-          <button>
+          <button className= "btn4">
             <Link class="sponsorButton" to="/sponsorDashboard/editCatalog">
               Catalog
               <span class="sr-only">(current)</span>
@@ -28,7 +28,7 @@ export default function SponsorDashboard(){
         </tr>
         <tr>
           <td>
-            <button>
+            <button className= "btn4">
               <Link class="sponsorButton" to="/Error">
                 Username Reset
               <span class="sr-only">(current)</span>
@@ -36,7 +36,7 @@ export default function SponsorDashboard(){
             </button>
           </td>
           <td>
-            <button>
+            <button className= "btn4">
               <Link class="sponsorButton" to="/Error">
                 Password Reset
               <span class="sr-only">(current)</span>
@@ -46,7 +46,7 @@ export default function SponsorDashboard(){
         </tr>
         <tr>
         <td>
-          <button>
+          <button className= "btn4">
             <Link class="sponsorButton" to="/">
               Driver View
             <span class="sr-only">(current)</span>
@@ -54,7 +54,7 @@ export default function SponsorDashboard(){
           </button>
         </td>
         <td>
-          <button>
+          <button className= "btn4">
             <Link class="userButton" to="/Error">
               Logout
             <span class="sr-only">(current)</span>
