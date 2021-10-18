@@ -137,10 +137,22 @@ app.get('/fetchLogData', function (req,res){
   })
 })
 
-app.get('/fetchCatalog', function (req,res){
-  axios.get('https://openapi.etsy.com/v2/listings/active?api_key=a4w1wj4ed12dov2etkdgmsv8&keywords=trucker').then(response =>{
-    console.log('Status Code:', response.status);
-    console.log('res', response);
+app.post('/fetchCatalog', function (req,res){
+  let query = req.body.query;
+  console.log(query);
+
+  let options = {
+    api_key: 'a4w1wj4ed12dov2etkdgmsv8',
+    includes: 'MainImage',
+    keywords: 'trucker',
+  };
+
+  if(query)
+    options['keywords'] = query;
+
+  console.log('options',options)
+
+  axios.get(`https://openapi.etsy.com/v2/listings/active`,{params:options}).then(response =>{
 
     res.send(response.data.results).status(200);
   })

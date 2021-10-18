@@ -2,12 +2,17 @@ import axios from "axios";
 import {React, useState, useEffect} from "react";
 
 export default function SponsorCatalogManage(){
-  const useMountEffect = (fun) => useEffect(fun, [])
+  // const useMountEffect = (fun) => useEffect(fun, [])
 
   const [catalogItems, setItems] = useState([{id: -1, selected: true, name: 'Test Item', price: 100.25},{id: -2, selected: false, name: 'Test False Item', price: 30.50}])
+  const [query, setQuery] = useState('');
+
+  function handleInput(event) {
+    setQuery(event.target.value );  
+  };
 
   const fetchProductData = () =>{
-    axios.get('http://localhost:8081/fetchCatalog', {})
+    axios.post('http://localhost:8081/fetchCatalog', {query:query})
     .then(function(response){
       console.log('fetch', response);
 
@@ -24,12 +29,12 @@ export default function SponsorCatalogManage(){
     for (let i in catalogItems){
       let item = catalogItems[i];
 
-      //TODO
+      //TODO regex the title and take just the first one
       rows.push(
       <tr>
         <td><input type='checkbox' checked={item.selected}/></td>
         <td>{item.title}</td>
-        <td><a href={item.url}>LINK</a></td>
+        <td><a href={item.url}><img src={item.MainImage.url_170x135}/></a></td>
         <td>{item.price}</td>
       </tr>
       )
@@ -44,6 +49,9 @@ export default function SponsorCatalogManage(){
   return(
     <div>
       <h1>Sponsor Catalog</h1>
+      <h3>Search</h3>
+      <input id="queryInput" onChange={handleInput} type="text" />
+      <button onClick={fetchProductData}>Search</button>
       <table>
         <tr>
           <th>Selected</th>
@@ -53,7 +61,6 @@ export default function SponsorCatalogManage(){
         </tr>
         {fillTableItems()}
       </table>
-      <button onClick={()=> fetchProductData()}>Push</button>
     </div>
   )
 }
