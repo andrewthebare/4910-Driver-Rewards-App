@@ -40,9 +40,9 @@ export default function SponsorEditCatalog(){
       <p>Default Key Words</p>
       <input id='keywords' type="text" defaultValue={query.keywords} onChange={handleInput} />
       <p>Number of Items</p>
-      <input type="number" defaultValue={query.limit} />
+      <input id='limit' type="number" defaultValue={query.limit} onChange={handleInput}/>
       <p>Max Price</p>
-      <input type="number" defaultValue={query.max_price} />
+      <input id='max_price' type="number" defaultValue={query.max_price} onChange={handleInput}/>
 
       <button onClick={fetchQuery}>testPull</button>
       <button onClick={setSponsorQuery}>test Push</button>
