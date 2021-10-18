@@ -3,6 +3,7 @@ var mysql = require('mysql');
 
 // enable CORS using npm package
 var cors = require('cors');
+const axios = require('axios');
 
 var app = express();
 var fs = require("fs");
@@ -136,7 +137,80 @@ app.get('/fetchLogData', function (req,res){
   })
 })
 
+app.get('/getCatalogQuery',function(req,res){
+  console.log('fetching the catalog query');
 
+  let id = req.query.id;
+
+  con.query(`SELECT CatalogQuery from Sponsor where SponsorID = ${id}`, 
+  function (err, result, fields){
+    if (err){
+      res.sendStatus(500);
+      throw err;
+    }else{
+      console.log('result', result);
+
+      res.send(result[0].CatalogQuery).status(200);
+    }
+
+
+  })
+});
+
+app.put('/setCatalogQuery',function(req,res){
+  console.log('Setting the catalog query');
+  console.log(req.body);
+
+  let body = req.body;
+  let stringBody = JSON.stringify(body.data);
+  con.query(`UPDATE Sponsor SET CatalogQuery = '${stringBody}' where SponsorID = ${body.id}`, 
+  function (err, result, fields){
+    if (err){
+      res.sendStatus(500);
+      throw err;
+    }else{
+      console.log('result', result);
+
+      QueryEvent(20, 0, body.data);
+      res.sendStatus(200);
+    }
+  })
+});
+
+
+app.post('/fetchCatalog', function (req,res){
+  let query = req.body.query;
+  console.log(query);
+
+  //fetch the default values first
+  con.query(`Select CatalogQuery from Sponsor where SponsorID = 0`, 
+  function (err, result, fields){
+    if (err) throw err;
+
+    
+    let options = JSON.parse(result[0].CatalogQuery)
+    
+    
+    // options = {
+    //   api_key: 'a4w1wj4ed12dov2etkdgmsv8',
+    //   includes: 'MainImage',
+    //   keywords: 'trucker',
+    // };
+
+    options['api_key'] = 'a4w1wj4ed12dov2etkdgmsv8';
+    options['includes'] = 'MainImage';
+    
+    if(query)
+      options['keywords'] = query;
+    
+    console.log('options',options)
+    
+    axios.get(`https://openapi.etsy.com/v2/listings/active`,{params:options}).then(response =>{
+      
+      res.send(response.data.results).status(200);
+    })
+  })
+})
 
 app.post('/sendMessage', function(req, res){
   console.log('Sending a message');

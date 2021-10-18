@@ -19,7 +19,7 @@ export default function DriverDashboard(){
           </td>
           <td>
           <button>
-            <Link class="driverButton" to="/Error">
+            <Link class="driverButton" to="/catalog">
               Catalog
               <span class="sr-only">(current)</span>
             </Link>
