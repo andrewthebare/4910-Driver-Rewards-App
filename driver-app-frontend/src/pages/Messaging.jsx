@@ -164,9 +164,6 @@ export default function Messaging(){
       <div>
       <center>
 
-      <button type='submit' onClick={showAll}>Show All</button>
-      <button type='submit' onClick={showStarred}>Show Starred</button>
-      <button type='submit' onClick={showUnread}>Show Unread</button>
       <button type='submit' className = "btn1" onClick={showAll}>Show All</button>
       <button type='submit' className = "btn1" onClick={showStarred}>Show Starred</button>
       <button type='submit' className = "btn1" onClick={showUnread}>Show Unread</button>

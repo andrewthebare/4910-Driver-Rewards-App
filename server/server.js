@@ -143,7 +143,7 @@ app.get('/getCatalogQuery',function(req,res){
 
   let id = req.query.id;
 
-  con.query(`SELECT CatalogQuery from Sponsor where SponsorID = ${id}`, 
+  con.query(`SELECT CatalogQuery from Sponsor where SponsorID = ${id}`,
   function (err, result, fields){
     if (err){
       res.sendStatus(500);
@@ -164,7 +164,7 @@ app.put('/setCatalogQuery',function(req,res){
 
   let body = req.body;
   let stringBody = JSON.stringify(body.data);
-  con.query(`UPDATE Sponsor SET CatalogQuery = '${stringBody}' where SponsorID = ${body.id}`, 
+  con.query(`UPDATE Sponsor SET CatalogQuery = '${stringBody}' where SponsorID = ${body.id}`,
   function (err, result, fields){
     if (err){
       res.sendStatus(500);
@@ -184,14 +184,14 @@ app.post('/fetchCatalog', function (req,res){
   console.log(query);
 
   //fetch the default values first
-  con.query(`Select CatalogQuery from Sponsor where SponsorID = 0`, 
+  con.query(`Select CatalogQuery from Sponsor where SponsorID = 0`,
   function (err, result, fields){
     if (err) throw err;
 
-    
+
     let options = JSON.parse(result[0].CatalogQuery)
-    
-    
+
+
     // options = {
     //   api_key: 'a4w1wj4ed12dov2etkdgmsv8',
     //   includes: 'MainImage',
@@ -200,14 +200,14 @@ app.post('/fetchCatalog', function (req,res){
 
     options['api_key'] = 'a4w1wj4ed12dov2etkdgmsv8';
     options['includes'] = 'MainImage';
-    
+
     if(query)
       options['keywords'] = query;
-    
+
     console.log('options',options)
-    
+
     axios.get(`https://openapi.etsy.com/v2/listings/active`,{params:options}).then(response =>{
-      
+
       res.send(response.data.results).status(200);
     })
   })
@@ -524,7 +524,7 @@ app.post('/login',function (req,res){
   // var json1;
   // var string2;
   // var json2;
-  
+
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
     var string1;
@@ -548,12 +548,12 @@ app.post('/login',function (req,res){
     if ( realPass === passAtmp){
 
       QueryEvent(10,json1[0].UserID,{})
-      con.query(`SELECT * FROM Settings WHERE userID = "${json1[0].UserID}"`,    
+      con.query(`SELECT * FROM Settings WHERE userID = "${json1[0].UserID}"`,
         function (err, result, fields) {
           if (err) {
             console.log("got an error ");
             json2 = {
-              "displayMode": 0, 
+              "displayMode": 0,
               "2stepAuth": 0,
               "SecurityQuestion1": " ",
               "SecurityQuestion2": " ",
@@ -564,7 +564,7 @@ app.post('/login',function (req,res){
               "BlockedUsers": []
             }
           }
-  
+
           else if(!err){
             string2=JSON.stringify(result);
             json2 = JSON.parse(string2);
