@@ -140,8 +140,7 @@ app.get('/fetchLogData', function (req,res){
 app.get('/getCatalogQuery',function(req,res){
   console.log('fetching the catalog query');
 
-<<<<<<< HEAD
-=======
+
   let id = req.query.id;
 
   con.query(`SELECT CatalogQuery from Sponsor where SponsorID = ${id}`, 
@@ -214,7 +213,6 @@ app.post('/fetchCatalog', function (req,res){
   })
 })
 
->>>>>>> e17d554e406e859333ed0f7d600b8ee0d88cafc7
 app.post('/sendMessage', function(req, res){
   console.log('Sending a message');
   let to = req.body.username;
