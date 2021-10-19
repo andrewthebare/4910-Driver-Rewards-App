@@ -7,20 +7,20 @@ export default function SendMessage(){
   //Basic format for how we talk to the DB
   //This function is called when the submit button is clicked
   const onFormSubmit = ()=>{
-
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    var userID = userInfo.UserID;
     let username = document.getElementById("username").value;
     let message = document.getElementById("message").value;
 
-
     if (username === '' || message === ''){
       console.warn('NOT ALL FIELDS FILLED OUT');
-
       return;
     }
 
     const mjson = {
       username: username,
       message: message,
+      userID: userID,
     };
 
 

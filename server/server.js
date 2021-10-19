@@ -137,7 +137,6 @@ app.get('/fetchLogData', function (req,res){
 })
 
 
-
 app.post('/sendMessage', function(req, res){
   console.log('Sending a message');
   let to = req.body.username;
@@ -148,41 +147,108 @@ app.post('/sendMessage', function(req, res){
   let starred = 0;
   let from = 0;
   let messageID = 0;
-  console.log(to);
+  let senderID = req.body.userID;
+
   con.query(`SELECT * FROM Users WHERE username = "${to}"`, function(err, result, fields){
     if (err) throw err;
     var string=JSON.stringify(result);
     var json = JSON.parse(string);
+    console.log(json);
     try{
       userID = json[0].UserID;
+      con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (${senderID}, ${json[0].UserID}, "${message}", "${dt}");`,
+        function (err, result, fields) {
+          if (err) throw err;
+          console.log('result', result);
+        });
+      console.log(userID);
     } catch(error){
       console.error(error);
     }
   });
 
 
-  con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (1, ${userID}, "${message}", "${dt}");`,
 
-    function (err, result, fields) {
-      if (err) throw err;
-      console.log('result', result);
-    });
 
 });
+
+app.post('/messageGroup', function(req, res){
+  let to = req.body.sponsorgroup;
+  let message = req.body.message;
+  var userID = -1;
+  let dt = new Date().toJSON().slice(0, 19).replace('T', ' ');
+  let read = 0;
+  let starred = 0;
+  let from = 0;
+  let messageID = 0;
+  let senderID = req.body.userID;
+
+  console.log('messaging group')
+  con.query(`SELECT * FROM Users WHERE sponsorKey = "${to}"`, function(err, result, fields){
+    if (err) throw err;
+    var string=JSON.stringify(result);
+    var json = JSON.parse(string);
+    console.log(json);
+    try{
+
+      for(i in json){
+        con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (${senderID}, ${json[i].UserID}, "${message}", "${dt}");`,
+          function (err, result, fields) {
+            if (err) throw err;
+            console.log('result', result);
+          });
+      }
+
+      console.log(userID);
+    } catch(error){
+      console.error(error);
+    }
+  });
+})
+
+
+
+
+app.patch('/markStarred',function(req,res){
+  let id = req.body.messageId;
+  console.log(id);
+  con.query(`UPDATE Message SET Starred = '1' WHERE (messageID = ${id});`, function(err, result, fields){
+    if (err) throw err;
+    console.log(id);
+  });
+})
+
+app.patch('/markRead',function(req,res){
+  let id = req.body.messageId;
+  console.log(id);
+  con.query(`UPDATE Message SET Unread = '0' WHERE (messageID = ${id});`, function(err, result, fields){
+    if (err) throw err;
+    console.log(id);
+  });
+})
+
+app.patch('/deleteMsg',function(req,res){
+  let id = req.body.messageId;
+  console.log('deleting message');
+  con.query(`DELETE FROM Message WHERE (messageID = ${id});`, function(err, result, fields){
+    if (err) throw err;
+    console.log(id);
+  });
+})
+
+
 
 app.get('/showAll',function (req,res){
   console.log('Loading All Messages');
 
   //this creates a connection to the DB
-
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query("SELECT * FROM Message ORDER BY Date", function (err, result, fields) {
+  con.query(`SELECT * FROM Message ORDER BY Date`, function (err, result, fields) {
     if (err) throw err;
 
     //data packet to send back
     let dataPacket = [];
 
-    console.log('result', result);
 
     //fill up that data packet
     for (i in result){
@@ -194,12 +260,11 @@ app.get('/showAll',function (req,res){
         Content:msg.Content,
         Unread:msg.Unread,
         Starred:msg.Starred,
+        Date:msg.Date,
       }
       dataPacket.push(data);
     }
 
-    //send that data packet
-    console.log('dataPacket',dataPacket)
     res.send(dataPacket).status(200);
   });
 
@@ -230,6 +295,7 @@ app.get('/showStarred',function (req,res){
         Content:msg.Content,
         Unread:msg.Unread,
         Starred:msg.Starred,
+        Date:msg.Date,
       }
       dataPacket.push(data);
     }
@@ -266,6 +332,7 @@ app.get('/showUnread',function (req,res){
         Content:msg.Content,
         Unread:msg.Unread,
         Starred:msg.Starred,
+        Date:msg.Date,
       }
       dataPacket.push(data);
     }
@@ -487,23 +554,23 @@ app.post('/applicationUpdate',function (req,res){
   let body = req.body;
   console.log('body', body);
   ({SponsorID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
-  
+
 
 
   con.query(`Update Sponsor
   set Application ="${json1}"
-  where SponsorID = ${SponsorID};`, 
+  where SponsorID = ${SponsorID};`,
   function (err, result, fields) {
     if (!err){
       console.log('result',result)
-      
+
       res.sendStatus(200);
       QueryEvent(1,SponsorID,body);
     }
     else{
       res.sendStatus(400);
     }
-    if (err) throw err;      
+    if (err) throw err;
 });
 
 })*/
@@ -514,7 +581,7 @@ app.post('/SecurityQuestions',function(req,res){
   console.log('Someone is adding security questions!');
 
   //Step 1 - connect to the db
-  
+
   //Step 2 - parse out the info from the message
   //          The JSON payload that we load is found in req.body
   let body = req.body;
@@ -528,10 +595,10 @@ app.post('/SecurityQuestions',function(req,res){
 
   //Step 4 - make the connection and then post the new user to the db
 
-  con.query(`SELECT * FROM Settings userID = "${userID}"`,    
+  con.query(`SELECT * FROM Settings userID = "${userID}"`,
     function (err, result, fields) {
     if (err) {
-      con.query(`insert into Settings(UserID, SecurityQuestion1, SecurityQuestion2, SecurityAnswer1, SecurityAnswer2)values("${userID}","${secureQ1}", "${secureQ2}","${secureA1}","${secureA2}")`, 
+      con.query(`insert into Settings(UserID, SecurityQuestion1, SecurityQuestion2, SecurityAnswer1, SecurityAnswer2)values("${userID}","${secureQ1}", "${secureQ2}","${secureA1}","${secureA2}")`,
 
       function (err, result, fields) {
       if (err) throw err;
@@ -547,8 +614,8 @@ app.post('/SecurityQuestions',function(req,res){
   }
   else if(!err){
     con.query(`Update Settings
-    set SecurityQuestion1 ="${secureQ1}", SecurityQuestion2 = "${secureQ2}", SecurityAnswer1 = "${secureA1}", SecurityAnswer2 = "${secureA2}" 
-    where UserID = ${userID};`, 
+    set SecurityQuestion1 ="${secureQ1}", SecurityQuestion2 = "${secureQ2}", SecurityAnswer1 = "${secureA1}", SecurityAnswer2 = "${secureA2}"
+    where UserID = ${userID};`,
 
       function (err, result, fields) {
       if (err) throw err;
