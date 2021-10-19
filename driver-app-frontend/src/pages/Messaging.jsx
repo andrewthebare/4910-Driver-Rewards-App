@@ -163,16 +163,13 @@ export default function Messaging(){
 
       <div>
       <center>
-<<<<<<< HEAD
 
       <button type='submit' onClick={showAll}>Show All</button>
       <button type='submit' onClick={showStarred}>Show Starred</button>
       <button type='submit' onClick={showUnread}>Show Unread</button>
-=======
       <button type='submit' className = "btn1" onClick={showAll}>Show All</button>
       <button type='submit' className = "btn1" onClick={showStarred}>Show Starred</button>
       <button type='submit' className = "btn1" onClick={showUnread}>Show Unread</button>
->>>>>>> e17d554e406e859333ed0f7d600b8ee0d88cafc7
       <br></br>
       <button>
         <Link class="nav-link" to="/SendMessage">
