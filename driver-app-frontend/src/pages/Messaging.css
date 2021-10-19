@@ -16,3 +16,27 @@
     padding: 20px;
     font-size: 1.2em;
 }
+
+.btn1{
+    width: 50px;
+    /* border-radius: 50px; */
+   font-size: 1.4vw;
+    /* padding: 10vw; */
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    text-align: left;
+    background-color: #9E9E9E;
+    border-color: ivory;
+    border-width: 20px;
+}
+
+.email-list{
+    width: 100vw;
+    padding: 10px;
+}
+
+.thead .tr{
+    width: 100vw;
+} 

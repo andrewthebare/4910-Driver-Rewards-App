@@ -1,12 +1,27 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import './Navigation.css';
+
+
 function Navigation(props) {
+  var first;
+  var last;
+  try{
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    first = userInfo.FirstName;
+    last = userInfo.LastName;
+  }
+  catch (error){
+    first = "Good Driver";
+    last = "Incentive";
+  }
   return (
     <div className="navigation">
       <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container">
           <Link class="navbar-brand" to="/">
-            Good Driver Incentive
+            {first} {last}
+            {/* Good Driver Incentive */}
           </Link>
 
           <div>

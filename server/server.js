@@ -3,10 +3,11 @@ var mysql = require('mysql');
 
 // enable CORS using npm package
 var cors = require('cors');
+const axios = require('axios');
 
 var app = express();
 var fs = require("fs");
-const { response } = require('express');
+const { response, json } = require('express');
 let dbHost = 'sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com'
 let dbuName = 'admin'
 let dbpWord = 'Team3Test'
@@ -136,7 +137,84 @@ app.get('/fetchLogData', function (req,res){
   })
 })
 
+app.get('/getCatalogQuery',function(req,res){
+  console.log('fetching the catalog query');
 
+<<<<<<< HEAD
+=======
+  let id = req.query.id;
+
+  con.query(`SELECT CatalogQuery from Sponsor where SponsorID = ${id}`, 
+  function (err, result, fields){
+    if (err){
+      res.sendStatus(500);
+      throw err;
+    }else{
+      console.log('result', result);
+
+      res.send(result[0].CatalogQuery).status(200);
+    }
+
+
+  })
+});
+
+app.put('/setCatalogQuery',function(req,res){
+  console.log('Setting the catalog query');
+  console.log(req.body);
+
+  let body = req.body;
+  let stringBody = JSON.stringify(body.data);
+  con.query(`UPDATE Sponsor SET CatalogQuery = '${stringBody}' where SponsorID = ${body.id}`, 
+  function (err, result, fields){
+    if (err){
+      res.sendStatus(500);
+      throw err;
+    }else{
+      console.log('result', result);
+
+      QueryEvent(20, 0, body.data);
+      res.sendStatus(200);
+    }
+  })
+});
+
+
+app.post('/fetchCatalog', function (req,res){
+  let query = req.body.query;
+  console.log(query);
+
+  //fetch the default values first
+  con.query(`Select CatalogQuery from Sponsor where SponsorID = 0`, 
+  function (err, result, fields){
+    if (err) throw err;
+
+    
+    let options = JSON.parse(result[0].CatalogQuery)
+    
+    
+    // options = {
+    //   api_key: 'a4w1wj4ed12dov2etkdgmsv8',
+    //   includes: 'MainImage',
+    //   keywords: 'trucker',
+    // };
+
+    options['api_key'] = 'a4w1wj4ed12dov2etkdgmsv8';
+    options['includes'] = 'MainImage';
+    
+    if(query)
+      options['keywords'] = query;
+    
+    console.log('options',options)
+    
+    axios.get(`https://openapi.etsy.com/v2/listings/active`,{params:options}).then(response =>{
+      
+      res.send(response.data.results).status(200);
+    })
+  })
+})
+
+>>>>>>> e17d554e406e859333ed0f7d600b8ee0d88cafc7
 app.post('/sendMessage', function(req, res){
   console.log('Sending a message');
   let to = req.body.username;
@@ -444,13 +522,21 @@ app.post('/login',function (req,res){
   let usernameAtmp = body.username;
   let passAtmp = body.password
   // ({usernameAtmp, passAtmp} = body);
-
+  // var string1;
+  // var json1;
+  // var string2;
+  // var json2;
+  
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
   con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
+    var string1;
+    var json1;
+    var string2;
+    var json2;
     if (err) throw err;
-    var string=JSON.stringify(result);
-    var json1 = JSON.parse(string);
-    //console.log('passAtmp', passAtmp);
+    string1=JSON.stringify(result);
+    json1 = JSON.parse(string1);
+    console.log('json1:', json1);
     //console.log('result.password', json[0].hashedPassword);
     var realPass = '';
     try {
@@ -462,12 +548,34 @@ app.post('/login',function (req,res){
     //console.log('realPass', realPass);
     //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
     if ( realPass === passAtmp){
+
       QueryEvent(10,json1[0].UserID,{})
-      //console.log('in if');
+      con.query(`SELECT * FROM Settings WHERE userID = "${json1[0].UserID}"`,    
+        function (err, result, fields) {
+          if (err) {
+            console.log("got an error ");
+            json2 = {
+              "displayMode": 0, 
+              "2stepAuth": 0,
+              "SecurityQuestion1": " ",
+              "SecurityQuestion2": " ",
+              "SecurityAnswer1": " ",
+              "SecurityAnswer2": " ",
+              "SecurityQuestionsLogin": 0,
+              "ReadReciepts": 0,
+              "BlockedUsers": []
+            }
+          }
+  
+          else if(!err){
+            string2=JSON.stringify(result);
+            json2 = JSON.parse(string2);
+          }
+      });
+      json1[0].displayMode = 0;
       res.object = json1;
       console.log("res.object: ", res.object);
       res.status(200).json(json1);
-      //res.send(`"${json}`);
     }
     else{
       QueryEvent(11,json1[0].UserID,{})
