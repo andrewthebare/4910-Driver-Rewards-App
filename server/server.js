@@ -580,8 +580,7 @@ app.post('/Profile/EditProfile',function(req,res){
 
 })
 
-/*
-NEEDS TO BE FIXED: "ERROR_INVALID_JSON_TEXT at pos1"
+
 app.post('/applicationUpdate',function (req,res){
   console.log('Updating Application');
 
@@ -594,9 +593,7 @@ app.post('/applicationUpdate',function (req,res){
   
 
 
-  con.query(`Update Sponsor
-  set Application ="${json1}"
-  where SponsorID = ${SponsorID};`, 
+  con.query(`UPDATE Sponsor SET Application = "${req.body}" WHERE SponsorID = ${SponsorID}`, 
   function (err, result, fields) {
     if (!err){
       console.log('result',result)
@@ -610,7 +607,7 @@ app.post('/applicationUpdate',function (req,res){
     if (err) throw err;      
 });
 
-})*/
+})
 
 
 

@@ -39,20 +39,15 @@ export default function ApplicationCreation(){
       q9: app9,
       q10: app10
     }
-    /*
-    NEEDS TO BE FIXED: "ERROR_INVALID_JSON_TEXT at pos1 on serverside"
+    
     axios.post('http://localhost:8081/applicationUpdate', applicationQuestions)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
-      console.log("response is:", response);
-      var result = response.data[0];
-      console.log("object:", result);
+      console.log(response);
       if (response.status === 200){
-        //sessionStorage.setItem("userInfo", JSON.stringify(result));
-        //console.log("test: ", test);
         alert("Questions Updated Successfully");
         window.location.replace("/SponsorDashboard");
       }
-    })*/
+    })
 
     console.log('Questions', applicationQuestions);
   }
