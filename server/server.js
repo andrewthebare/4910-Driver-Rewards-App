@@ -504,7 +504,7 @@ app.post('/newUser',function(req,res){
 
     //Step 5 - Listen for a response from the DB
     //          currently there is no logic for error
-
+      
     QueryEvent(0, result.insertId, body)
     //Step 6 - this sends a json response back to the front end as well as a 200 status code
     res.send({'response':'Thanks'}).status(200);
@@ -548,10 +548,10 @@ app.post('/login',function (req,res){
     if ( realPass === passAtmp){
 
       QueryEvent(10,json1[0].UserID,{})
-      con.query(`SELECT * FROM Settings WHERE userID = "${json1[0].UserID}"`,
+      con.query(`SELECT * FROM Settings WHERE UserID = "${json1[0].UserID}"`,
         function (err, result, fields) {
           if (err) {
-            console.log("got an error ");
+            console.log("No existing settings");
             json2 = {
               "displayMode": 0,
               "2stepAuth": 0,
@@ -560,20 +560,28 @@ app.post('/login',function (req,res){
               "SecurityAnswer1": " ",
               "SecurityAnswer2": " ",
               "SecurityQuestionsLogin": 0,
-              "ReadReciepts": 0,
-              "BlockedUsers": []
+              "BlockedUsers": [],
+              "FontSize": 1,
+              "EmailNotifications": 0,
+              "SaveBills": 12,
+              "SaveOrders": 12
             }
           }
 
           else if(!err){
+            console.log("inside here");
             string2=JSON.stringify(result);
             json2 = JSON.parse(string2);
           }
+          console.log("json2 value = ", json2);
+          const json3 = {
+            ...json1,
+            ...json2,
+          };
+          res.object = json3;
+          console.log("res.object: ", res.object);
+          res.status(200).json(json3)
       });
-      json1[0].displayMode = 0;
-      res.object = json1;
-      console.log("res.object: ", res.object);
-      res.status(200).json(json1);
     }
     else{
       QueryEvent(11,json1[0].UserID,{})
@@ -732,4 +740,81 @@ app.post('/SecurityQuestions',function(req,res){
     });
   }
   });
+})
+
+
+app.post('/Settings',function(req,res){
+  console.log('Someone is updating their Settings!');
+
+  //Step 1 - connect to the db
+
+  //Step 2 - parse out the info from the message
+  //          The JSON payload that we load is found in req.body
+  let body = req.body;
+  console.log('body', body);
+
+
+  //js short hand parse out the data submitted from the user
+  ({UserID, font,darkTheme, securityQ, twostep, emailNote, preBill, preOrder, removePicture} = body);
+
+  //Step 3 - make sure all that info is good info - TODO
+
+    //if any of these field are wrong, send a bad data status code, that the front end should tell the user about
+    if (UserID === undefined){
+          res.sendStatus(400);
+        }
+
+  //Step 4 - make the connection and then post the new user to the db
+  con.query(`SELECT * FROM Settings where UserID = "${UserID}"`,
+  function (err, result, fields) {
+  if (err) {
+    con.query(`insert into Settings(UserID, FontSize,displayMode, SecurityQuestionsLogin, twostepAuth, EmailNotifications, SaveBills, SaveOrders )values("${UserID}","${font}","${darkTheme}", "${securityQ}", "${twostep}", "${emailNote}", "${preBill}", "${preOrder}")`,
+
+    function (err, result, fields) {
+    if (err) throw err;
+    console.log('result for insert', result);
+
+    //Step 5 - Listen for a response from the DB
+    //          currently there is no logic for error
+
+    //QueryEvent(0, result.insertId, body)
+    //Step 6 - this sends a json response back to the front end as well as a 200 status code
+    res.send({'response':'Thanks'}).status(200);
+  });
+}
+else if(!err){
+  con.query(`Update Settings set FontSize ="${font}", displayMode = "${darkTheme}", SecurityQuestionsLogin = "${securityQ}", twostepAuth = "${twostep}", EmailNotifications = "${emailNote}", SaveBills = "${preBill}", SaveOrders = "${preOrder}" where UserID = "${UserID}";`,
+
+    function (err, result, fields) {
+      if (!err){
+        console.log('result',result)
+        //res.sendStatus(200);
+        QueryEvent(1,UserID,body);
+        var string=JSON.stringify(result);
+        var json1 = JSON.parse(string);
+        console.log("json1 = ", json1);
+        res.object = json1;
+        res.status(200).json(json1);
+      }
+      else{
+        res.sendStatus(400);
+      }
+      if (err) throw err;
+    // if (err) throw err;
+    // console.log('result', result);
+    // var string=JSON.stringify(result);
+    // var json1 = JSON.parse(string);
+    // res.object = json1;
+    // res.status(200).json(json1);
+
+  });
+  
+}
+
+  //Step 5 - Listen for a response from the DB
+  //          currently there is no logic for error
+
+  //Step 6 - this sends a json response back to the front end as well as a 200 status code
+
+})
 })
