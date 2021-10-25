@@ -1,5 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import IconButton from "@material-ui/core/IconButton";
+import InputLabel from "@material-ui/core/InputLabel";
+import Visibility from "@material-ui/icons/Visibility";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Input from "@material-ui/core/Input";
 import { Link, withRouter } from "react-router-dom";
 
 export default function Login(){
@@ -40,7 +46,14 @@ export default function Login(){
      console.log("object:", result);
      if (response.status === 200){
        sessionStorage.setItem("userInfo", JSON.stringify(result));
-       alert("Successful login");
+       var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+       
+       if(userInfo.twostepAuth === 1){
+         alert("Please Authenticate Your Identity Through Your Email");
+       }
+       else{
+        alert("Successful login");
+       }
        window.location.replace("/Profile");
      }
    })
@@ -52,6 +65,23 @@ export default function Login(){
    });
   }
 
+  const [values, setValues] = React.useState({
+    password: "",
+    showPassword: false,
+  });
+  
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+  
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  
+  const handlePasswordChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  
   return(    
     <div>
       <h3>Login</h3>
@@ -60,11 +90,54 @@ export default function Login(){
 	      <input id='Username' type='text'/>
         <br></br>
 	      <label htmlFor="Password"> Password </label>
-	      <input id='Password' type='password'/>
+	      {/* <input id='Password' type='password'/> */}
+        <Input
+          id = 'Password'
+          type={values.showPassword ? "text" : "password"}
+          onChange={handlePasswordChange("password")}
+          value={values.password}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              >
+                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
         <br /><span id="error"></span>
-	      {/* <button onClick={redirect}>Login</button> */}
       </form>   
       <button onClick={redirect}>Login</button>
    </div>     
   )
+
+    
+    // return (
+    //   <div
+    //   >
+    //     <InputLabel htmlFor="standard-adornment-password">
+    //       Enter your Password
+    //     </InputLabel>
+    //     <Input
+    //       type={values.showPassword ? "text" : "password"}
+    //       onChange={handlePasswordChange("password")}
+    //       value={values.password}
+    //       endAdornment={
+    //         <InputAdornment position="end">
+    //           <IconButton
+    //             onClick={handleClickShowPassword}
+    //             onMouseDown={handleMouseDownPassword}
+    //           >
+    //             {values.showPassword ? <Visibility /> : <VisibilityOff />}
+    //           </IconButton>
+    //         </InputAdornment>
+    //       }
+    //     />
+    //   </div>
+    // );
+ 
 }
+
+// export default App;
