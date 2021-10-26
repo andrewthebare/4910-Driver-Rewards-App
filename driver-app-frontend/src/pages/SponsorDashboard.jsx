@@ -11,7 +11,7 @@ export default function SponsorDashboard(){
         <tr>
           <td>
             <button className= "btn4">
-              <Link class="sponsorButton" to="/Error">
+              <Link class="sponsorButton" to="/SponsorViewDrivers">
                 View Drivers
                 <span class="sr-only">(current)</span>
               </Link>

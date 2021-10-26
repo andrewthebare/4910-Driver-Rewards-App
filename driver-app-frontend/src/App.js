@@ -5,6 +5,7 @@ import {AdminLogViewer} from "./pages"  //found out we can import like this to a
 import { CatalogDisplay } from "./pages";
 import { SponsorEditCatalog } from "./pages";
 import ApplicationCreation from "./pages/ApplicationEditor";
+import {SponsorViewDrivers} from "./pages";
 /**
  * Every Page we create must be listed as a Route with a unique path in this file, with the page
  * imported above and passed as the exact component
@@ -37,6 +38,7 @@ function App() {
           <Route path="/Messaging" exact component={() => <Messaging />} />
           <Route path="/SendMessage" exact component={() => <SendMessage />} />
           <Route path="/SponsorGroupMessage" exact component={() => <SponsorGroupMessage />} />
+          <Route path="/SponsorViewDrivers" exact component={() => <SponsorViewDrivers />} />
           <Route Path="/Error" exact component={() => <Error />} /> {/*must be at the buttom*/}
 
 	      </Switch>

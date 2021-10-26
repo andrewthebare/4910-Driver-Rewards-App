@@ -6,6 +6,8 @@ var cors = require('cors');
 const axios = require('axios');
 
 var app = express();
+const bodyParser = require('body-parser')
+const jsonParser = bodyParser.json();
 var fs = require("fs");
 const { response, json } = require('express');
 let dbHost = 'sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com'
@@ -422,9 +424,44 @@ app.get('/showUnread',function (req,res){
 
 
 
+app.post('/showSponsorGroup',function (req,res){
+  console.log('Loading All Drivers in Sponsor Group');
+  console.log(req.body);
+  let key = req.body.sponsorKey;
+  //this creates a connection to the DB
+  //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
+  con.query(`SELECT * FROM Users WHERE (sponsorKey = ${key} AND userType = 0)`, function (err, result, fields) {
+    if (err) throw err;
+
+    //data packet to send back
+    let dataPacket = [];
 
 
+    //fill up that data packet
+    for (i in result){
+      let usr = result[i];
+      let data = {
+        UserID:usr.UserID,
+        FirstName:usr.FirstName,
+        LastName:usr.LastName,
+        Username:usr.username,
+        Points:usr.Points,
+      }
+      dataPacket.push(data);
+    }
+    console.log(dataPacket);
+    res.send(dataPacket).status(200);
+  });
 
+})
+
+app.patch('/addPoints',function(req,res){
+  let id = req.body.userID;
+  let pts = req.body.points;
+  con.query(`UPDATE Users SET Points = Points + ${pts} WHERE UserID = ${id}`, function(err, result, fields){
+    if(err) throw err;
+  })
+})
 
 app.post('/oneUser',function (req,res){
   console.log('Fetching one user');
@@ -659,9 +696,9 @@ app.post('/applicationUpdate',function (req,res){
   let body = req.body;
   console.log('body', body);
   ({SponsorID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
-  
 
-  con.query(`UPDATE Sponsor SET Application = "${req.body}" WHERE SponsorID = ${SponsorID}`, 
+
+  con.query(`UPDATE Sponsor SET Application = "${req.body}" WHERE SponsorID = ${SponsorID}`,
   function (err, result, fields) {
     if (!err){
       console.log('result',result)

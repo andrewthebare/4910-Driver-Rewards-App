@@ -3,26 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 import './Messaging.css';
 import axios from 'axios';
 
-class Email extends React.Component{
-  render(){
-    return(
-      <div className="email">
-        <dl className="meta dl-horizontal">
-          <dt>From</dt>
-          <dd>{this.props.from}</dd>
-
-          <dt>To</dt>
-          <dd>{this.props.to}</dd>
-
-        </dl>
-        <div>
-          <p> {this.props.body}</p>
-        </div>
-      </div>
-    );
-  }
-}
-
 
 class EmailList extends React.Component{
   render(){
