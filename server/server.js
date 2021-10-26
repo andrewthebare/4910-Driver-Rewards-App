@@ -181,7 +181,7 @@ app.put('/setCatalogQuery',function(req,res){
 
 app.post('/fetchCatalog', function (req,res){
   let query = req.body.query;
-  console.log(query);
+  let price = req.body.price;
 
   //fetch the default values first
   con.query(`Select CatalogQuery from Sponsor where SponsorID = 0`,
@@ -190,7 +190,6 @@ app.post('/fetchCatalog', function (req,res){
 
 
     let options = JSON.parse(result[0].CatalogQuery)
-
 
     // options = {
     //   api_key: 'a4w1wj4ed12dov2etkdgmsv8',
@@ -203,6 +202,8 @@ app.post('/fetchCatalog', function (req,res){
 
     if(query)
       options['keywords'] = query;
+    if(price)
+      options['max_price'] = price;
 
     console.log('options',options)
 
