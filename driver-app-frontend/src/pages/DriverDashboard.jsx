@@ -7,62 +7,50 @@ export default function DriverDashboard(){
     <div>
       <center>
       <h1> Driver Dashboard </h1>
-      <table class = "driverTable">
-        <tr>
-          <td>
-            <button>
+
+            <button className= "btn2">
               <Link class="driverButton" to="/Error">
                 View Points
                 <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-          <td>
-          <button>
-            <Link class="driverButton" to="/Error">
+ 
+          <button className= "btn2">
+            <Link class="driverButton" to="/catalog">
               Catalog
               <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        </tr>
-        <tr>
-          <td>
-            <button>
+
+            <button className= "btn2">
               <Link class="driverButton" to="/Error">
                 Username Reset
               <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-          <td>
-            <button>
+
+            <button className= "btn2">
               <Link class="userButton" to="/Error">
                 Password Reset
               <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-        </tr>
-        <tr>
-        <td>
-          <button>
-            <Link class="userButton" to="/">
+
+            <right>
+          <button className= "btn3">
+            <Link class="adminButton" to="/Error">
               Logout
             <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        <td>
-          <button>
+      </right>
+
+          <button className= "btn2">
             <Link class="userButton" to="/Error">
               Placeholder
             <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        </tr>
-      </table>
       </center>
     </div>
   )
