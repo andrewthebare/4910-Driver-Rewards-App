@@ -5,65 +5,63 @@ export default function AdminDashboard(){
 
   return(
     <div>
-      <center>
+      <screenLeft>
       <h1> Administrator Dashboard </h1>
-      <table class = "adminTable">
-        <tr>
-          <td>
+      </screenLeft>
+
+      <screenLeft>
             <button className= "btn2">
               <Link class="adminButton" to="/adminDashboard/createUser">
                 Create User
                 <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-          <td>
-          <button className= "btn2" >
-            <Link class="adminButton" to="/adminDashboard/editUser">
-              Edit User
-              <span class="sr-only">(current)</span>
+        </screenLeft> 
+      
+      <screenLeft>   
+            <button className= "btn2" >
+              <Link class="adminButton" to="/adminDashboard/editUser">
+                Edit User
+                <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        </tr>
-        <tr>
-          <td>
+      </screenLeft>
+
+      <center>
             <button className= "btn2">
               <Link class="adminButton" to="/adminDashboard/Logs">
                 View Logs
               <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-          <td>
+      </center>
+
+      <center>
             <button className= "btn2">
               <Link class="adminButton" to="/adminDashboard/manageCatalog">              
                 Catalog
               <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-        </tr>
-        <tr>
-        <td>
-          <button className= "btn2">
+      </center>
+
+      <right>
+          <button className= "btn3">
             <Link class="adminButton" to="/Error">
               Logout
             <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        <td>
+      </right>
+
+      <screenLeft>
           <button className= "btn2">
             <Link class="adminButton" to="/Error">
               Placeholder
             <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        </tr>
-      </table>
-      </center>
+      </screenLeft>
     </div>
   )
 }

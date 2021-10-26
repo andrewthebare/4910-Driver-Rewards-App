@@ -7,62 +7,51 @@ export default function SponsorDashboard(){
     <div>
       <center>
       <h1> Sponsor Dashboard </h1>
-      <table class = "sponsorTable">
-        <tr>
-          <td>
-            <button className= "btn4">
-              <Link class="sponsorButton" to="/SponsorViewDrivers">
+
+            <button className= "btn2">
+              <Link class="sponsorButton" to="/Error">
                 View Drivers
                 <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-          <td>
-          <button className= "btn4">
+
+          <button className= "btn2">
             <Link class="sponsorButton" to="/sponsorDashboard/editCatalog">
               Catalog
               <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        </tr>
-        <tr>
-          <td>
-            <button className= "btn4">
+
+            <button className= "btn2">
               <Link class="sponsorButton" to="/Error">
                 Username Reset
               <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-          <td>
-            <button className= "btn4">
+
+            <button className= "btn2">
               <Link class="sponsorButton" to="/Error">
                 Password Reset
               <span class="sr-only">(current)</span>
               </Link>
             </button>
-          </td>
-        </tr>
-        <tr>
-        <td>
-          <button className= "btn4">
+
+          <button className= "btn2">
             <Link class="sponsorButton" to="/">
               Driver View
             <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        <td>
-          <button className= "btn4">
-            <Link class="userButton" to="/Error">
+
+          <right>
+          <button className= "btn3">
+            <Link class="adminButton" to="/Error">
               Logout
             <span class="sr-only">(current)</span>
             </Link>
           </button>
-        </td>
-        </tr>
-      </table>
+      </right>
+
       </center>
     </div>
   )

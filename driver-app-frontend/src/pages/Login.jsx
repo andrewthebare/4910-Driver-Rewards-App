@@ -110,6 +110,9 @@ export default function Login(){
         <br /><span id="error"></span>
       </form>   
       <button onClick={redirect}>Login</button>
+       <p className="Forgot-password text-left">
+        <Link to={"/"}>Forgot Password? </Link>
+      </p>
    </div>     
   )
 
