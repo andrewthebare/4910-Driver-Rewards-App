@@ -55,11 +55,11 @@ export default function CatalogDisplay(){
 
       //TODO regex the title and take just the first one
       rows.push(
-      <tr>
+      <tr className="catalogRow basic">
         {/* <td><input type='checkbox' checked={item.selected}/></td> */}
         <td><a href={item.url}><img src={item.MainImage? item.MainImage.url_170x135 : null}/></a></td>
         <td>{item.title}</td>
-        <td>{item.price}</td>
+        <td>${item.price}</td>
         <td><button>Buy</button></td>
       </tr>
       )
@@ -76,10 +76,10 @@ export default function CatalogDisplay(){
       <div className={"holder"}>
         <div className="flexItem">
           <label for="queryInput">Search</label>
-          <input id="queryInput" onChange={handleInput} onKeyUp={(e)=> {console.log(e,e); if(e.key==='Enter'){fetchProductData()}}} type="text" />
+          <input id="queryInput" className="rounded" onChange={handleInput} onKeyUp={(e)=> {console.log(e,e); if(e.key==='Enter'){fetchProductData()}}} type="text" />
           <label for="priceInput">Max Price</label>
-          <input id="priceInput" onChange={handlePriceInput} onKeyUp={(e)=> {console.log(e,e); if(e.key==='Enter'){fetchProductData()}}} type="number" />
-          <button onClick={fetchProductData}>Search</button>
+          <input id="priceInput" className="rounded" onChange={handlePriceInput} onKeyUp={(e)=> {console.log(e,e); if(e.key==='Enter'){fetchProductData()}}} type="number" />
+          <button className="rounded" onClick={fetchProductData}>Search</button>
         </div>
         <div>
           <div className={'pointHolder'}>
@@ -90,11 +90,12 @@ export default function CatalogDisplay(){
           </div>
         </div>
       </div>
-      <table style={{'width': '90%'}}>
-        <tr>
+      <table className={'catalog rounded'}>
+        <tr className="catalogRow">
           <th>Picture</th>
           <th>Item</th>
           <th>Price <button onClick={SortCatalog}>Sort</button></th>
+          <th></th>
         </tr>
         {fillTableItems()}
       </table>
