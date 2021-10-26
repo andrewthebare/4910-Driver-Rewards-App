@@ -699,15 +699,13 @@ app.post('/Profile/EditProfile',function(req,res){
 app.post('/applicationUpdate',function (req,res){
   console.log('Updating Application');
 
-  var string = JSON.stringify(req.body);
-  var json1 = JSON.parse(string);
-
   let body = req.body;
+  let stringBody = JSON.stringify(body);
+
   console.log('body', body);
   ({SponsorID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
-
-
-  con.query(`UPDATE Sponsor SET Application = "${req.body}" WHERE SponsorID = ${SponsorID}`,
+  
+  con.query(`UPDATE Sponsor SET Application = '${stringBody}' WHERE SponsorID = ${SponsorID}`, 
   function (err, result, fields) {
     if (!err){
       console.log('result',result)
@@ -720,6 +718,24 @@ app.post('/applicationUpdate',function (req,res){
     }
     if (err) throw err;
 });
+})
+
+app.get('/fetchQuestions',function (req,res){
+  console.log('Pulling Questions Down');
+  let body = req.body;
+  let stringBody = JSON.stringify(body);
+  console.log('body', stringBody);
+
+  
+  con.query(`SELECT Application FROM Sponsor WHERE SponsorID = "${body}"`, function (err, result, fields) {
+    if (err) throw err;
+
+
+    let ezResult = JSON.parse(result[0].Application)
+    console.log('Result', ezResult)
+
+    res.send(ezResult).status(200);
+  });
 
 })
 

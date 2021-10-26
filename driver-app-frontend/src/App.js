@@ -6,6 +6,7 @@ import { CatalogDisplay } from "./pages";
 import { SponsorEditCatalog } from "./pages";
 import ApplicationCreation from "./pages/ApplicationEditor";
 import {SponsorViewDrivers} from "./pages";
+import ApplicationViewer from "./pages/ApplicationViewer";
 /**
  * Every Page we create must be listed as a Route with a unique path in this file, with the page
  * imported above and passed as the exact component
@@ -32,6 +33,7 @@ function App() {
           <Route path="/Settings" exact component={() => <Settings />} />
           <Route path="/adminDashboard/Logs" exact component={() => <AdminLogViewer />} />
           <Route path="/ApplicationCreation" exact component={() => <ApplicationCreation />} />
+          <Route path="/ApplicationViewer" exact component={() => <ApplicationViewer />} />
           <Route path="/DriverDashBoard" exact component={() => <DriverDashboard />} />
           <Route path="/SponsorDashBoard" exact component={() => <SponsorDashBoard />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
