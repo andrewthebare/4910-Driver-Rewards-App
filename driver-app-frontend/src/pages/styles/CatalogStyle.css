@@ -1,0 +1,44 @@
+.holder{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.holder > .flexItem{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.pointHolder{
+  padding: 10px;
+  margin: 3px;
+  border: 2pt solid #232323;
+  border-radius: 5%;
+  background-color:  #565656;
+  color: #fcfcfc;
+}
+
+.catalog{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  width: 90%;
+}
+
+.catalogRow .basic{
+  height: 140px;
+}
+
+.catalogRow> th{
+  background-color: #565656;
+  color: white;
+}
+
+.rounded{
+  border-radius: 5%;
+}
