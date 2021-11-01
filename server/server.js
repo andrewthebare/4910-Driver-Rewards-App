@@ -556,7 +556,8 @@ app.post('/login',function (req,res){
   console.log('body', body);
 
   let usernameAtmp = body.username;
-  let passAtmp = body.password
+  let passAtmp = body.password;
+  let sponsorKey = body.sponsorKey;
   // ({usernameAtmp, passAtmp} = body);
   // var string1;
   // var json1;
@@ -564,19 +565,20 @@ app.post('/login',function (req,res){
   // var json2;
 
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}"`, function (err, result, fields) {
+  con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}" AND sponsorKey = "${sponsorKey}"`, function (err, result, fields) {
     var string1;
     var json1;
     var string2;
     var json2;
-    if (err) throw err;
-    string1=JSON.stringify(result);
+    if (typeof result[0]!== "undefined"){
+    console.log("early results: ", result[0]);
+    string1=JSON.stringify(result[0]);
     json1 = JSON.parse(string1);
     console.log('json1:', json1);
     //console.log('result.password', json[0].hashedPassword);
     var realPass = '';
     try {
-      var realPass = json1[0].hashedPassword;
+      var realPass = json1.hashedPassword;
     } catch (error) {
       console.error(error);
     }
@@ -585,8 +587,8 @@ app.post('/login',function (req,res){
     //({firstName,lastName, username, password, address, email, sponsorKey, type} = results);
     if ( realPass === passAtmp){
 
-      QueryEvent(10,json1[0].UserID,{})
-      con.query(`SELECT * FROM Settings WHERE UserID = "${json1[0].UserID}"`,
+      QueryEvent(10,json1.UserID,{})
+      con.query(`SELECT * FROM Settings WHERE UserID = "${json1.UserID}"`,
         function (err, result, fields) {
           if (err) {
             console.log("No existing settings");
@@ -608,24 +610,32 @@ app.post('/login',function (req,res){
 
           else if(!err){
             console.log("inside here");
-            string2=JSON.stringify(result);
+            string2=JSON.stringify(result[0]);
+            console.log("result value: ", result[0]);
             json2 = JSON.parse(string2);
           }
           console.log("json2 value = ", json2);
           const json3 = {
             ...json1,
-            ...json2,
+            ...json2
           };
+       
+          console.log("json3 value: ", json3);
           res.object = json3;
           console.log("res.object: ", res.object);
           res.status(200).json(json3)
       });
     }
     else{
-      QueryEvent(11,json1[0].UserID,{})
+      QueryEvent(11,json1.UserID,{})
       res.sendStatus(300);
       //console.log('in else');
     }
+  }
+  else if(typeof result[0] == "undefined"){
+    console.log("didnt find a match");
+    res.sendStatus(300);
+  }
   });
 
   //This sends a 200 status message that basically tells the front end client that it was done successfully
