@@ -7,6 +7,8 @@ import { SponsorEditCatalog } from "./pages";
 import ApplicationCreation from "./pages/ApplicationEditor";
 import {SponsorViewDrivers} from "./pages";
 import ApplicationViewer from "./pages/ApplicationViewer";
+
+import './App.css'
 /**
  * Every Page we create must be listed as a Route with a unique path in this file, with the page
  * imported above and passed as the exact component
