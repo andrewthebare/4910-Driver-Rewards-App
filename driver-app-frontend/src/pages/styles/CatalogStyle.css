@@ -42,3 +42,8 @@
 .rounded{
   border-radius: 5%;
 }
+
+img .catItem{
+  border-radius: 0%;
+  box-shadow: unset;
+}

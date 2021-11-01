@@ -47,7 +47,7 @@ function Profile() {
         <div class="row align-items-center my-5">
           <div class="col-lg-7">
             <img
-              class="img-fluid rounded mb-4 mb-lg-0"
+              class="img-fluid rounded mb-4 mb-lg-0 neomorph"
               src="http://placehold.it/200x200"
               alt=""
             />

@@ -57,7 +57,7 @@ export default function CatalogDisplay(){
       rows.push(
       <tr className="catalogRow basic">
         {/* <td><input type='checkbox' checked={item.selected}/></td> */}
-        <td><a href={item.url}><img src={item.MainImage? item.MainImage.url_170x135 : null}/></a></td>
+        <td><a href={item.url}><img class='catItem' src={item.MainImage? item.MainImage.url_170x135 : null}/></a></td>
         <td>{item.title}</td>
         <td>${item.price}</td>
         <td><button>Buy</button></td>
