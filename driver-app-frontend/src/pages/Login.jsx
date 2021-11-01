@@ -16,13 +16,15 @@ export default function Login(){
     //Step 1 - Make sure that all the necissary fields are filled out
     let username = document.getElementById("Username").value;
     let password = document.getElementById("Password").value;
+    let sponsorKey = document.getElementById("SponsorID").value
     console.log(username);
     console.log(password);
+    console.log(sponsorKey);
 
     //Empty inputs are stopped here
     //
     var error = document.getElementById("error")
-    if (document.getElementById("Username").value === '' || document.getElementById("Password").value === '') 
+    if (document.getElementById("Username").value === '' || document.getElementById("Password").value === '' || document.getElementById("Username").value === '' ) 
     {
         error.textContent = "Please fill out all fields"
         error.style.color = "red"
@@ -37,12 +39,13 @@ export default function Login(){
     const loginAttempt = { 
       username: username,
       password: password,
+      sponsorKey: sponsorKey,
    }
    //post it to the server
    axios.post('http://localhost:8081/login', loginAttempt)
    .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
      console.log("response is:", response);
-     var result = response.data[0];
+     var result = response.data;
      console.log("object:", result);
      if (response.status === 200){
        sessionStorage.setItem("userInfo", JSON.stringify(result));
@@ -107,12 +110,16 @@ export default function Login(){
             </InputAdornment>
           }
         />
+        <br></br>
+      <label htmlFor="SponsorID">Sponsor ID</label>
+      <input id='SponsorID' type='int'/>
         <br /><span id="error"></span>
       </form>   
       <button onClick={redirect}>Login</button>
        <p className="Forgot-password text-left">
         <Link to={"/"}>Forgot Password? </Link>
       </p>
+      
    </div>     
   )
 
