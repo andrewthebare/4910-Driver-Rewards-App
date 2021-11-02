@@ -236,13 +236,13 @@ app.post('/buyItem', function (req,res){
         console.log(`user ${userID} set to ${pointsAfter}`);
 
         //defo need to query the sponsor
-        QueryEvent(30, userID, {'item': item.JSON});
+        QueryEvent(40, userID, {'item': item.JSON});
 
         res.send({enough:true}).status(200);
       })
     }
     else{
-      QueryEvent(31, userID, {'item': item.JSON});
+      QueryEvent(41, userID, {'item': item.JSON});
       res.send({enough:false}).status(200);
     }
   })

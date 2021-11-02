@@ -12,6 +12,6 @@
 ### Catalog Events
 20. Sponsor Update Catalog
 ### Purchase Events
-30. Successful Purchase
-31. Unsucessful Purchase
+40. Successful Purchase
+41. Unsucessful Purchase
 
