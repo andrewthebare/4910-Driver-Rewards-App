@@ -7,7 +7,7 @@ export default function DriverDashboard(){
     <div>
       <center>
       <h1> Driver Dashboard </h1>
-
+        <div className="dashboardName">
             <button className= "btn2">
               <Link class="driverButton" to="/Error">
                 View Points
@@ -36,14 +36,12 @@ export default function DriverDashboard(){
               </Link>
             </button>
 
-            <right>
           <button className= "btn3">
             <Link class="adminButton" to="/Error">
               Logout
             <span class="sr-only">(current)</span>
             </Link>
           </button>
-      </right>
 
           <button className= "btn2">
             <Link class="userButton" to="/Error">
@@ -51,6 +49,7 @@ export default function DriverDashboard(){
             <span class="sr-only">(current)</span>
             </Link>
           </button>
+        </div>
       </center>
     </div>
   )

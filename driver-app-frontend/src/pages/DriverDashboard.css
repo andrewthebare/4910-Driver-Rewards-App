@@ -1,12 +1,35 @@
-.btn3 {
+.dashboardName{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 50px 0px 50px;
+  border-radius: 40px;
+  justify-content: space-between;
+}
+
+.btn2 {
   background-color: #9E9E9E;
   border: none;
   color: white;
-  padding: 6vw 10vw;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  margin: 10px;
+}
+
+.btn3 {
+  background-color: #ee0505;
+  border: none;
+  color: rgb(17, 0, 255);
+  padding: 0vw 1vw;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position: absolute;
+  top: 59px;
+  right:0;
+  border-radius: 40px;
 }
 
 .adminButton {
