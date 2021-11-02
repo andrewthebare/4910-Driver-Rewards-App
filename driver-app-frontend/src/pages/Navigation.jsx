@@ -1,17 +1,57 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import './Navigation.css';
+
+
 function Navigation(props) {
+
+  function logOut() {
+    if(window.confirm("Are you sure you want to log out?")){
+      sessionStorage.removeItem("userInfo");
+      window.location.replace("/");
+    }
+  }
+
+
+  var first;
+  var last;
+  var driver = false;
+  var sponsor = false;
+  var admin = false;
+  var loggedIn = false;
+  var userType;
+  try{
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    first = userInfo.FirstName;
+    last = userInfo.LastName;
+    userType = userInfo.userType;
+    if(userType === 0){
+      admin = true;
+    }
+    else if(userType === 1){
+      sponsor = true;
+    }
+    else if(userType === 2){
+      driver = true;
+    }
+    loggedIn = true;
+  }
+  catch (error){
+    first = "Good Driver";
+    last = "Incentive";
+  }
+ 
   return (
     <div className="navigation">
       <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container">
           <Link class="navbar-brand" to="/">
-            Good Driver Incentive
+            {first} {last}
           </Link>
 
           <div>
             <ul class="navbar-nav ml-auto">
-              <li
+              {loggedIn && <li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""
                 }`}
@@ -20,8 +60,8 @@ function Navigation(props) {
                   Home
                   <span class="sr-only">(current)</span>
                 </Link>
-              </li>
-              <li
+              </li>}
+              {admin && <li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""
                 }`}
@@ -30,8 +70,8 @@ function Navigation(props) {
                   Admin Dashboard
                   <span class="sr-only">(current)</span>
                 </Link>
-              </li>
-              <li
+              </li>}
+              {driver && <li
                 class={`nav-item  ${
                   props.location.pathname === "/DriverDashboard" ? "active" : ""
                 }`}
@@ -39,8 +79,8 @@ function Navigation(props) {
                 <Link class="nav-link" to="/DriverDashboard">
                   Driver Dashboard
                 </Link>
-              </li>
-              <li
+              </li>}
+              {sponsor && <li
                 class={`nav-item  ${
                   props.location.pathname === "/SponsorDashboard" ? "active" : ""
                 }`}
@@ -48,9 +88,9 @@ function Navigation(props) {
                 <Link class="nav-link" to="/SponsorDashboard">
                   Sponsor Dashboard
                 </Link>
-              </li>
+              </li>}
 
-              <li
+              {loggedIn && <li
                 class={`nav-item  ${
                   props.location.pathname === "/about" ? "active" : ""
                 }`}
@@ -58,8 +98,8 @@ function Navigation(props) {
                 <Link class="nav-link" to="/Messaging">
                   Messaging
                 </Link>
-              </li>
-              <li
+              </li>}
+              {!loggedIn &&<li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""
                 }`}
@@ -67,16 +107,19 @@ function Navigation(props) {
                 <Link class="nav-link" to="/Login">
                   Login
                 </Link>
-              </li>
-              <li
+              </li>}
+              {loggedIn &&<li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""
                 }`}
               >
-                <Link class="nav-link" to="/SecurityQuestions">
-                  Security Questions
+                <Link class="nav-link" to="/Profile">
+                  Profile
                 </Link>
-              </li>
+              </li>}
+              {loggedIn &&<li
+                class="nav-link" onClick={logOut}>Log Out  
+              </li>}
             </ul>
           </div>
         </div>

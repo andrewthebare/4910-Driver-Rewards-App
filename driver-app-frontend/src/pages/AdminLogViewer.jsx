@@ -2,6 +2,7 @@ import {React, useState, useEffect} from "react";
 import LogEvent from "./components/LogEvent";
 import axios from 'axios';
 
+
 export default function AdminLogViewer(){
   const [logData, setLogData] = useState([]);
   const useMountEffect = (fun) => useEffect(fun, [])
@@ -32,9 +33,16 @@ export default function AdminLogViewer(){
 
   return(
    <div>
-     <div className='logHolder'>
+    <h1>Log Viewer</h1>
+     <table className='logHolder'>
+      <tr className='LogEvent header'>
+        <th>Date</th>
+        <th>Event</th>
+        <th>User</th>
+        <th>Data</th>
+      </tr>
       {populateLog()}
-     </div>
+     </table>
    </div> 
   )
 }

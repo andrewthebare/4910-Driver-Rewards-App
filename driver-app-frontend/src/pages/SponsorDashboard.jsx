@@ -9,7 +9,7 @@ export default function SponsorDashboard(){
       <h1> Sponsor Dashboard </h1>
 
             <button className= "btn2">
-              <Link class="sponsorButton" to="/Error">
+              <Link class="sponsorButton" to="/SponsorViewDrivers">
                 View Drivers
                 <span class="sr-only">(current)</span>
               </Link>

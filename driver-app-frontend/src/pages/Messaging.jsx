@@ -1,51 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import './Messaging.css';
-
-class Email extends React.Component{
-  render(){
-    return(
-      <div className="email">
-        <dl className="meta dl-horizontal">
-          <dt>From</dt>
-          <dd>{this.props.from}</dd>
-
-          <dt>To</dt>
-          <dd>{this.props.to}</dd>
-
-        </dl>
-        <div>
-          <p> {this.props.body}</p>
-        </div>
-      </div>
-    );
-  }
-}
+import axios from 'axios';
 
 
 class EmailList extends React.Component{
   render(){
     var email_list = this.props.emails.map(function(mail) {
       return (
-        <EmailListItem key={mail.id}
-                       from={mail.from}
-                       to={mail.to}
-                       body={mail.body}
-                       read={mail.read}
-                       date={mail.date}/>
+        <EmailListItem key={mail.messageID}
+                       id={mail.messageID}
+                       from={mail.SenderID}
+                       to={mail.RecipientID}
+                       body={mail.Content}
+                       read={mail.Starred}
+                       date={mail.Date}/>
       );
     }.bind(this));
 
     return (
-      <table className="email-list table table-striped table-condensed">
+      <table className="email-list">
         <thead>
           <tr>
+            <th> ID </th>
             <th>Date</th>
             <th>From</th>
             <th>Body</th>
-            <th>Read</th>
-            <th> Starred</th>
-            <th> Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -61,12 +41,10 @@ class EmailListItem extends React.Component{
   render(){
     return (
       <tr>
+        <td> {this.props.id}</td>
         <td>{this.props.date}</td>
         <td>{this.props.from}</td>
         <td>{this.props.body}</td>
-        <td><button>{this.props.read}</button></td>
-        <td><button> * </button></td>
-        <td><button> X </button></td>
       </tr>
     );
   }
@@ -77,32 +55,99 @@ class EmailListItem extends React.Component{
 
 
 
-
-
-var test = [
-  {
-    id: 1,
-    from: "test2@email.com",
-    to: "test@email.com",
-    date: "9/26/2020",
-    body: "hi",
-    read: "True"
-  },
-  {
-    id: 2,
-    from: "test3@email.com",
-    to: "test@email.com",
-    date: "9/27/2021",
-    body: "hello",
-    read: "False"
-  }
-];
-
 export default function Messaging(){
+
+  const [msgs, setMsgs] = useState([]);
+  const [msgData, setMsgData]=useState({
+    messageID:0,
+    SenderID:0,
+    RecipientID:0,
+    Content:'',
+    Read:0,
+    Starred:0,
+  })
+
+
+  const showAll = ()=>{
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    var userID = userInfo.UserID;
+    axios.get('http://localhost:8081/showAll')
+    .then((response) => {
+      setMsgs(response.data);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+  }
+
+  const showStarred = ()=>{
+    axios.get('http://localhost:8081/showStarred')
+    .then(function (response) {
+      setMsgs(response.data);
+      console.log(msgs);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  const showUnread = ()=>{
+    axios.get('http://localhost:8081/showUnread')
+    .then(function (response) {
+      setMsgs(response.data);
+      console.log(msgs);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  const populateIDList= () =>{
+    let options = [];
+    options.push(<option value='empty'>Select A Message</option>)
+
+    for (let i in msgs){
+      options.push(<option value={msgs[i].messageID}>{`${msgs[i].messageID}`}</option>)
+    }
+
+    return options;
+  }
+  const markRead = ()=>{
+    let mid = document.getElementById("msgSelect").value;
+    const mjson = {
+      messageId: mid,
+    }
+    console.log(mjson);
+    axios.patch('http://localhost:8081/markRead', mjson)
+  }
+
+  const markStarred = ()=>{
+    let mid = document.getElementById("msgSelect").value;
+    const mjson = {
+      messageId: mid,
+    }
+    console.log(mjson);
+    axios.patch('http://localhost:8081/markStarred', mjson)
+  }
+
+  const deleteMsg = ()=>{
+    let mid = document.getElementById("msgSelect").value;
+    const mjson = {
+      messageId: mid,
+    }
+    console.log(mjson);
+    axios.patch('http://localhost:8081/deleteMsg', mjson)
+  }
+
     return(
 
       <div>
       <center>
+
+      <button type='submit' className = "btn1" onClick={showAll}>Show All</button>
+      <button type='submit' className = "btn1" onClick={showStarred}>Show Starred</button>
+      <button type='submit' className = "btn1" onClick={showUnread}>Show Unread</button>
+      <br></br>
       <button>
         <Link class="nav-link" to="/SendMessage">
           Send Message
@@ -116,7 +161,19 @@ export default function Messaging(){
         </Link>
       </button>
       </center>
-        <EmailList emails={test} />
+        <EmailList emails={msgs} />
+      <center>
+      <br></br>
+      <select id="msgSelect">
+        {populateIDList()}
+      </select>
+      <br></br>
+      <button onClick = {markRead}> Mark As Read</button>
+      <button onClick = {markStarred}> Mark As Starred</button>
+      <button onClick = {deleteMsg}> Delete Message</button>
+      <br></br>
+      You can turn on read receipts in the settings part of your profile
+      </center>
       </div>
     )
   }

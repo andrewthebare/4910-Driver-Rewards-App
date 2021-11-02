@@ -1,5 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import IconButton from "@material-ui/core/IconButton";
+import InputLabel from "@material-ui/core/InputLabel";
+import Visibility from "@material-ui/icons/Visibility";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Input from "@material-ui/core/Input";
 import { Link, withRouter } from "react-router-dom";
 
 export default function Login(){
@@ -10,13 +16,15 @@ export default function Login(){
     //Step 1 - Make sure that all the necissary fields are filled out
     let username = document.getElementById("Username").value;
     let password = document.getElementById("Password").value;
+    let sponsorKey = document.getElementById("SponsorID").value
     console.log(username);
     console.log(password);
+    console.log(sponsorKey);
 
     //Empty inputs are stopped here
     //
     var error = document.getElementById("error")
-    if (document.getElementById("Username").value === '' || document.getElementById("Password").value === '') 
+    if (document.getElementById("Username").value === '' || document.getElementById("Password").value === '' || document.getElementById("Username").value === '' ) 
     {
         error.textContent = "Please fill out all fields"
         error.style.color = "red"
@@ -31,17 +39,24 @@ export default function Login(){
     const loginAttempt = { 
       username: username,
       password: password,
+      sponsorKey: sponsorKey,
    }
    //post it to the server
    axios.post('http://localhost:8081/login', loginAttempt)
    .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
      console.log("response is:", response);
-     var result = response.data[0];
+     var result = response.data;
      console.log("object:", result);
      if (response.status === 200){
        sessionStorage.setItem("userInfo", JSON.stringify(result));
-       //console.log("test: ", test);
-       alert("Successful login");
+       var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+       
+       if(userInfo.twostepAuth === 1){
+         alert("Please Authenticate Your Identity Through Your Email");
+       }
+       else{
+        alert("Successful login");
+       }
        window.location.replace("/Profile");
      }
    })
@@ -53,21 +68,86 @@ export default function Login(){
    });
   }
 
+  const [values, setValues] = React.useState({
+    password: "",
+    showPassword: false,
+  });
+  
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+  
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  
+  const handlePasswordChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  
   return(    
     <div>
       <h3>Login</h3>
       <form onSubmit={onFormSubmit}>
         <label htmlFor="Username">Username</label>
 	      <input id='Username' type='text'/>
+        <br></br>
 	      <label htmlFor="Password"> Password </label>
-	      <input id='Password' type='password'/>
+	      {/* <input id='Password' type='password'/> */}
+        <Input
+          id = 'Password'
+          type={values.showPassword ? "text" : "password"}
+          onChange={handlePasswordChange("password")}
+          value={values.password}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              >
+                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+        <br></br>
+      <label htmlFor="SponsorID">Sponsor ID</label>
+      <input id='SponsorID' type='int'/>
         <br /><span id="error"></span>
-	      {/* <button onClick={redirect}>Login</button> */}
       </form>   
       <button onClick={redirect}>Login</button>
        <p className="Forgot-password text-left">
         <Link to={"/"}>Forgot Password? </Link>
       </p>
+      
    </div>     
   )
+
+    
+    // return (
+    //   <div
+    //   >
+    //     <InputLabel htmlFor="standard-adornment-password">
+    //       Enter your Password
+    //     </InputLabel>
+    //     <Input
+    //       type={values.showPassword ? "text" : "password"}
+    //       onChange={handlePasswordChange("password")}
+    //       value={values.password}
+    //       endAdornment={
+    //         <InputAdornment position="end">
+    //           <IconButton
+    //             onClick={handleClickShowPassword}
+    //             onMouseDown={handleMouseDownPassword}
+    //           >
+    //             {values.showPassword ? <Visibility /> : <VisibilityOff />}
+    //           </IconButton>
+    //         </InputAdornment>
+    //       }
+    //     />
+    //   </div>
+    // );
+ 
 }
+
+// export default App;
