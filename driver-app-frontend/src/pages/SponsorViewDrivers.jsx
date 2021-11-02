@@ -79,16 +79,37 @@ export default function SponsorViewDrivers(){
   }
 
   const addPoints = ()=>{
-
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    var sponsorGroup = userInfo.sponsorKey;
     let addPts = document.getElementById("points").value;
     let userToAdd = document.getElementById("usrSelect").value;
+    let reason = document.getElementById("reasons").value;
+    var actor = userInfo.UserID;
     const mjson = {
       points: addPts,
       userID: userToAdd,
+      sponsor: sponsorGroup,
+      reason: reason,
+      actor: actor,
     }
     axios.patch('http://localhost:8081/addPoints',mjson)
+  }
 
-
+  const removePoints = ()=>{
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    var sponsorGroup = userInfo.sponsorKey;
+    var actor = userInfo.UserID;
+    let remPts = document.getElementById("points").value;
+    let userToRem = document.getElementById("usrSelect").value;
+    let reason = document.getElementById("reasons").value;
+    const mjson = {
+      points: remPts,
+      userID: userToRem,
+      sponsor: sponsorGroup,
+      reason: reason,
+      actor: actor,
+    }
+    axios.patch('http://localhost:8081/removePoints',mjson)
   }
 
   const populateIDList= () =>{
@@ -111,7 +132,7 @@ export default function SponsorViewDrivers(){
     </center>
     <br></br>
     <center>
-    <label htmlFor="user">Driver to Add Points To</label>
+    <label htmlFor="user">Driver to Change Points</label>
     <select id="usrSelect">
       {populateIDList()}
     </select>
@@ -119,7 +140,10 @@ export default function SponsorViewDrivers(){
     <label htmlFor="point">Points</label>
     <input id='points' type='number'/>
     <br></br>
+    <label htmlFor="reason"> Reason</label>
+    <input id='reasons' type='text'/>
     <button type='submit' onClick={addPoints}> Add Points </button>
+    <button type='submit' onClick={removePoints}> Remove Points </button>
     </center>
     </div>
   )

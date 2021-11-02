@@ -11,4 +11,6 @@
 11. Unsuccessful Login
 ### Catalog Events
 20. Sponsor Update Catalog
-
+### Point Events
+30. Points Added
+31. Points Removed

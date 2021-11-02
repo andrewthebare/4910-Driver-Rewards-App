@@ -459,10 +459,26 @@ app.post('/showSponsorGroup',function (req,res){
 app.patch('/addPoints',function(req,res){
   let id = req.body.userID;
   let pts = req.body.points;
-  con.query(`UPDATE Users SET Points = Points + ${pts} WHERE UserID = ${id}`, function(err, result, fields){
+  let sp = req.body.sponsor;
+  console.log(req.body.actor);
+  con.query(`UPDATE Users SET Points = Points + ${pts} WHERE (UserID = ${id} AND sponsorKey = ${sp})`, function(err, result, fields){
     if(err) throw err;
   })
+  QueryEvent(30, req.body.actor, req.body);
 })
+
+app.patch('/removePoints',function(req,res){
+  let id = req.body.userID;
+  let pts = req.body.points;
+  let sp = req.body.sponsor;
+  con.query(`UPDATE Users SET Points = Points - ${pts} WHERE (UserID = ${id} AND sponsorKey = ${sp})`, function(err, result, fields){
+    if(err) throw err;
+  })
+  QueryEvent(31, req.body.actor, req.body);
+})
+
+
+
 
 app.post('/oneUser',function (req,res){
   console.log('Fetching one user');
@@ -542,7 +558,7 @@ app.post('/newUser',function(req,res){
 
     //Step 5 - Listen for a response from the DB
     //          currently there is no logic for error
-      
+
     QueryEvent(0, result.insertId, body)
     //Step 6 - this sends a json response back to the front end as well as a 200 status code
     res.send({'response':'Thanks'}).status(200);
@@ -590,7 +606,8 @@ app.post('/login',function (req,res){
       QueryEvent(10,json1.UserID,{})
       con.query(`SELECT * FROM Settings WHERE UserID = "${json1.UserID}"`,
         function (err, result, fields) {
-          if (err) {
+          console.log("look at this", typeof result[0]);
+          if (typeof result[0]== 'undefined') {
             console.log("No existing settings");
             json2 = {
               "displayMode": 0,
@@ -619,7 +636,7 @@ app.post('/login',function (req,res){
             ...json1,
             ...json2
           };
-       
+
           console.log("json3 value: ", json3);
           res.object = json3;
           console.log("res.object: ", res.object);
@@ -714,8 +731,8 @@ app.post('/applicationUpdate',function (req,res){
 
   console.log('body', body);
   ({SponsorID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
-  
-  con.query(`UPDATE Sponsor SET Application = '${stringBody}' WHERE SponsorID = ${SponsorID}`, 
+
+  con.query(`UPDATE Sponsor SET Application = '${stringBody}' WHERE SponsorID = ${SponsorID}`,
   function (err, result, fields) {
     if (!err){
       console.log('result',result)
@@ -736,7 +753,7 @@ app.get('/fetchQuestions',function (req,res){
   let stringBody = JSON.stringify(body);
   console.log('body', stringBody);
 
-  
+
   con.query(`SELECT Application FROM Sponsor WHERE SponsorID = "${body}"`, function (err, result, fields) {
     if (err) throw err;
 
@@ -872,7 +889,7 @@ else if(!err){
     // res.status(200).json(json1);
 
   });
-  
+
 }
 
   //Step 5 - Listen for a response from the DB
