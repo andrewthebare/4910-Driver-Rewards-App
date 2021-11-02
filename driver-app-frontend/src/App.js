@@ -4,11 +4,12 @@ import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Pr
 import {AdminLogViewer} from "./pages"  //found out we can import like this to avoid merge conflicts
 import { CatalogDisplay } from "./pages";
 import { SponsorEditCatalog } from "./pages";
-import ApplicationCreation from "./pages/ApplicationEditor";
+import ApplicationCreation from "./pages/ApplicationCreator";
 import {SponsorViewDrivers} from "./pages";
 import ApplicationViewer from "./pages/ApplicationViewer";
-
+import ApplicationSubmit from "./ApplicationSubmit";
 import './App.css'
+
 /**
  * Every Page we create must be listed as a Route with a unique path in this file, with the page
  * imported above and passed as the exact component
@@ -36,6 +37,7 @@ function App() {
           <Route path="/adminDashboard/Logs" exact component={() => <AdminLogViewer />} />
           <Route path="/ApplicationCreation" exact component={() => <ApplicationCreation />} />
           <Route path="/ApplicationViewer" exact component={() => <ApplicationViewer />} />
+          <Route path="/ApplicationSubmit" exact component={() => <ApplicationSubmit />} />
           <Route path="/DriverDashBoard" exact component={() => <DriverDashboard />} />
           <Route path="/SponsorDashBoard" exact component={() => <SponsorDashBoard />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />

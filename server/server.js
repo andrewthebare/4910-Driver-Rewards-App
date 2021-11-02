@@ -779,22 +779,51 @@ app.post('/applicationUpdate',function (req,res){
     if (err) throw err;
 });
 })
+/*
+app.post('/applicationUSubmit',function (req,res){
+  console.log('Submittting Application');
+
+  let body = req.body;
+  let stringBody = JSON.stringify(body);
+
+  console.log('body', body);
+  ({SponsorID, DriverID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
+  
+  con.query(`UPDATE Sponsor SET SubmittedApplication = '${stringBody}' WHERE SponsorID = ${SponsorID}`, 
+  function (err, result, fields) {
+    if (!err){
+      console.log('result',result)
+
+      res.sendStatus(200);
+      QueryEvent(1,SponsorID,body);
+    }
+    else{
+      res.sendStatus(400);
+    }
+    if (err) throw err;
+});
+})*/
 
 app.get('/fetchQuestions',function (req,res){
   console.log('Pulling Questions Down');
-  let body = req.body;
-  let stringBody = JSON.stringify(body);
-  console.log('body', stringBody);
-
-
-  con.query(`SELECT Application FROM Sponsor WHERE SponsorID = "${body}"`, function (err, result, fields) {
+  let sponsID = req.query.SponsorID;
+  con.query(`SELECT 1 FROM Sponsor WHERE SponsorID = ${sponsID}`, function (err, result, fields) {
     if (err) throw err;
+    if (result.length === 0)
+    {
+      res.sendStatus(400)
+    }
+    else
+    {
+      con.query(`SELECT Application FROM Sponsor WHERE SponsorID = ${sponsID}`, function (err, result, fields) {
+        let ezResult = JSON.parse(result[0].Application)
+        console.log('Result', ezResult)
 
-
-    let ezResult = JSON.parse(result[0].Application)
-    console.log('Result', ezResult)
-
-    res.send(ezResult).status(200);
+        res.send(ezResult).status(200);
+      })
+    }
+        
+     
   });
 
 })
