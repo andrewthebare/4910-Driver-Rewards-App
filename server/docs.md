@@ -14,3 +14,6 @@
 ### Point Events
 30. Points Added
 31. Points Removed
+### Purchase Events
+40. Successful Purchase
+41. Unsucessful Purchase

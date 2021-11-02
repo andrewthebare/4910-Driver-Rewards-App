@@ -216,6 +216,39 @@ app.post('/fetchCatalog', function (req,res){
   })
 })
 
+app.post('/buyItem', function (req,res){
+  let item = req.body.item;
+  let userID = req.body.user;
+  console.log('item', item);
+
+  //get the user's points
+  con.query(`Select Points from Users where UserID = ${userID}`, function(err, result, fields){
+    if (err) throw err;
+    let pointsBefore = result[0].Points;
+
+    if (pointsBefore >= item.price){
+      console.log('valid purchase');
+
+      let pointsAfter = pointsBefore - item.price;
+
+      //update db
+      con.query(`Update Users Set Points = ${pointsAfter} where UserID=${userID}`, function(err, result, fields){
+        console.log(`user ${userID} set to ${pointsAfter}`);
+
+        //defo need to query the sponsor
+        QueryEvent(40, userID, {'item': item.JSON});
+
+        res.send({enough:true}).status(200);
+      })
+    }
+    else{
+      QueryEvent(41, userID, {'item': item.JSON});
+      res.send({enough:false}).status(200);
+    }
+  })
+})
+
+
 app.post('/sendMessage', function(req, res){
   console.log('Sending a message');
   let to = req.body.username;
