@@ -1,14 +1,26 @@
 import axios from "axios";
 import {React, useState, useEffect} from "react";
+import CatalogItem from "./components/CatalogItem";
 import './styles/CatalogStyle.css'
 
 export default function CatalogDisplay(){
   const useMountEffect = (fun) => useEffect(fun, [])
 
+  const[userInfo, setUserInfo] = useState(JSON.parse(sessionStorage.getItem("userInfo")))
   const [catalogItems, setItems] = useState([{id: -1, selected: true, name: 'Test Item', price: 100.25},{id: -2, selected: false, name: 'Test False Item', price: 30.50}])
   const [query, setQuery] = useState('');
   const [price, setPrice] = useState();
   let ascending;
+
+  const updateUser = ()=>{
+    axios.post('http://localhost:8081/oneUser', {userID: userInfo.UserID})
+    .then(function(response){
+      //probably shouldn't pull down the whole user, but I'm lazy
+      console.log('user', response);
+
+      setUserInfo(response.data)
+    })
+  }
 
   const SortCatalog = ()=>{
     console.log('cat Items', catalogItems);
@@ -43,11 +55,15 @@ export default function CatalogDisplay(){
 
       setItems(data)
 
-    })
+    });
+
+    updateUser();
+
   }
 
   const fillTableItems = () =>{
-    console.log('drawing items', catalogItems);
+
+    console.log('Storage', userInfo);
     let rows = [];
 
     for (let i in catalogItems){
@@ -55,13 +71,7 @@ export default function CatalogDisplay(){
 
       //TODO regex the title and take just the first one
       rows.push(
-      <tr className="catalogRow basic">
-        {/* <td><input type='checkbox' checked={item.selected}/></td> */}
-        <td><a href={item.url}><img src={item.MainImage? item.MainImage.url_170x135 : null}/></a></td>
-        <td>{item.title}</td>
-        <td>${item.price}</td>
-        <td><button>Buy</button></td>
-      </tr>
+        <CatalogItem item={item} user={userInfo.UserID}/>
       )
     }
 
@@ -85,7 +95,7 @@ export default function CatalogDisplay(){
           <div className={'pointHolder'}>
             <div style={{textAlign: 'center'}}>
               <h2>Points</h2>
-              <h4>$3.40</h4>
+              <h4>${userInfo.Points}</h4>
             </div>
           </div>
         </div>

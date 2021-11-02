@@ -11,4 +11,7 @@
 11. Unsuccessful Login
 ### Catalog Events
 20. Sponsor Update Catalog
+### Purchase Events
+30. Successful Purchase
+31. Unsucessful Purchase
 
