@@ -32,9 +32,47 @@
   font-size: 16px;
 
 }
-/*
-.adminTable{
-  border: none;
-  width: 75vw;
+
+.dashCard{
+  min-width: 300px;
+  max-width: 45%;
+  background-color: bisque;
+
+  padding: 5px;
+  border: 1pt solid #232323;
+  border-radius: 15px;
 }
-*/
+
+.gridHolder{
+  display: grid; 
+  grid-auto-columns: 300px; 
+  gap: 0px 0px; 
+  justify-items: center; 
+  align-items: center; 
+}
+
+.dashHolder{
+  margin: auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  max-width: 90%;
+}
+
+.reverse{
+  flex-direction: row-reverse;
+}
+
+.content{
+  flex: 3;
+}
+
+.btnHolder{
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
