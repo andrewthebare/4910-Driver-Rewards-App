@@ -27,9 +27,12 @@ function Navigation(props) {
     userType = userInfo.userType;
     if(userType === 0){
       admin = true;
+      driver = true;
+      sponsor = true;
     }
     else if(userType === 1){
       sponsor = true;
+      driver = true;
     }
     else if(userType === 2){
       driver = true;
