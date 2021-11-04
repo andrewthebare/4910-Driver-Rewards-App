@@ -111,48 +111,42 @@ export default function CreateUser(){
       <form onSubmit={onFormSubmit}>
 
         <label htmlFor="usertype">User Type</label>
-        <br/>
         <select id='usertype'>
           <option value="admin">Admin</option>
           <option value="sponsor">Sponsor</option>
           <option value="user">User</option>
         </select>
-        <br/>
         <label htmlFor="sponsorKey">Sponsor to be associated with</label>   {/*Could defo be a dropdown of sponsors in the future*/}
-        <br/>
-        <input id='sponsorKey' type='number'/>
+        <input id='sponsorKey' type='number' style={{maxWidth:'60px'}}/>
          <br/>
-        <label htmlFor="FirstName">First Name</label><br/>
+        <label htmlFor="FirstName">First Name</label>
         <input id='FirstName' type='text'/>
-        <br/>
-        <label htmlFor="LastName">Last Name</label><br/>
+        <label htmlFor="LastName">Last Name</label>
         <input id='LastName' type='text'/><br/>
-        <label htmlFor="email">Email</label><br/>
+        <label htmlFor="email">Email</label>
         <input id='email' type='email'/><br/>
-        <label htmlFor="address">Address</label><br/>
+        <label htmlFor="address">Address</label>
         <input id='address' type='text'/><br/>
-        <label htmlFor="username">Username</label><br/>
-        <input id='username' type='text'/><br/>
-        <label htmlFor="password">Password</label><br/>
+        <label htmlFor="username">Username</label>
+        <input id='username' type='text'/>
+        <label htmlFor="password">Password</label>
         <input id='password' type='text'/> <br/>
 
         <h3 style={{"display":"none"}}>User Created Successfully</h3>
 
         <br/>
-        <label htmlFor="Security Question 1">Security Question 1</label><br/>
+        <label htmlFor="Security Question 1">Security Question 1</label>
         <input id='Security Question 1' type='text'/><br/>
-        <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label><br/>
+        <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>
         <input id='Security Question 1 Answer' type='text'/><br/><br/>
-        <label htmlFor="Security Question 2">Security Question 2</label><br/>
+        <label htmlFor="Security Question 2">Security Question 2</label>
         <input id='Security Question 2' type='text'/><br/>
-        <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label><br/>
+        <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>
         <input id='Security Question 2 Answer' type='text'/><br/><br/>
 
-        <button type='submit'>Submit</button>
+        {/* <button type='submit'>Submit</button> */}
       </form>
-      <button onClick={addFred}>Add Fred Flinstone</button>
-      <button onClick={onFormSubmit}>Dummy Submit</button>
-      <button onClick={fetchDB}>Fetch DB</button>
+      <button onClick={onFormSubmit}>Submit</button>
       </center>
     </div>
   )
