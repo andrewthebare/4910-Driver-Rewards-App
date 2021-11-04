@@ -49,6 +49,8 @@ a{
 body{
   background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(131,131,131,1) 100%);
+  background-image: radial-gradient(50% 50% at top center,rgba(255,255,255,1),#d1d1d1);
+  min-height:100vh;
 }
 
 .neomorph{
@@ -69,3 +71,11 @@ box-shadow: inset 15px 15px 30px #bebebe,
     font-family: "Suez One", serif;
 }
 
+#id{
+  margin-bottom: 5px;
+}
+
+label{
+  margin-right: 3px;
+  margin-left: 3px;
+}

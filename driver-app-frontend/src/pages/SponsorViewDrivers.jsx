@@ -142,6 +142,7 @@ export default function SponsorViewDrivers(){
     <br></br>
     <label htmlFor="reason"> Reason</label>
     <input id='reasons' type='text'/>
+    <br/>
     <button type='submit' onClick={addPoints}> Add Points </button>
     <button type='submit' onClick={removePoints}> Remove Points </button>
     </center>
