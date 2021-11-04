@@ -58,7 +58,7 @@ export default function ApplicationCreation(){
 
   return(    
       <div>
-        <h3>Application Editor</h3>
+        <h3>Application Creation</h3>
         { <form onSubmit={onFormSubmit}>
 
           <label htmlFor="Application Question 1">Application Question 1</label>

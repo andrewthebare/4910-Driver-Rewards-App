@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import App from "../App";
 
 export default function ApplicationViewer(){
 
@@ -22,7 +23,7 @@ export default function ApplicationViewer(){
             document.getElementById("AppQ10").innerHTML = data.q10;
 
     })
-        document.getElementById("AppQ1").innerHTML = "Test Question pls work";
+
     }
     
     const onCancel = () =>{
@@ -30,7 +31,133 @@ export default function ApplicationViewer(){
     }
 
     const onFormSubmit = () =>{
+      var error = document.getElementById("error")
 
+      let sponsID = 0;
+      //Question 1
+      if (document.getElementById("Q1").value === "")
+      {
+          var app1 = document.getElementById("AppQ1").textContent
+      }
+      else
+      {
+        var app1 = document.getElementById("Q1").value;
+      }
+
+      //Question 2
+      if (document.getElementById("Q2").value === "")
+      {
+          var app2 = document.getElementById("AppQ2").textContent
+      }
+      else
+      {
+        var app2 = document.getElementById("Q2").value;
+      }
+
+      //Question 3
+      if (document.getElementById("Q3").value === "")
+      {
+          var app3 = document.getElementById("AppQ3").textContent
+      }
+      else
+      {
+        var app3 = document.getElementById("Q3").value;
+      }
+
+      //Question 4
+      if (document.getElementById("Q4").value === "")
+      {
+          var app4 = document.getElementById("AppQ4").textContent
+      }
+      else
+      {
+        var app4 = document.getElementById("Q4").value;
+      }
+
+      //Question 5
+      if (document.getElementById("Q5").value === "")
+      {
+          var app5 = document.getElementById("AppQ5").textContent
+      }
+      else
+      {
+        var app5 = document.getElementById("Q5").value;
+      }
+      
+      //Question 6
+      if (document.getElementById("Q6").value === "")
+      {
+          var app6 = document.getElementById("AppQ6").textContent
+      }
+      else
+      {
+        var app1 = document.getElementById("Q6").value;
+      }
+
+      //Question 7
+      if (document.getElementById("Q7").value === "")
+      {
+          var app7 = document.getElementById("AppQ7").textContent
+      }
+      else
+      {
+        var app7 = document.getElementById("Q7").value;
+      }
+      
+      //Question 8
+      if (document.getElementById("Q8").value === "")
+      {
+          var app8 = document.getElementById("AppQ8").textContent
+      }
+      else
+      {
+        var app8 = document.getElementById("Q8").value;
+      }
+
+      //Question 9
+      if (document.getElementById("Q9").value === "")
+      {
+          var app9 = document.getElementById("AppQ9").textContent
+      }
+      else
+      {
+        var app9 = document.getElementById("Q9").value;
+      }
+      
+      //Question 10
+      if (document.getElementById("Q10").value === "")
+      {
+          var app10 = document.getElementById("AppQ10").textContent
+      }
+      else
+      {
+        var app10 = document.getElementById("Q10").value;
+      }  
+      
+      const applicationQuestions = {
+        SponsorID: sponsID, 
+        q1: app1,
+        q2: app2,
+        q3: app3,
+        q4: app4,
+        q5: app5,
+        q6: app6,
+        q7: app7,
+        q8: app8,
+        q9: app9,
+        q10: app10
+      }
+      
+      axios.post('http://localhost:8081/applicationUpdate', applicationQuestions)
+      .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
+        console.log(response);
+        if (response.status === 200){
+          alert("Questions Updated Successfully");
+          window.location.replace("/SponsorDashboard");
+        }
+      })
+  
+      console.log('Questions', applicationQuestions);
     }
   
     return(    
@@ -71,7 +198,7 @@ export default function ApplicationViewer(){
              
       </form>}
         <span id="error"></span><br/>
-        <button onClick={onFormSubmit}>fakeSubmit</button>
+        <button onClick={onFormSubmit}>Save Question Changes</button>
         <button onClick={onCancel}> Cancel</button>
     </div>  
       )
