@@ -54,7 +54,7 @@ function Navigation(props) {
 
           <div>
             <ul class="navbar-nav ml-auto">
-              {loggedIn && <li
+              {!loggedIn && <li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""
                 }`}
