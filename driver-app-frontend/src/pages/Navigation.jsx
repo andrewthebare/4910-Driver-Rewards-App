@@ -48,13 +48,13 @@ function Navigation(props) {
     <div className="navigation">
       <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container">
-          <Link class="navbar-brand" to="/">
+          <Link class="navbar-brand" to="/Profile">
             {first} {last}
           </Link>
 
           <div>
             <ul class="navbar-nav ml-auto">
-              {!loggedIn && <li
+              {/* {!loggedIn && <li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""
                 }`}
@@ -63,7 +63,7 @@ function Navigation(props) {
                   Home
                   <span class="sr-only">(current)</span>
                 </Link>
-              </li>}
+              </li>} */}
               {admin && <li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""
