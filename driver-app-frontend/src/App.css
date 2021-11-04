@@ -1,3 +1,12 @@
+a:hover{
+  text-decoration: none !important;
+  color: unset;
+}
+
+a{
+  outline: none;
+}
+
 .App {
   text-align: center;
 }
@@ -40,6 +49,19 @@
 body{
   background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(131,131,131,1) 100%);
+}
+
+.neomorph{
+  border-radius: 50px;
+background: #d1d1d1;
+box-shadow:  16px 16px 32px #bbb,
+             -16px -16px 32px #ffffff;
+                                    }
+.neoInverse{
+  border-radius: 5px;
+background: #e0e0e0;
+box-shadow: inset 15px 15px 30px #bebebe,
+            inset -15px -15px 30px #ffffff;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Suez+One');

@@ -1,3 +1,4 @@
+
 .btn2 {
   background-color: #12a8a8;
   border: none;
@@ -29,12 +30,60 @@
 
 .adminButton {
   color: black;
-  font-size: 16px;
+  font-size: 22px;
 
 }
-/*
-.adminTable{
-  border: none;
-  width: 75vw;
+
+.dashCard{
+  min-width: 300px;
+  max-width: 400px;
+  background-color: bisque;
+  margin: 25px;
+
+  padding: 5px;
+  /* border: 1pt solid #232323; */
+  border-radius: 15px !important;
 }
-*/
+
+.dashbtn{
+  /* background: #12a8a8 !important; */
+  min-width: 50%;
+  border-radius: 10px;
+}
+
+.gridHolder{
+  margin: auto;
+  max-width: 85%;
+
+  display: grid; 
+  grid-template-columns: 1fr 1fr 2fr
+
+
+}
+
+.dashHolder{
+  margin: auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+  max-width: 90%;
+}
+
+.reverse{
+  flex-direction: row-reverse;
+}
+
+.content{
+  flex: 3;
+}
+
+.btnHolder{
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
