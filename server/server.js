@@ -598,6 +598,45 @@ app.post('/newUser',function(req,res){
   });
 })
 
+app.post('/SponsorAddSponsor',function(req,res){
+  console.log('Sponsor is making a new sponsor');
+
+  //Step 1 - connect to the db
+
+  //Step 2 - parse out the info from the message
+  //          The JSON payload that we load is found in req.body
+  let body = req.body;
+  console.log('body', body);
+
+  //js short hand parse out the data submitted from the user
+  ({firstName,lastName, username, password, address, email, sponsorKey, type, secureQ1, secureA1, secureQ2, secureA2} = body);
+
+  //Step 3 - make sure all that info is good info - TODO
+
+    //if any of these field are wrong, send a bad data status code, that the front end should tell the user about
+    if (firstName === undefined ||
+        lastName === undefined){
+          res.sendStatus(400);
+        }
+
+  //Step 4 - make the connection and then post the new user to the db
+
+  con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword)
+            values("${firstName}","${lastName}", ${type},"${address}","${email}","${sponsorKey}","${username}", "${password}")`,
+
+    function (err, result, fields) {
+    if (err) throw err;
+    console.log('result', result);
+
+    //Step 5 - Listen for a response from the DB
+    //          currently there is no logic for error
+
+    QueryEvent(0, result.insertId, body)
+    //Step 6 - this sends a json response back to the front end as well as a 200 status code
+    res.send({'response':'Thanks'}).status(200);
+  });
+})
+
 app.post('/login',function (req,res){
   console.log('Someone is getting from /login');
 

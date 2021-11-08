@@ -37,8 +37,8 @@ export default function SponsorDashboard(){
             </button>
 
           <button className= "btn2">
-            <Link class="sponsorButton" to="/">
-              Driver View
+            <Link class="sponsorButton" to="/sponsorDashboard/AddSponsor">
+              Add Sponsor
             <span class="sr-only">(current)</span>
             </Link>
           </button>
