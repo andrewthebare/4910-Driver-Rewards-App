@@ -4,7 +4,7 @@ import React from "react";
 export default function CatalogItem(props){
   const item = props.item;
   const userID = props.user;
-
+  var msg = '';
   const purchase = ()=>{
     console.log('im buying '+ item.title);
 
@@ -12,8 +12,20 @@ export default function CatalogItem(props){
     .then(function(response){
 
       response.data.enough?alert('Purchase Successful'):alert('You do not have enough points');
-      
+
+      if(response.data.enough){
+        msg = "You have successfully purchased " + item;
+      }
+      else{
+        msg = "There was a problem purchasing " + item;
+      }
+      const msgJson = {
+        username: userID,
+        message: msg,
+      };
+      axios.post('http://localhost:8081/sendAlertMessage', msgJson)
     })
+
   }
 
   return(

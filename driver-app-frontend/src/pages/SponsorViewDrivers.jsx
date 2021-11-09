@@ -93,6 +93,14 @@ export default function SponsorViewDrivers(){
       actor: actor,
     }
     axios.patch('http://localhost:8081/addPoints',mjson)
+
+    var msg = addPts + " points have been added to your account";
+    const msgJson = {
+      username: userToAdd,
+      message: msg,
+      userID: actor,
+    };
+    axios.post('http://localhost:8081/sendAlertMessage', msgJson)
   }
 
   const removePoints = ()=>{
@@ -110,7 +118,30 @@ export default function SponsorViewDrivers(){
       actor: actor,
     }
     axios.patch('http://localhost:8081/removePoints',mjson)
+    var msg = remPts + " points have been removed from your account";
+    const msgJson = {
+      username: userToRem,
+      message: msg,
+      userID: actor,
+    };
+    axios.post('http://localhost:8081/sendAlertMessage', msgJson)
+
+
   }
+
+
+  const removeDriver = ()=>{
+    var driver = document.getElementById("driverSelect").value;
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    var sponsorGroup = userInfo.sponsorKey;
+    const mjson ={
+      username: driver,
+      sponsorKey: sponsorGroup,
+    };
+
+    axios.post('http://localhost:8081/removeDriver', mjson)
+  }
+
 
   const populateIDList= () =>{
     let options = [];
@@ -122,6 +153,7 @@ export default function SponsorViewDrivers(){
 
     return options;
   }
+
 
   return(
     <div>
@@ -145,6 +177,13 @@ export default function SponsorViewDrivers(){
     <br/>
     <button type='submit' onClick={addPoints}> Add Points </button>
     <button type='submit' onClick={removePoints}> Remove Points </button>
+    <br></br>
+    <br></br>
+    <label htmlFor="driver">Driver to Modify</label>
+    <select id="driverSelect">
+      {populateIDList()}
+    </select>
+    <button type='submit' onClick={removeDriver}> Remove Driver </button>
     </center>
     </div>
   )

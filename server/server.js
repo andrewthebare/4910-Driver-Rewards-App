@@ -284,6 +284,30 @@ app.post('/sendMessage', function(req, res){
 
 });
 
+
+
+app.post('/sendAlertMessage', function(req, res){
+  console.log('Sending a message');
+  let to = req.body.username;
+  let message = req.body.message;
+  let dt = new Date().toJSON().slice(0, 19).replace('T', ' ');
+  let read = 0;
+  let starred = 0;
+  let from = 0;
+  let messageID = 0;
+  let senderID = 13;
+
+  con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (${senderID}, ${to}, "${message}", "${dt}");`,
+    function (err, result, fields) {
+      if (err) throw err;
+      console.log('result', result);
+    });
+
+
+
+
+});
+
 app.post('/messageGroup', function(req, res){
   let to = req.body.sponsorgroup;
   let message = req.body.message;
@@ -350,12 +374,12 @@ app.patch('/deleteMsg',function(req,res){
 
 
 
-app.get('/showAll',function (req,res){
+app.post('/showAll',function (req,res){
   console.log('Loading All Messages');
-
+  let id = req.body.userID;
   //this creates a connection to the DB
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query(`SELECT * FROM Message ORDER BY Date`, function (err, result, fields) {
+  con.query(`SELECT * FROM Message WHERE RecipientID = ${id} ORDER BY Date`, function (err, result, fields) {
     if (err) throw err;
 
     //data packet to send back
@@ -464,7 +488,7 @@ app.post('/showSponsorGroup',function (req,res){
   let key = req.body.sponsorKey;
   //this creates a connection to the DB
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query(`SELECT * FROM Users WHERE (sponsorKey = ${key} AND userType = 0)`, function (err, result, fields) {
+  con.query(`SELECT * FROM Users WHERE (sponsorKey = ${key} AND userType = 2)`, function (err, result, fields) {
     if (err) throw err;
 
     //data packet to send back
@@ -509,6 +533,14 @@ app.patch('/removePoints',function(req,res){
   })
   QueryEvent(31, req.body.actor, req.body);
 })
+
+app.post('/removeDriver', function(req, res){
+  let driver = req.body.username;
+  let sponsor = req.body.sponsorKey;
+  con.query(`DELETE * FROM Users WHERE (username = "${to}" AND sponsorKey = ${sponsor})`, function(err, result, fields){
+    if (err) throw err;
+  });
+});
 
 
 
@@ -827,8 +859,8 @@ app.post('/applicationUSubmit',function (req,res){
 
   console.log('body', body);
   ({SponsorID, DriverID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
-  
-  con.query(`UPDATE Sponsor SET SubmittedApplication = '${stringBody}' WHERE SponsorID = ${SponsorID}`, 
+
+  con.query(`UPDATE Sponsor SET SubmittedApplication = '${stringBody}' WHERE SponsorID = ${SponsorID}`,
   function (err, result, fields) {
     if (!err){
       console.log('result',result)
@@ -861,8 +893,8 @@ app.get('/fetchQuestions',function (req,res){
         res.send(ezResult).status(200);
       })
     }
-        
-     
+
+
   });
 
 })
