@@ -71,7 +71,10 @@ export default function Messaging(){
   const showAll = ()=>{
     var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     var userID = userInfo.UserID;
-    axios.get('http://localhost:8081/showAll')
+    const mjson = {
+      userID: userID,
+    };
+    axios.post('http://localhost:8081/showAll', mjson)
     .then((response) => {
       setMsgs(response.data);
     })
