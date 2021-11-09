@@ -818,8 +818,8 @@ app.post('/applicationUpdate',function (req,res){
     if (err) throw err;
 });
 })
-/*
-app.post('/applicationUSubmit',function (req,res){
+
+app.post('/applicationSubmit',function (req,res){
   console.log('Submittting Application');
 
   let body = req.body;
@@ -828,20 +828,26 @@ app.post('/applicationUSubmit',function (req,res){
   console.log('body', body);
   ({SponsorID, DriverID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
   
-  con.query(`UPDATE Sponsor SET SubmittedApplication = '${stringBody}' WHERE SponsorID = ${SponsorID}`, 
-  function (err, result, fields) {
-    if (!err){
-      console.log('result',result)
+  con.query(`SELECT * FROM Applications WHERE SponsorID = ${SponsorID} AND UserID = ${DriverID}`, function(err, results, fields) {
+    if (results.length === 0)
+    {
+        con.query(`INSERT INTO Applications VALUES(${SponsorID},${DriverID},'${stringBody}')`,
+          function (err, result, fields) {
+            if (!err){
+              console.log('result',result)
 
-      res.sendStatus(200);
-      QueryEvent(1,SponsorID,body);
+              res.sendStatus(200);
+              QueryEvent(1,SponsorID,body);
+            }
+            else{
+              res.sendStatus(400);
+            }
+            if (err) throw err;
+        })
     }
-    else{
-      res.sendStatus(400);
-    }
-    if (err) throw err;
+  })
+  
 });
-})*/
 
 app.get('/fetchQuestions',function (req,res){
   console.log('Pulling Questions Down');

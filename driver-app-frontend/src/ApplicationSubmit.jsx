@@ -53,7 +53,7 @@ export default function ApplicationSubmit(){
     var error1 = document.getElementById("error1")
     var error2 = document.getElementById("error2")
     let SponsorID = document.getElementById("SponsorID").value;
-    let driverID = 0;
+    let driverID = 1;
 
     if(SponsorID === '')
         {
@@ -63,16 +63,16 @@ export default function ApplicationSubmit(){
         }
     
 
-    let ans1 = document.getElementById("AppQ1").value;
-    let ans2 = document.getElementById("AppQ2").value;
-    let ans3 = document.getElementById("AppQ3").value;
-    let ans4 = document.getElementById("AppQ4").value;
-    let ans5 = document.getElementById("AppQ5").value;
-    let ans6 = document.getElementById("AppQ6").value;
-    let ans7 = document.getElementById("AppQ7").value;
-    let ans8 = document.getElementById("AppQ8").value;
-    let ans9 = document.getElementById("AppQ9").value;
-    let ans10 = document.getElementById("AppQ10").value;
+    let ans1 = document.getElementById("Q1").value;
+    let ans2 = document.getElementById("Q2").value;
+    let ans3 = document.getElementById("Q3").value;
+    let ans4 = document.getElementById("Q4").value;
+    let ans5 = document.getElementById("Q5").value;
+    let ans6 = document.getElementById("Q6").value;
+    let ans7 = document.getElementById("Q7").value;
+    let ans8 = document.getElementById("Q8").value;
+    let ans9 = document.getElementById("Q9").value;
+    let ans10 = document.getElementById("Q10").value;
 
     if (ans1 === ''|| ans2 === ''||ans3 === ''||ans4 === ''||ans5 === ''||ans6 === ''||ans7 === ''||ans8 === ''||ans9 === ''||ans10 === '') 
         {
@@ -98,13 +98,13 @@ export default function ApplicationSubmit(){
       q9: ans9,
       q10: ans10
     }
-    /*
+    
     axios.post('http://localhost:8081/applicationSubmit', applicationAnswers)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log(response);
       if (response.status === 200){
         alert("Answers Submitted Successfully");
-        window.location.replace("/SponsorDashboard");
+        //window.location.replace("/SponsorDashboard");
       }
     })
     .catch(function (error) {   //Error catch and Statement
@@ -112,8 +112,7 @@ export default function ApplicationSubmit(){
         error.textContent = "Incorrect SponsorID"
         error.style.color = "red"
         console.log(error);
-    console.log('Questions', applicationAnswers);
-    }*/
+    })
 }
   
     return(    
