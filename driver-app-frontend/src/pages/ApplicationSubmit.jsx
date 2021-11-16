@@ -155,7 +155,7 @@ export default function ApplicationSubmit(){
              
       </form>}
         <span id="error2"></span><br/>
-        <button onClick={onFormSubmit}>fakeSubmit</button>
+        <button onClick={onFormSubmit}>Submit</button>
         <button onClick={onCancel}> Cancel</button>
     </div>  
       )

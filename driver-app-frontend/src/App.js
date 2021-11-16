@@ -7,7 +7,8 @@ import { SponsorEditCatalog } from "./pages";
 import ApplicationCreation from "./pages/ApplicationCreator";
 import {SponsorViewDrivers} from "./pages";
 import ApplicationViewer from "./pages/ApplicationViewer";
-import ApplicationSubmit from "./ApplicationSubmit";
+import ApplicationSubmit from "./pages/ApplicationSubmit";
+import ApplicationChoice from "./pages/ApplicationChoice";
 import {SponsorAddSponsor} from "./pages";
 import './App.css'
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/ApplicationCreation" exact component={() => <ApplicationCreation />} />
           <Route path="/ApplicationViewer" exact component={() => <ApplicationViewer />} />
           <Route path="/ApplicationSubmit" exact component={() => <ApplicationSubmit />} />
+          <Route path="/ApplicationChoice" exact component={() => <ApplicationChoice />} />
           <Route path="/DriverDashBoard" exact component={() => <DriverDashboard />} />
           <Route path="/SponsorDashBoard" exact component={() => <SponsorDashBoard />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />

@@ -905,6 +905,30 @@ app.get('/fetchQuestions',function (req,res){
 
 })
 
+app.get('/fetchApplication',function (req,res){
+  console.log('Pulling Application Down');
+  let sponsID = req.query.SponsorID;
+  con.query(`SELECT * FROM Sponsor WHERE SponsorID = ${sponsID}`, function (err, result, fields) {
+    if (err) throw err;
+    if (result.length === 0)
+    {
+      res.sendStatus(400)
+    }
+    else
+    {
+      con.query(`SELECT * FROM Applications WHERE SponsorID IN (${sponsID})`, function (err, result, fields) {
+        
+        console.log('Result', result)
+
+        res.send(result).status(200);
+      })
+    }
+
+
+  });
+
+})
+
 
 
 app.post('/SecurityQuestions',function(req,res){
