@@ -51,7 +51,7 @@ export default function SponsorEditCatalog(){
       {sponsor &&<p>Max Price</p>}
       <br/>
       {sponsor &&<button onClick={fetchQuery}>Fill Boxes with current Query</button>}
-      {sponosr &&<button onClick={setSponsorQuery}>Set Query</button>}
+      {sponsor &&<button onClick={setSponsorQuery}>Set Query</button>}
     </div>
   )
 }
