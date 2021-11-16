@@ -14,6 +14,26 @@ import axios from 'axios';
         return false;
     }
 
+    function polynomialRollingHash(str)
+    {
+
+    // P and M
+    let p = 31;
+    let m = (1e9 + 9);
+    let power_of_p = 1;
+    let hash_val = 0;
+
+    // Loop to calculate the hash value
+    // by iterating over the elements of String
+    for(let i = 0; i < str.length; i++)
+    {
+        hash_val = (hash_val + (str[i].charCodeAt() -
+                    'a'.charCodeAt() + 1) * power_of_p) % m;
+        power_of_p = (power_of_p * p) % m;
+    }
+    return hash_val;
+  }
+
     function submitUpdate(){
         console.log("got into submit button");
         if (document.getElementById("FirstName").value === "" ){document.getElementById("FirstName").value = userInfo.FirstName}
@@ -24,7 +44,7 @@ import axios from 'axios';
         if(document.getElementById("password").value === ""){document.getElementById("password").value = userInfo.hashedPassword}
         if(document.getElementById("deleteTab").checked){document.getElementById("deleteTab").value = 1}
         else{document.getElementById("deleteTab").value = 0}
-        
+
         //Step 1 - Make sure that all the necissary fields are filled out
         let firstName = document.getElementById("FirstName").value;
         let lastName = document.getElementById("LastName").value;
@@ -34,20 +54,20 @@ import axios from 'axios';
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
         let deleted = document.getElementById("deleteTab").value;
-        
-    
+
+
         //Step 2 - Send the data along to the server
         //load up a json object with our data that we're sending
-        const updatedUser = { 
+        const updatedUser = {
         UserID: UserID,
           firstName: firstName,
           lastName: lastName,
           email: email,
           address: address,
           username: username,
-          password: password, 
-          delete: deleted, 
-             
+          password: password,
+          delete: deleted,
+
         };
         console.log("pass updateUser: ", updatedUser);
         //post it to the server
@@ -65,19 +85,19 @@ import axios from 'axios';
             return false;
           }
         })
-        
-    
+
+
         //step 3 - listen for a response from the server (This is the .then function above)
         //Step 4 - react to the response given to the server (this is will be the body of the .then function above)
       }
 
    return(
     <div>
-      
 
-        
-        
-        
+
+
+
+
          <br/>
         <label htmlFor="FirstName">First Name</label>
         <input id='FirstName' placeholder = {userInfo.FirstName} type='text'/>
@@ -94,7 +114,7 @@ import axios from 'axios';
         <input id='password' placeholder= {userInfo.hashedPassword} type='text'/> <br/>
         <label htmlFor="deleteTab">Delete Acount?</label>
         <input id='deleteTab'  type='checkbox'/>
-        
+
         <h3 style={{"display":"none"}}>User Created Successfully</h3>
 
         <br/>
@@ -111,7 +131,7 @@ import axios from 'axios';
 
         <button onClick={submitUpdate}>Submit</button>
         <button onClick={cancelUpdate}>Cancel</button>
-      
+
     </div>
    )
 }

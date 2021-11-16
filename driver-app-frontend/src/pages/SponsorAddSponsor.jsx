@@ -10,14 +10,32 @@ export default function SponsorAddSponsor(){
    * This is a very simple example of how we're going to talk to the DB
    * This function is called when I click on the Add Fred Flinstone button
    */
-  
+   function polynomialRollingHash(str)
+   {
+
+     // P and M
+     let p = 31;
+     let m = (1e9 + 9);
+     let power_of_p = 1;
+     let hash_val = 0;
+
+     // Loop to calculate the hash value
+     // by iterating over the elements of String
+     for(let i = 0; i < str.length; i++)
+     {
+         hash_val = (hash_val + (str[i].charCodeAt() -
+                     'a'.charCodeAt() + 1) * power_of_p) % m;
+         power_of_p = (power_of_p * p) % m;
+     }
+     return hash_val;
+   }
   //Basic format for how we talk to the DB
   //This function is called when the submit button is clicked
   const onFormSubmit = ()=>{
     //Step 1 - Make sure that all the necissary fields are filled out
     let firstName = document.getElementById("FirstName").value;
     let lastName = document.getElementById("LastName").value;
-    let type = 1; 
+    let type = 1;
     let sponsor = userInfo.sponsorKey;
     let email = document.getElementById("email").value;
     let address = document.getElementById("address").value;
@@ -76,7 +94,7 @@ export default function SponsorAddSponsor(){
       <h1> Create User </h1>
       <form onSubmit={onFormSubmit}>
 
-        
+
          <br/>
         <label htmlFor="FirstName">First Name</label>
         <input id='FirstName' type='text'/>

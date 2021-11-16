@@ -10,8 +10,29 @@ import { Link, withRouter } from "react-router-dom";
 
 export default function Login(){
    const onFormSubmit = ()=>{
-    
+
   }
+
+  function polynomialRollingHash(str)
+  {
+
+      // P and M
+      let p = 31;
+      let m = (1e9 + 9);
+      let power_of_p = 1;
+      let hash_val = 0;
+
+      // Loop to calculate the hash value
+      // by iterating over the elements of String
+      for(let i = 0; i < str.length; i++)
+      {
+          hash_val = (hash_val + (str[i].charCodeAt() -
+                      'a'.charCodeAt() + 1) * power_of_p) % m;
+          power_of_p = (power_of_p * p) % m;
+      }
+      return hash_val;
+  }
+
   function redirect() {
     //Step 1 - Make sure that all the necissary fields are filled out
     let username = document.getElementById("Username").value;
@@ -24,7 +45,7 @@ export default function Login(){
     //Empty inputs are stopped here
     //
     var error = document.getElementById("error")
-    if (document.getElementById("Username").value === '' || document.getElementById("Password").value === '' || document.getElementById("Username").value === '' ) 
+    if (document.getElementById("Username").value === '' || document.getElementById("Password").value === '' || document.getElementById("Username").value === '' )
     {
         error.textContent = "Please fill out all fields"
         error.style.color = "red"
@@ -36,7 +57,7 @@ export default function Login(){
 
     //Step 2 - Send the data along to the server
     //load up a json object with our data that we're sending
-    const loginAttempt = { 
+    const loginAttempt = {
       username: username,
       password: password,
       sponsorKey: sponsorKey,
@@ -50,7 +71,7 @@ export default function Login(){
      if (response.status === 200){
        sessionStorage.setItem("userInfo", JSON.stringify(result));
        var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-       
+
        if(userInfo.twostepAuth === 1){
          alert("Please Authenticate Your Identity Through Your Email");
        }
@@ -72,20 +93,20 @@ export default function Login(){
     password: "",
     showPassword: false,
   });
-  
+
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
-  
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  
+
   const handlePasswordChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  
-  return(    
+
+  return(
     <div>
       <h3>Login</h3>
       <form onSubmit={onFormSubmit}>
@@ -114,16 +135,16 @@ export default function Login(){
       <label htmlFor="SponsorID">Sponsor ID</label>
       <input id='SponsorID' type='int'/>
         <br /><span id="error"></span>
-      </form>   
+      </form>
       <button onClick={redirect}>Login</button>
        <p className="Forgot-password text-left">
         <Link to={"/"}>Forgot Password? </Link>
       </p>
-      
-   </div>     
+
+   </div>
   )
 
-    
+
     // return (
     //   <div
     //   >
@@ -147,7 +168,7 @@ export default function Login(){
     //     />
     //   </div>
     // );
- 
+
 }
 
 // export default App;

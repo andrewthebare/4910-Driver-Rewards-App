@@ -145,7 +145,7 @@ app.get('/getCatalogQuery',function(req,res){
 
   let id = req.query.id;
 
-  con.query(`SELECT CatalogQuery from Sponsor where SponsorID = ${id}`,
+  con.query(`SELECT CatalogQuery from Sponsor where SponsorID = ?`, [id],
   function (err, result, fields){
     if (err){
       res.sendStatus(500);
@@ -166,7 +166,7 @@ app.put('/setCatalogQuery',function(req,res){
 
   let body = req.body;
   let stringBody = JSON.stringify(body.data);
-  con.query(`UPDATE Sponsor SET CatalogQuery = '${stringBody}' where SponsorID = ${body.id}`,
+  con.query(`UPDATE Sponsor SET CatalogQuery = ? where SponsorID = ?`,[stringBody, body.id],
   function (err, result, fields){
     if (err){
       res.sendStatus(500);
@@ -222,7 +222,7 @@ app.post('/buyItem', function (req,res){
   console.log('item', item);
 
   //get the user's points
-  con.query(`Select Points from Users where UserID = ${userID}`, function(err, result, fields){
+  con.query(`Select Points from Users where UserID = ?`,[userID], function(err, result, fields){
     if (err) throw err;
     let pointsBefore = result[0].Points;
 
@@ -232,7 +232,7 @@ app.post('/buyItem', function (req,res){
       let pointsAfter = pointsBefore - item.price;
 
       //update db
-      con.query(`Update Users Set Points = ${pointsAfter} where UserID=${userID}`, function(err, result, fields){
+      con.query(`Update Users Set Points = ? where UserID= ?`,[pointsAfter, userID], function(err, result, fields){
         console.log(`user ${userID} set to ${pointsAfter}`);
 
         //defo need to query the sponsor
@@ -261,14 +261,14 @@ app.post('/sendMessage', function(req, res){
   let messageID = 0;
   let senderID = req.body.userID;
 
-  con.query(`SELECT * FROM Users WHERE username = "${to}"`, function(err, result, fields){
+  con.query(`SELECT * FROM Users WHERE username = ?`,[to], function(err, result, fields){
     if (err) throw err;
     var string=JSON.stringify(result);
     var json = JSON.parse(string);
     console.log(json);
     try{
       userID = json[0].UserID;
-      con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (${senderID}, ${json[0].UserID}, "${message}", "${dt}");`,
+      con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (?, ?, ?, ?);`,[senderID, json[0].UserID, message, dt],
         function (err, result, fields) {
           if (err) throw err;
           console.log('result', result);
@@ -297,7 +297,7 @@ app.post('/sendAlertMessage', function(req, res){
   let messageID = 0;
   let senderID = 13;
 
-  con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (${senderID}, ${to}, "${message}", "${dt}");`,
+  con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (?, ?, ?, ?);`,[senderID, to, message, dt],
     function (err, result, fields) {
       if (err) throw err;
       console.log('result', result);
@@ -320,7 +320,7 @@ app.post('/messageGroup', function(req, res){
   let senderID = req.body.userID;
 
   console.log('messaging group')
-  con.query(`SELECT * FROM Users WHERE sponsorKey = "${to}"`, function(err, result, fields){
+  con.query(`SELECT * FROM Users WHERE sponsorKey = ?`,[to], function(err, result, fields){
     if (err) throw err;
     var string=JSON.stringify(result);
     var json = JSON.parse(string);
@@ -328,7 +328,7 @@ app.post('/messageGroup', function(req, res){
     try{
 
       for(i in json){
-        con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (${senderID}, ${json[i].UserID}, "${message}", "${dt}");`,
+        con.query(`INSERT INTO Message(SenderID, RecipientID, Content, Date) VALUES (?, ?, ?, ?);`,[senderID, json[i].UserID, message, dt],
           function (err, result, fields) {
             if (err) throw err;
             console.log('result', result);
@@ -348,7 +348,7 @@ app.post('/messageGroup', function(req, res){
 app.patch('/markStarred',function(req,res){
   let id = req.body.messageId;
   console.log(id);
-  con.query(`UPDATE Message SET Starred = '1' WHERE (messageID = ${id});`, function(err, result, fields){
+  con.query(`UPDATE Message SET Starred = '1' WHERE (messageID = ?);`,[id], function(err, result, fields){
     if (err) throw err;
     console.log(id);
   });
@@ -357,7 +357,7 @@ app.patch('/markStarred',function(req,res){
 app.patch('/markRead',function(req,res){
   let id = req.body.messageId;
   console.log(id);
-  con.query(`UPDATE Message SET Unread = '0' WHERE (messageID = ${id});`, function(err, result, fields){
+  con.query(`UPDATE Message SET Unread = '0' WHERE (messageID = ?);`,[id], function(err, result, fields){
     if (err) throw err;
     console.log(id);
   });
@@ -366,7 +366,7 @@ app.patch('/markRead',function(req,res){
 app.patch('/deleteMsg',function(req,res){
   let id = req.body.messageId;
   console.log('deleting message');
-  con.query(`DELETE FROM Message WHERE (messageID = ${id});`, function(err, result, fields){
+  con.query(`DELETE FROM Message WHERE (messageID = ?);`,[id], function(err, result, fields){
     if (err) throw err;
     console.log(id);
   });
@@ -379,7 +379,7 @@ app.post('/showAll',function (req,res){
   let id = req.body.userID;
   //this creates a connection to the DB
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query(`SELECT * FROM Message WHERE RecipientID = ${id} ORDER BY Date`, function (err, result, fields) {
+  con.query(`SELECT * FROM Message WHERE RecipientID = ? ORDER BY Date`,[id], function (err, result, fields) {
     if (err) throw err;
 
     //data packet to send back
@@ -488,7 +488,7 @@ app.post('/showSponsorGroup',function (req,res){
   let key = req.body.sponsorKey;
   //this creates a connection to the DB
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query(`SELECT * FROM Users WHERE (sponsorKey = ${key} AND userType = 2)`, function (err, result, fields) {
+  con.query(`SELECT * FROM Users WHERE (sponsorKey = ? AND userType = 2)`,[key], function (err, result, fields) {
     if (err) throw err;
 
     //data packet to send back
@@ -518,7 +518,7 @@ app.patch('/addPoints',function(req,res){
   let pts = req.body.points;
   let sp = req.body.sponsor;
   console.log(req.body.actor);
-  con.query(`UPDATE Users SET Points = Points + ${pts} WHERE (UserID = ${id} AND sponsorKey = ${sp})`, function(err, result, fields){
+  con.query(`UPDATE Users SET Points = Points + ? WHERE (UserID = ? AND sponsorKey = ?)`,[pts, id, sp], function(err, result, fields){
     if(err) throw err;
   })
   QueryEvent(30, req.body.actor, req.body);
@@ -528,7 +528,7 @@ app.patch('/removePoints',function(req,res){
   let id = req.body.userID;
   let pts = req.body.points;
   let sp = req.body.sponsor;
-  con.query(`UPDATE Users SET Points = Points - ${pts} WHERE (UserID = ${id} AND sponsorKey = ${sp})`, function(err, result, fields){
+  con.query(`UPDATE Users SET Points = Points - ? WHERE (UserID = ? AND sponsorKey = ?)`,[pts, id, sp], function(err, result, fields){
     if(err) throw err;
   })
   QueryEvent(31, req.body.actor, req.body);
@@ -537,7 +537,7 @@ app.patch('/removePoints',function(req,res){
 app.post('/removeDriver', function(req, res){
   let driver = req.body.username;
   let sponsor = req.body.sponsorKey;
-  con.query(`DELETE * FROM Users WHERE (username = "${to}" AND sponsorKey = ${sponsor})`, function(err, result, fields){
+  con.query(`DELETE * FROM Users WHERE (username = ? AND sponsorKey = ?)`,[to, sponsor], function(err, result, fields){
     if (err) throw err;
   });
 });
@@ -551,7 +551,7 @@ app.post('/oneUser',function (req,res){
   //make sure a user there to be fetched
   let userID = req.body.userID;
 
-  con.query(`SELECT * FROM Users WHERE UserID = ${userID}`, function (err, result, fields) {
+  con.query(`SELECT * FROM Users WHERE UserID = ?`,[userID], function (err, result, fields) {
     if (err) throw err;
     console.log('result', result);
     res.send(result[0]).status(200);
@@ -573,8 +573,8 @@ app.post('/updateUser',function (req,res){
 
 
   con.query(`Update Users
-  set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}", userType = "${userType}"
-  where UserID = ${UserID};`,
+  set FirstName =?, LastName = ?, username = ?, hashedPassword = ?, address = ?, email = ?, userType = ?
+  where UserID = ?;`,[firstName, lastName, username, password, address, email, userType, UserID],
   function (err, result, fields) {
     if (!err){
       console.log('result',result)
@@ -615,7 +615,7 @@ app.post('/newUser',function(req,res){
   //Step 4 - make the connection and then post the new user to the db
 
   con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword)
-            values("${firstName}","${lastName}", ${type},"${address}","${email}","${sponsorKey}","${username}", "${password}")`,
+            values(?,?, ?,?,?,?,?, ?)`,[firstName, lastName, type, address, email, sponsorKey, username, password],
 
     function (err, result, fields) {
     if (err) throw err;
@@ -654,7 +654,7 @@ app.post('/SponsorAddSponsor',function(req,res){
   //Step 4 - make the connection and then post the new user to the db
 
   con.query(`insert into Users(FirstName, LastName, userType, address, email, sponsorKey, username, hashedPassword)
-            values("${firstName}","${lastName}", ${type},"${address}","${email}","${sponsorKey}","${username}", "${password}")`,
+            values(?,?, ?,?,?,?,?, ?)`,[firstName, lastName, type, address, email, sponsorKey, username, password],
 
     function (err, result, fields) {
     if (err) throw err;
@@ -685,7 +685,7 @@ app.post('/login',function (req,res){
   // var json2;
 
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query(`SELECT * FROM Users WHERE username = "${usernameAtmp}" AND sponsorKey = "${sponsorKey}"`, function (err, result, fields) {
+  con.query(`SELECT * FROM Users WHERE username = ? AND sponsorKey = ?`, [usernameAtmp, sponsorKey], function (err, result, fields) {
     var string1;
     var json1;
     var string2;
@@ -708,7 +708,7 @@ app.post('/login',function (req,res){
     if ( realPass === passAtmp){
 
       QueryEvent(10,json1.UserID,{})
-      con.query(`SELECT * FROM Settings WHERE UserID = "${json1.UserID}"`,
+      con.query(`SELECT * FROM Settings WHERE UserID = ?`,[json1.UserID],
         function (err, result, fields) {
           console.log("look at this", typeof result[0]);
           if (typeof result[0]== 'undefined') {
@@ -788,8 +788,8 @@ app.post('/Profile/EditProfile',function(req,res){
   //Step 4 - make the connection and then post the new user to the db
 
   con.query(`Update Users
-  set FirstName ="${firstName}", LastName = "${lastName}", username = "${username}", hashedPassword = "${password}", address = "${address}", email = "${email}"
-  where UserID = ${UserID};`,
+  set FirstName = ?, LastName = ?, username = ?, hashedPassword = ?, address = ?, email = ?
+  where UserID = ?;`,[firstName, lastName, username, password, address, email, UserID],
 
 
 
@@ -859,7 +859,7 @@ app.post('/applicationSubmit',function (req,res){
 
   console.log('body', body);
   ({SponsorID, DriverID, q1, q2, q3, q4, q5, q6, q6, q8, q9, q10} = body);
-  
+
   con.query(`SELECT * FROM Applications WHERE SponsorID = ${SponsorID} AND UserID = ${DriverID}`, function(err, results, fields) {
     if (results.length === 0)
     {
@@ -878,7 +878,7 @@ app.post('/applicationSubmit',function (req,res){
         })
     }
   })
-  
+
 });
 
 app.get('/fetchQuestions',function (req,res){
