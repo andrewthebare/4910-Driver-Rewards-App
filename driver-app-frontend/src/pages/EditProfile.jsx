@@ -75,9 +75,9 @@ import axios from 'axios';
         .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
           console.log(response);
           if (response.status === 200){
-            alert("Profile Successfully Updated");
-            sessionStorage.setItem("userInfo", JSON.stringify(response));
-            window.location= "http://localhost:3000/Profile";
+            window.confirm("Are you sure you want to save your changes, you will be logged out?")
+            sessionStorage.removeItem("userInfo");
+            window.location.replace("/Login");
             return false;
           }else{
             alert("Please Try Again")
