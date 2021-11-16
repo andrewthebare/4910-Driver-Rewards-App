@@ -41,6 +41,14 @@ function Profile() {
   console.log("userInfo inside profile: ",userInfo);
   console.log("First Name: ", userInfo.FirstName);
   console.log("Last Name: ",userInfo.LastName);
+
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var driver = false;
+  var userType = 3; 
+  userType = userInfo.userType;
+  if(userType === 2 || userType === 1 || userType === 0){
+    driver = true;
+  }
   return (
     <div className="profile">
       <div class="container">
@@ -52,7 +60,7 @@ function Profile() {
               alt=""
             />
           </div>
-          <p>
+          {driver && <p>
           {(()=>{
             if(userInfo.userType === 0){
               return(
@@ -73,10 +81,10 @@ function Profile() {
             }
           })()}
 
-          </p>
+          </p>}
           <div class="col-lg-5">
             
-            <p>{(()=>{
+            {driver &&<p>{(()=>{
             if(userInfo.userType === 0){
               return(
                 <div>User Type: Admin</div>
@@ -106,9 +114,9 @@ function Profile() {
           Sponsor ID: {userInfo.sponsorKey}<br></br>
 
 
-          </p>
-          <button onClick={updateUser}>Edit</button>
-          <button onClick={settings}>Settings</button>
+          </p>}
+          {driver &&<button onClick={updateUser}>Edit</button>}
+          {driver && <button onClick={settings}>Settings</button>}
     
          
           

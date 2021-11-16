@@ -205,80 +205,66 @@ function UndoChanges(){
 
 function Settings(){
 // var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-
+var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var driver = false;
+  var userType = 3; 
+  userType = userInfo.userType;
+  if(userType === 2 || userType === 1 || userType === 0){
+    driver = true;
+  }
 return(
     <div>
-        <label htmlFor="FontSize">Font Size</label>   
-            <select id='FontSize'>
+        {driver &&<label htmlFor="FontSize">Font Size</label>}   
+           {driver && <select id='FontSize'>
              <option value="regular">Regular</option>
              <option value="large">Large</option>
              <option value="extraLarge">Extra Large</option>
-             </select>
+             </select>}
             <br/>
-        <label htmlFor="darkThemeTab">Dark Theme?</label>
-            <input id='darkThemeTab'  type='checkbox'/>
+        {driver &&<label htmlFor="darkThemeTab">Dark Theme?</label>}
+            {driver &&<input id='darkThemeTab'  type='checkbox'/>}
             <br/>
-        {/* <label htmlFor="readReceipt">Read Receipts?</label>
-            <input id='readReceipt'  type='checkbox'/>
-            <br/> */}
-        <label htmlFor="securityQs">Require Security Questions?</label>
-            <input id='securityQs'  type='checkbox'/>
+        
+        {driver &&<label htmlFor="securityQs">Require Security Questions?</label>}
+            {driver &&<input id='securityQs'  type='checkbox'/>}
             <br/>
-        <label htmlFor="2StepAuth">Reuire 2-Step Authentification?</label>
-            <input id='2StepAuth'  type='checkbox'/>
+        {driver &&<label htmlFor="2StepAuth">Reuire 2-Step Authentification?</label>}
+            {driver &&<input id='2StepAuth'  type='checkbox'/>}
             <br/>
-        <label htmlFor="emailNotif">Receive Email Notifications?</label>
-            <input id='emailNotif'  type='checkbox'/>
+        {driver &&<label htmlFor="emailNotif">Receive Email Notifications?</label>}
+            {driver &&<input id='emailNotif'  type='checkbox'/>}
             <br/>
-        <label htmlFor="savePreBill">Save previous bills for</label>   
-            <select id='savePreBill'>
+        {driver &&<label htmlFor="savePreBill">Save previous bills for</label>}   
+            {driver &&<select id='savePreBill'>
                 <option value="1">1</option>
                 <option value="3">3</option>
                 <option value="5">5</option>
                 <option value="7">7</option>
                 <option value="9">9</option>
                 <option value="12">12</option>
-            </select>months
+            </select>}months
             <br/>
-        <label htmlFor="savePreOrders">Save previous orders for</label>   
-            <select id='savePreOrders'>
+        {driver &&<label htmlFor="savePreOrders">Save previous orders for</label> }  
+            {driver &&<select id='savePreOrders'>
                 <option value="1">1</option>
                 <option value="3">3</option>
                 <option value="5">5</option>
                 <option value="7">7</option>
                 <option value="9">9</option>
                 <option value="12">12</option>
-            </select>months
+            </select>}months
             <br/>
-        {/* <label htmlFor="messageColor">Color of Messages</label>
+       
+            {driver &&<label htmlFor="profilePic">Upload a Profile Picture</label>}
+            {driver &&<input id='profilePic'  type='file'/>}
+            {driver &&<label htmlFor="removePic">Remove Profile Picture</label>}
+            {driver && <input id='removePic' type='checkbox'/>}
             <br/>
-            <select id='messageColor'>
-                <option value="blue">Blue</option>
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-                <option value="purple">Purple</option>
-                <option value="orange">Orange</option>
-                <option value="yellow">Yellow</option>
-            </select>
-            <br/> */}
-            <label htmlFor="profilePic">Upload a Profile Picture</label>
-            <input id='profilePic'  type='file'/>
-            <label htmlFor="removePic">Remove Profile Picture</label>
-            <input id='removePic' type='checkbox'/>
-            <br/>
-            {/* <label htmlFor="Security Question 1">Security Question 1</label>
-            <input id='Security Question 1' type='text'/><br/>
-            <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>
-            <input id='Security Question 1 Answer' type='text'/><br/><br/>
-            <label htmlFor="Security Question 2">Security Question 2</label>
-            <input id='Security Question 2' type='text'/><br/>
-            <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>
-            <input id='Security Question 2 Answer' type='text'/><br/><br/> */}
-        <button onClick={SubChanges}>Submit Changes</button>
-        <button onClick={SetDefault}>Set to Default</button>
-        <button onClick={UndoChanges}>Undo Changes</button>
-        <button onClick={BlockedUser}>Blocked Users</button>
-        <button onClick={UnblockAll}>Unblock All Users</button>
+        {driver &&<button onClick={SubChanges}>Submit Changes</button>}
+        {driver &&<button onClick={SetDefault}>Set to Default</button>}
+        {driver &&<button onClick={UndoChanges}>Undo Changes</button>}
+        {driver &&<button onClick={BlockedUser}>Blocked Users</button>}
+        {driver &&<button onClick={UnblockAll}>Unblock All Users</button>}
     </div>
 )
 

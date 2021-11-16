@@ -16,7 +16,7 @@ class DriverList extends React.Component{
                        Points={user.Points}/>
       );
     }.bind(this));
-
+    
     return (
       <table>
         <thead>
@@ -155,35 +155,42 @@ export default function SponsorViewDrivers(){
   }
 
 
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var sponsor = false;
+  var userType = 3; 
+  userType = userInfo.userType;
+  if(userType === 1 || userType === 0){
+    sponsor = true;
+  }
   return(
     <div>
     <center>
-    <button type='submit' onClick={showSponsorGroup}> View Drivers </button>
+    {sponsor &&<button type='submit' onClick={showSponsorGroup}> View Drivers </button>}
 
-    <DriverList users = {usrs}/>
+    {sponsor &&<DriverList users = {usrs}/>}
     </center>
     <br></br>
     <center>
-    <label htmlFor="user">Driver to Change Points</label>
-    <select id="usrSelect">
+    {sponsor &&<label htmlFor="user">Driver to Change Points</label>}
+    {sponsor &&<select id="usrSelect">
       {populateIDList()}
-    </select>
+    </select>}
     <br></br>
-    <label htmlFor="point">Points</label>
-    <input id='points' type='number'/>
+    {sponsor &&<label htmlFor="point">Points</label>}
+    {sponsor &&<input id='points' type='number'/>}
     <br></br>
-    <label htmlFor="reason"> Reason</label>
-    <input id='reasons' type='text'/>
+    {sponsor &&<label htmlFor="reason"> Reason</label>}
+    {sponsor &&<input id='reasons' type='text'/>}
     <br/>
-    <button type='submit' onClick={addPoints}> Add Points </button>
-    <button type='submit' onClick={removePoints}> Remove Points </button>
+    {sponsor &&<button type='submit' onClick={addPoints}> Add Points </button>}
+    {sponsor &&<button type='submit' onClick={removePoints}> Remove Points </button>}
     <br></br>
     <br></br>
-    <label htmlFor="driver">Driver to Modify</label>
-    <select id="driverSelect">
+    {sponsor &&<label htmlFor="driver">Driver to Modify</label>}
+    {sponsor &&<select id="driverSelect">
       {populateIDList()}
-    </select>
-    <button type='submit' onClick={removeDriver}> Remove Driver </button>
+    </select>}
+    {sponsor &&<button type='submit' onClick={removeDriver}> Remove Driver </button>}
     </center>
     </div>
   )

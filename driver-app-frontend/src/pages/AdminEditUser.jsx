@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function EditUser() {
 
+
   //this is called a hook. first value(users) is the variable and the second one(setUsers) is a function that you call to update that variable
   //  when you update a hook, the whole page redraws. So, with that in mind, I wrote this code in a way that updates this variable with the data from the server
   //  so when the query comes back, everything gets redrawn, but with the new values now populating the list
@@ -138,16 +139,23 @@ export default function EditUser() {
     });
 
   }
-
+  var userType = 3;
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var admin = false;
+  userType = userInfo.userType;
+  console.log('usertype = ', userType);
+  if(userType === 0){
+    admin = true;
+  }
   return(
     <div>
-      <button onClick={fetchDB}>Fetch Users</button>
-      <select id="userSelect">
+      {admin && <button onClick={fetchDB}>Fetch Users</button>}
+      {admin && <select id="userSelect">
         {populateUserList()}
-      </select>
-      <button onClick={()=>setUserEdit()}>Edit User</button>
+      </select>}
+      {admin && <button onClick={()=>setUserEdit()}>Edit User</button>}
 
-      <form>
+      {admin && <form>
 
         <label htmlFor="usertype">User Type</label>
         <select id='usertype' selection={userData.userType}>
@@ -179,10 +187,11 @@ export default function EditUser() {
         <br/>
         <br/>
         
-    </form>
-    <button type='submit' onClick={()=> submit()}>Submit</button>
+    </form>}
+    {admin && <button type='submit' onClick={()=> submit()}>Submit</button>}
 
     </div>
+    
   )
 
 }
