@@ -91,6 +91,16 @@ export default function CreateUser(){
 
       return;
     }
+    if(password.indexOf('$') === -1 && password.indexOf('!') === -1 && password.indexOf('@') === -1 && password.indexOf('&') === -1 && password.indexOf('?') === -1){
+      alert('Password must include a special character ($,!,@,&,?)');
+
+      return;
+    }
+    if(password.length < 8){
+      alert('Password must be at least 8 characters');
+
+      return;
+    }
 
     //Step 2 - Send the data along to the server
     //load up a json object with our data that we're sending
@@ -123,12 +133,19 @@ export default function CreateUser(){
     //step 3 - listen for a response from the server (This is the .then function above)
     //Step 4 - react to the response given to the server (this is will be the body of the .then function above)
   }
-
+  var userType = 3;
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var admin = false;
+  userType = userInfo.userType;
+  console.log('usertype = ', userType);
+  if(userType === 0){
+    admin = true;
+  }
   return(
     <div>
       <center>
       <h1> Create User </h1>
-      <form onSubmit={onFormSubmit}>
+      {admin && <form onSubmit={onFormSubmit}>
 
         <label htmlFor="usertype">User Type</label>
         <select id='usertype'>
@@ -165,8 +182,8 @@ export default function CreateUser(){
         <input id='Security Question 2 Answer' type='text'/><br/><br/>
 
         {/* <button type='submit'>Submit</button> */}
-      </form>
-      <button onClick={onFormSubmit}>Submit</button>
+      </form>}
+      {admin && <button onClick={onFormSubmit}>Submit</button>}
       </center>
     </div>
   )

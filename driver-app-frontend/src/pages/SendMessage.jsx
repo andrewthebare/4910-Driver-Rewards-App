@@ -38,12 +38,18 @@ export default function SendMessage(){
     });
 
   }
-
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var driver = false;
+  var userType = 3; 
+  userType = userInfo.userType;
+  if(userType === 2 || userType === 1 || userType === 0){
+    driver = true;
+  }
   return(
     <div>
       <center>
-      <h1> Send Message </h1>
-      <form onSubmit={onFormSubmit}>
+      {driver &&<h1> Send Message </h1>}
+      {driver &&<form onSubmit={onFormSubmit}>
 
         <label htmlFor="username">User to Send To</label>
         <input id='username' type='text'/>
@@ -52,7 +58,7 @@ export default function SendMessage(){
         <input id='message' type='text'/>
         <br></br>
         <button type='submit'>Submit</button>
-      </form>
+      </form>}
       </center>
     </div>
   )

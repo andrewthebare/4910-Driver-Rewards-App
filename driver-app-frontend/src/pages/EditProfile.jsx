@@ -90,7 +90,13 @@ import axios from 'axios';
         //step 3 - listen for a response from the server (This is the .then function above)
         //Step 4 - react to the response given to the server (this is will be the body of the .then function above)
       }
-
+      var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+      var driver = false;
+      var userType = 3; 
+      userType = userInfo.userType;
+      if(userType === 2 || userType === 1 || userType === 0){
+        driver = true;
+      }
    return(
     <div>
 
@@ -99,38 +105,38 @@ import axios from 'axios';
 
 
          <br/>
-        <label htmlFor="FirstName">First Name</label>
-        <input id='FirstName' placeholder = {userInfo.FirstName} type='text'/>
-        <label htmlFor="LastName">Last Name</label>
-        <input id='LastName' placeholder = {userInfo.LastName} type='text'/><br/>
+        {driver && <label htmlFor="FirstName">First Name</label>}
+        {driver && <input id='FirstName' placeholder = {userInfo.FirstName} type='text'/>} 
+        {driver && <label htmlFor="LastName">Last Name</label>}
+        {driver && <input id='LastName' placeholder = {userInfo.LastName} type='text'/>}<br/>
 
-        <label htmlFor="email">Email</label>
-        <input id='email' placeholder= {userInfo.email} type='email'/><br/>
-        <label htmlFor="address">Address</label>
-        <input id='address' placeholder= {userInfo.address} type='text'/><br/>
-        <label htmlFor="username">Username</label>
-        <input id='username' placeholder= {userInfo.username} type='text'/>
-        <label htmlFor="password">Password</label>
-        <input id='password' placeholder= {userInfo.hashedPassword} type='text'/> <br/>
-        <label htmlFor="deleteTab">Delete Acount?</label>
-        <input id='deleteTab'  type='checkbox'/>
+        {driver && <label htmlFor="email">Email</label>}
+        {driver && <input id='email' placeholder= {userInfo.email} type='email'/>}<br/>
+        {driver && <label htmlFor="address">Address</label>}
+        {driver && <input id='address' placeholder= {userInfo.address} type='text'/>}<br/>
+        {driver && <label htmlFor="username">Username</label>}
+        {driver &&<input id='username' placeholder= {userInfo.username} type='text'/>}
+        {driver && <label htmlFor="password">Password</label>}
+        {driver && <input id='password' placeholder= {userInfo.hashedPassword} type='text'/> }<br/>
+        {driver && <label htmlFor="deleteTab">Delete Acount?</label>}
+        {driver && <input id='deleteTab'  type='checkbox'/>}
 
-        <h3 style={{"display":"none"}}>User Created Successfully</h3>
+        {driver && <h3 style={{"display":"none"}}>User Created Successfully</h3>}
 
         <br/>
         <br/>
         <br/>
-        <label htmlFor="Security Question 1">Security Question 1</label>
-        <input id='Security Question 1' type='text'/><br/>
-        <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>
-        <input id='Security Question 1 Answer' type='text'/><br/><br/>
-        <label htmlFor="Security Question 2">Security Question 2</label>
-        <input id='Security Question 2' type='text'/><br/>
-        <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>
-        <input id='Security Question 2 Answer' type='text'/><br/><br/>
+        {driver && <label htmlFor="Security Question 1">Security Question 1</label>}
+        {driver && <input id='Security Question 1' type='text'/>}<br/>
+        {driver && <label htmlFor="Security Question 1 Answer">Security Question 1 Answer</label>}
+        {driver && <input id='Security Question 1 Answer' type='text'/>}<br/><br/>
+        {driver &&<label htmlFor="Security Question 2">Security Question 2</label>}
+        {driver &&<input id='Security Question 2' type='text'/>}<br/>
+        {driver && <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>}
+        {driver && <input id='Security Question 2 Answer' type='text'/>}<br/><br/>
 
-        <button onClick={submitUpdate}>Submit</button>
-        <button onClick={cancelUpdate}>Cancel</button>
+        {driver &&<button onClick={submitUpdate}>Submit</button>}
+        {driver &&<button onClick={cancelUpdate}>Cancel</button>}
 
     </div>
    )

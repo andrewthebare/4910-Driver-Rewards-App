@@ -139,11 +139,18 @@ export default function AdminLogViewer(){
   }
 
   useMountEffect(fetchData)
-
+  var userType = 3;
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var admin = false;
+  userType = userInfo.userType;
+  console.log('usertype = ', userType);
+  if(userType === 0){
+    admin = true;
+  }
   return(
    <div>
-    <h1>Log Viewer</h1>
-     <table className='logHolder'>
+    {admin && <h1>Log Viewer</h1>}
+     {admin && <table className='logHolder'>
       <tr className='LogEvent header'>
         <th id='dateHeader' onClick={handleSort}>Date</th>
         <th id='eventHeader' onClick={handleSort} style={{cursor:'pointer'}}>Event</th>
@@ -151,7 +158,7 @@ export default function AdminLogViewer(){
         <th>Data</th>
       </tr>
       {populateLog()}
-     </table>
+     </table>}
    </div> 
   )
 }

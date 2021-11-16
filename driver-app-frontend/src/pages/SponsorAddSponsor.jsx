@@ -51,7 +51,19 @@ export default function SponsorAddSponsor(){
           || sponsor === '' || type === '' || email === '' || address === ''
           || username === '' || password === ''){
       //tell the user to try again
-      console.warn('NOT ALL FIELDS FILLED OUT');
+      alert('NOT ALL FIELDS FILLED OUT');
+
+      return;
+    }
+
+    if(password.indexOf('$') === -1 && password.indexOf('!') === -1 && password.indexOf('@') === -1 && password.indexOf('&') === -1 && password.indexOf('?') === -1){
+      alert('Password must include a special character ($,!,@,&,?)');
+
+      return;
+    }
+
+    if(password.length() < 8){
+      alert('Password must be at least 8 characters');
 
       return;
     }

@@ -141,41 +141,47 @@ export default function Messaging(){
     console.log(mjson);
     axios.patch('http://localhost:8081/deleteMsg', mjson)
   }
-
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var driver = false;
+  var userType = 3; 
+  userType = userInfo.userType;
+  if(userType === 2 || userType === 1 || userType === 0){
+    driver = true;
+  }
     return(
 
       <div>
       <center>
 
-      <button type='submit' className = "btn1" onClick={showAll}>Show All</button>
-      <button type='submit' className = "btn1" onClick={showStarred}>Show Starred</button>
-      <button type='submit' className = "btn1" onClick={showUnread}>Show Unread</button>
+      {driver && <button type='submit' className = "btn1" onClick={showAll}>Show All</button>}
+      {driver && <button type='submit' className = "btn1" onClick={showStarred}>Show Starred</button>}
+      {driver &&<button type='submit' className = "btn1" onClick={showUnread}>Show Unread</button>}
       <br></br>
-      <button>
+      {driver &&<button>
         <Link class="nav-link" to="/SendMessage">
           Send Message
           <span class="sr-only">(current)</span>
         </Link>
-      </button>
-      <button>
+      </button>}
+      {driver &&<button>
         <Link class="nav-link" to="/SponsorGroupMessage">
           Message Group
           <span class="sr-only">(current)</span>
         </Link>
-      </button>
+      </button>}
       </center>
-        <EmailList emails={msgs} />
+        {driver &&<EmailList emails={msgs} />}
       <center>
       <br></br>
-      <select id="msgSelect">
+      {driver &&<select id="msgSelect">
         {populateIDList()}
-      </select>
+      </select>}
       <br></br>
-      <button onClick = {markRead}> Mark As Read</button>
-      <button onClick = {markStarred}> Mark As Starred</button>
-      <button onClick = {deleteMsg}> Delete Message</button>
+      {driver &&<button onClick = {markRead}> Mark As Read</button>}
+      {driver &&<button onClick = {markStarred}> Mark As Starred</button>}
+      {driver && <button onClick = {deleteMsg}> Delete Message</button>}
       <br></br>
-      You can turn on read receipts in the settings part of your profile
+       You can turn on read receipts in the settings part of your profile
       </center>
       </div>
     )

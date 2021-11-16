@@ -19,17 +19,23 @@ export default function SponsorGroupMessage(){
     axios.post('http://localhost:8081/messageGroup',mjson)
   }
 
-
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var sponsor = false;
+  var userType = 3; 
+  userType = userInfo.userType;
+  if(userType === 1 || userType === 0){
+    sponsor = true;
+  }
   return(
     <div>
       <center>
-      <h1> Send Message to Your Entire Sponsor Group </h1>
-      <form onSubmit={msgGroup}>
+      {sponsor &&<h1> Send Message to Your Entire Sponsor Group </h1>}
+      {sponsor &&<form onSubmit={msgGroup}>
         <label htmlFor="message">Message Body</label>
         <input id='message' type='text'/>
         <br></br>
         <button type='submit'>Submit</button>
-      </form>
+      </form>}
       </center>
     </div>
   )

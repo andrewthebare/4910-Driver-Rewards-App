@@ -32,20 +32,26 @@ export default function SponsorEditCatalog(){
       console.log(response);
     })
   }
-
+  var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  var sponsor = false;
+  var userType = 3; 
+  userType = userInfo.userType;
+  if(userType === 1 || userType === 0){
+    sponsor = true;
+  }
   return(
     <div>
-      <h1>Edit Items found in the Catalog</h1>
+      {sponsor && <h1>Edit Items found in the Catalog</h1>}
 
-      <input id='keywords' type="text" defaultValue={query.keywords} onChange={handleInput} />
-      <p>Default Search Query</p>
-      <input id='limit' type="number" defaultValue={query.limit} onChange={handleInput}/>
-      <p>Number of Items</p>
-      <input id='max_price' type="number" defaultValue={query.max_price} onChange={handleInput}/>
-      <p>Max Price</p>
+      {sponsor &&<input id='keywords' type="text" defaultValue={query.keywords} onChange={handleInput} />}
+      {sponsor &&<p>Default Search Query</p>}
+      {sponsor &&<input id='limit' type="number" defaultValue={query.limit} onChange={handleInput}/>}
+      {sponsor && <p>Number of Items</p>}
+      {sponsor &&<input id='max_price' type="number" defaultValue={query.max_price} onChange={handleInput}/>}
+      {sponsor &&<p>Max Price</p>}
       <br/>
-      <button onClick={fetchQuery}>Fill Boxes with current Query</button>
-      <button onClick={setSponsorQuery}>Set Query</button>
+      {sponsor &&<button onClick={fetchQuery}>Fill Boxes with current Query</button>}
+      {sponosr &&<button onClick={setSponsorQuery}>Set Query</button>}
     </div>
   )
 }
