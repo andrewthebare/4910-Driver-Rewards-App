@@ -130,8 +130,14 @@ app.get('/fetchUsers',function (req,res){
 })
 
 app.get('/fetchLogData', function (req,res){
-  console.log('Fetching All Log Data')
-  con.query(`SELECT username, EventID, EventType, Event.UserID, Content, DATE_FORMAT(Date, '%e/%c/%Y %H:%i') Date from Event, Users where Event.UserID = Users.UserID`,
+  let logData = JSON.parse( req.query.logData);
+  logData.type = parseInt(logData.type);
+  console.log('logData', logData);
+
+
+
+  console.log('Fetching Log Data')
+  con.query(`SELECT username, EventID, EventType, Event.UserID, Content, DATE_FORMAT(Date, '%e/%c/%Y %H:%i') Date from Event, Users where Event.UserID = Users.UserID ${logData.type===-1?'':' and Event.EventType = ' + logData.type} ${logData.user===''?'':'and Users.username = \"' + logData.user+'\"'}`,
   function (err, result, fields){
     if (err) throw err;
 
