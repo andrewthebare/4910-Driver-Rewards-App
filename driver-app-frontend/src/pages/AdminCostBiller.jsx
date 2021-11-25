@@ -6,7 +6,6 @@ export default function AdminCostBiller(){
     const useMountEffect = (fun) => useEffect(fun, [])
     const [userIDs, setIDs] = useState([]);
     const [sponsors, setSponsors] = useState([{SponsorID: 0, SponsorName: 'username'}])
-    const [sponsorData, setSponsorData] = useState({});
 
     const fetchSponsors = ()=>{
         axios.get('http://localhost:8081/fetchSponsors').then(function(response){
@@ -33,12 +32,6 @@ export default function AdminCostBiller(){
         .then(function(response){
             console.log('res', response.data);
             setIDs(response.data);
-
-            // let Events = [];
-
-            // for(let i in userIDs){
-            //     axios.get('http://localhost:8081/fetchLogData', {params:{logData:}})
-            // }
         })
     }
 
@@ -53,7 +46,7 @@ export default function AdminCostBiller(){
 
             <div>
                 <h3>Purchases</h3>
-\               <LogViewer userNames={userIDs} />
+               <LogViewer userNames={userIDs} />
                 <button>Send Bill</button>
             </div>
         </div>
@@ -81,11 +74,8 @@ export function LogViewer(props){
         console.log('logData', logData);
 
         let data = [];
-    
-        for(let i in props.userNames){
-            console.log('i',props.userNames[i].username);
-            logData['user'] = props.userNames[i].username;
-            console.log('logData', logData)
+
+        if(logData.user!==''){
             axios.get('http://localhost:8081/fetchLogData', {params:{logData:logData}})
             .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
               if(response.data.length > 0)              
@@ -95,7 +85,23 @@ export function LogViewer(props){
             .catch(function (error) {   //this part catches errors
               console.log(error);
             });
+        }else{
+            for(let i in props.userNames){
+                console.log('i',props.userNames[i].username);
+                logData['user'] = props.userNames[i].username;
+                console.log('logData', logData)
+                axios.get('http://localhost:8081/fetchLogData', {params:{logData:logData}})
+                .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
+                  if(response.data.length > 0)              
+                    data = data.concat(response.data);
+                  //   setLogDataDisplay(response.data);
+                })
+                .catch(function (error) {   //this part catches errors
+                  console.log(error);
+                });
+            }        
         }
+    
         setTimeout(()=> setLogDataDisplay(data),1000)
       }    
 
