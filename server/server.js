@@ -98,6 +98,23 @@ app.get('/',function (req,res){
   res.send(200);
 })
 
+app.get('/fetchSponsors',function(req,res){
+  console.log('Fetching all Sponsors');
+  con.query('SELECT * From Sponsor', function (err, result, fields){
+    res.send(result).status(200);
+  })
+})
+
+app.get('/fetchSponsorsUsers', function(req,res){
+  console.log('Fetching all users of a Sponsor!');
+
+  let sponsor = req.query.sponsor;
+
+  con.query(`Select username from Users where sponsorKey = ${sponsor}`, function (err, result, fields){
+    // console.log(result);
+    res.send(result).status(200);
+  })
+})
 
 app.get('/fetchUsers',function (req,res){
   console.log('Fetching all the Users');
