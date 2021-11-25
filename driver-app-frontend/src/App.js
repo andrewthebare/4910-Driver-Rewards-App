@@ -10,6 +10,7 @@ import ApplicationViewer from "./pages/ApplicationViewer";
 import ApplicationSubmit from "./pages/ApplicationSubmit";
 import ApplicationChoice from "./pages/ApplicationChoice";
 import {SponsorAddSponsor} from "./pages";
+import {AdminCostBiller} from "./pages";
 import './App.css'
 
 /**
@@ -31,6 +32,7 @@ function App() {
           <Route path="/adminDashboard/createUser" exact component={() => <CreateUser />} />
           <Route path="/adminDashboard/editUser" exact component={() => <AdminEditUser />} />
           <Route path="/sponsorDashboard/editCatalog" exact component={() => <SponsorEditCatalog />} />
+          <Route path="/adminDashboard/BillMaker" exact component={() => <AdminCostBiller />} />
           <Route path="/sponsorDashboard/AddSponsor" exact component={() => <SponsorAddSponsor />} />
           <Route path="/catalog" exact component={() => <CatalogDisplay />} />
           <Route path="/Login" exact component={() => <Login />} />
