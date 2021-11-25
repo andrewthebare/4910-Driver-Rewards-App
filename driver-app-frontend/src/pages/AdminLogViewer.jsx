@@ -171,13 +171,16 @@ export default function AdminLogViewer(){
 }
 
 export function LogDataInput(props){
+  let today = new Date();
+  today.setDate(today.getDate()+1);
+
   return(
     <div>
       <div>
         <label for="dateRangeStart">Start</label>
         <input id='dateRangeStart' type='date'defaultValue={new Date(2021,8,3).toISOString().split('T')[0]}/>
         <label for="dateRangeEnd">End</label>
-        <input id='dateRangeEnd' type='date' defaultValue={new Date().toISOString().split('T')[0]}/>
+        <input id='dateRangeEnd' type='date' defaultValue={today.toISOString().split('T')[0]}/>
       </div>
       <div>
         <label for="eventTypeLabel">Event Type</label>

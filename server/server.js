@@ -57,15 +57,17 @@ app.use(function(req, res, next) {
  * @param {JSON} data the data that is associated with the event
  */
 let QueryEvent = (type, userID, data)=>{
-  // console.log('QUERYING');
-  // console.log('id',userID);
-  // console.log('data', data);
+  console.log('QUERYING');
+  console.log('type',type);
+  console.log('id',userID);
+  console.log('data', data);
   con.query(`INSERT into Event
   SET
   EventType = ${type},
   UserID = ${userID},
   Content = '${JSON.stringify(data)}'`,
   function(err,result,fields){
+    console.log('result', result);
     if (err) throw err;
   });
 }
@@ -246,7 +248,8 @@ app.post('/buyItem', function (req,res){
         console.log(`user ${userID} set to ${pointsAfter}`);
 
         //defo need to query the sponsor
-        QueryEvent(40, userID, {'item': item.JSON});
+        console.log(item);
+        QueryEvent(40, userID, {'item': {title: item.title, price: item.price}});
 
         res.send({enough:true}).status(200);
       })
