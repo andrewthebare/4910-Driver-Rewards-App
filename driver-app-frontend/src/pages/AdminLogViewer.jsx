@@ -114,8 +114,12 @@ export default function AdminLogViewer(){
     return parsed;
   }
   
-  const fetchData = () =>{
-    axios.get('http://localhost:8081/fetchLogData', {})
+  const fetchData = (logData) =>{
+
+    console.log('logData', logData);
+
+
+    axios.get('http://localhost:8081/fetchLogData', {params:{logData:logData}})
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log('response', response);
       setLogData(response.data);
@@ -138,7 +142,7 @@ export default function AdminLogViewer(){
     return logList;
   }
 
-  useMountEffect(fetchData)
+  // useMountEffect(fetchData)
   var userType = 3;
   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   var admin = false;
@@ -147,9 +151,12 @@ export default function AdminLogViewer(){
   if(userType === 0){
     admin = true;
   }
+
   return(
    <div>
     {admin && <h1>Log Viewer</h1>}
+    <LogDataInput fetchData={fetchData}/>
+
      {admin && <table className='logHolder'>
       <tr className='LogEvent header'>
         <th id='dateHeader' onClick={handleSort}>Date</th>
@@ -160,5 +167,38 @@ export default function AdminLogViewer(){
       {populateLog()}
      </table>}
    </div> 
+  )
+}
+
+export function LogDataInput(props){
+  return(
+    <div>
+      <div>
+        <label for="dateRangeStart">Start</label>
+        <input id='dateRangeStart' type='date'defaultValue={new Date(2021,8,3).toISOString().split('T')[0]}/>
+        <label for="dateRangeEnd">End</label>
+        <input id='dateRangeEnd' type='date' defaultValue={new Date().toISOString().split('T')[0]}/>
+      </div>
+      <div>
+        <label for="eventTypeLabel">Event Type</label>
+        <input id='eventTypeLabel' title='Enter -1 for All Types' type='number' defaultValue={-1}/>
+      </div>
+      <div>
+        <label for="userLabel">User</label>
+        <input id='userLabel' type='text' defaultValue={''}/>
+      </div>
+      <button onClick={()=>{
+
+        const logData = {
+          start: document.getElementById('dateRangeStart').value,
+          end: document.getElementById('dateRangeEnd').value,
+          type: document.getElementById('eventTypeLabel').value,
+          user: document.getElementById('userLabel').value,
+        }
+
+
+        props.fetchData(logData)
+      }}>Go</button>
+    </div>
   )
 }
