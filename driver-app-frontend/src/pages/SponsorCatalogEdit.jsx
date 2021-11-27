@@ -14,7 +14,7 @@ export default function SponsorEditCatalog(){
   const fetchQuery = ()=>{
     console.log('fetch!')
 
-    axios.get('http://localhost:8081/getCatalogQuery',{params:{id: 0}})
+    axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/getCatalogQuery',{params:{id: 0}})
     .then(function(response){
       
       let data = response.data;
@@ -27,7 +27,7 @@ export default function SponsorEditCatalog(){
   }
 
   const setSponsorQuery = () =>{
-    axios.put('http://localhost:8081/setCatalogQuery',{id: 0, data: query})
+    axios.put('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/setCatalogQuery',{id: 0, data: query})
     .then(function(response){
       console.log(response);
     })

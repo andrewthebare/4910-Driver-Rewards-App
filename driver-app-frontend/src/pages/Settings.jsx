@@ -6,7 +6,7 @@ function BlockedUser(){
 
     let userID = userInfo.UserID;
     alert("No Blocked Users")
-    // axios.post('http://localhost:8081/Settings', userID)
+    // axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/Settings', userID)
     //     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
     //       console.log(response);
     //       if (response.status === 200){
@@ -135,7 +135,7 @@ function SubChanges(){
     };
     console.log("updateSet: ", updatedSet);
 
-    axios.post('http://localhost:8081/Settings', updatedSet)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/Settings', updatedSet)
         .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
           console.log(response);
           if (response.status === 200){
@@ -179,7 +179,7 @@ function SetDefault(){
         removePicture: removePicture,
     };
     console.log("updateSet: ", updatedSet);
-    axios.post('http://localhost:8081/Settings', updatedSet)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/Settings', updatedSet)
         .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
           console.log(response);
           if (response.status === 200){
