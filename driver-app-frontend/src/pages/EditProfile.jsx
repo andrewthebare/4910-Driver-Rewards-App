@@ -55,6 +55,13 @@ import axios from 'axios';
         let password = document.getElementById("password").value;
         let deleted = document.getElementById("deleteTab").value;
 
+        if(deleted === '1'){
+          deleted = 1;
+        }
+        else {
+          deleted = 0;
+        }
+
 
         //Step 2 - Send the data along to the server
         //load up a json object with our data that we're sending
@@ -66,7 +73,7 @@ import axios from 'axios';
           address: address,
           username: username,
           password: password,
-          delete: deleted,
+          deleted: deleted,
 
         };
         console.log("pass updateUser: ", updatedUser);

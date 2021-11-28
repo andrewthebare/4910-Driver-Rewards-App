@@ -567,7 +567,7 @@ app.patch('/removePoints',function(req,res){
 app.post('/removeDriver', function(req, res){
   let driver = req.body.username;
   let sponsor = req.body.sponsorKey;
-  con.query(`DELETE * FROM Users WHERE (username = ? AND sponsorKey = ?)`,[to, sponsor], function(err, result, fields){
+  con.query(`DELETE FROM Users WHERE (username = ? AND sponsorKey = ?)`,[to, sponsor], function(err, result, fields){
     if (err) throw err;
   });
 });
@@ -807,7 +807,7 @@ app.post('/Profile/EditProfile',function(req,res){
 
   //js short hand parse out the data submitted from the user
   ({UserID, firstName,lastName, username, password, address, email, deleted} = body);
-
+  //console.log("////////////value of delteded is:", deleted);
   //Step 3 - make sure all that info is good info - TODO
 
     //if any of these field are wrong, send a bad data status code, that the front end should tell the user about
@@ -816,7 +816,15 @@ app.post('/Profile/EditProfile',function(req,res){
         }
 
   //Step 4 - make the connection and then post the new user to the db
-
+  if(deleted === 1){
+    console.log("////////////////////deleting account////////////////");
+    con.query(`DELETE FROM Users WHERE (UserID = ?);`,[UserID], function(err, result, fields){
+      if (err) throw err;
+      console.log("succesfull delete");
+      res.sendStatus(200);
+    });
+  }
+  else{
   con.query(`Update Users
   set FirstName = ?, LastName = ?, username = ?, hashedPassword = ?, address = ?, email = ?
   where UserID = ?;`,[firstName, lastName, username, password, address, email, UserID],
@@ -849,6 +857,7 @@ app.post('/Profile/EditProfile',function(req,res){
 
   });
 
+}
   //Step 5 - Listen for a response from the DB
   //          currently there is no logic for error
 
@@ -1029,7 +1038,7 @@ app.post('/Settings',function(req,res){
 
 
   //js short hand parse out the data submitted from the user
-  ({UserID, font,darkTheme, securityQ, twostep, emailNote, preBill, preOrder, removePicture} = body);
+  ({UserID, font,darkTheme, securityQ, twostep, emailNote, preBill, preOrder} = body);
 
   //Step 3 - make sure all that info is good info - TODO
 
