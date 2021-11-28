@@ -48,10 +48,12 @@ function Navigation(props) {
     <div className="navigation">
       <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container">
-          <Link class="navbar-brand" to="/Profile">
+          {loggedIn&& <Link class="navbar-brand" to="/Profile">
             {first} {last}
-          </Link>
-
+          </Link>}
+          {!loggedIn&& <Link class="navbar-brand" to="/">
+            {first} {last}
+          </Link>}
           <div>
             <ul class="navbar-nav ml-auto">
               {/* {!loggedIn && <li
@@ -102,6 +104,18 @@ function Navigation(props) {
                   Messaging
                 </Link>
               </li>}
+              {!loggedIn && <li
+                class={`nav-item  ${
+                  props.location.pathname === "/" ? "active" : ""
+                }`}
+              >
+                <Link class="nav-link" to="/SignUp">
+                  Sign Up
+                  <span class="sr-only">(current)</span>
+                </Link>
+              </li>} 
+              
+              
               {!loggedIn &&<li
                 class={`nav-item  ${
                   props.location.pathname === "/" ? "active" : ""

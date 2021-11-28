@@ -9,3 +9,10 @@ table, th, td {
   background-color: #222222;
   color: white;
 }
+
+h3 {
+  font-size: 100px;
+}
+h4{
+  font-size: large;
+}

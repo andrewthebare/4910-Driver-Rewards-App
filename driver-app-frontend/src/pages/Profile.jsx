@@ -56,11 +56,11 @@ function Profile() {
           <div class="col-lg-7">
             <img
               class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/200x200"
+              src="https://s11284.pcdn.co/wp-content/uploads/2020/01/Commercial-truck-driver-leaving-cab.jpg.webp"
               alt=""
             />
           </div>
-          {driver && <p>
+          {/* {driver && <p>
           {(()=>{
             if(userInfo.userType === 0){
               return(
@@ -81,9 +81,10 @@ function Profile() {
             }
           })()}
 
-          </p>}
+          </p>} */}
+          
           <div class="col-lg-5">
-            
+          <h3>{userInfo.Points} <h4>Points</h4></h3>
             {driver &&<p>{(()=>{
             if(userInfo.userType === 0){
               return(
@@ -106,7 +107,6 @@ function Profile() {
           UserID: {userInfo.UserID} <br></br>
           First Name: {userInfo.FirstName}<br></br>
           Last Name: {userInfo.LastName}<br></br>
-          Points: {userInfo.Points}<br></br>
           Address: {userInfo.address}<br></br>
           Email: {userInfo.email}<br></br>
           Username: {userInfo.username}<br></br>
