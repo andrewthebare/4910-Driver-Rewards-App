@@ -87,6 +87,7 @@ export default function SponsorAddSponsor(){
       console.log(response);
       if (response.status === 200){
         alert("Account created successfully");
+        window.location.replace("/Login");
       }else{
         alert("Account Creation was unsuccessful")
       }

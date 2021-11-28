@@ -163,7 +163,7 @@ function SetDefault(){
     let preBill = 12;
     let preOrder = 12;
     //let profilePicture = null;
-    let removePicture = false;
+    //let removePicture = false;
     
 
     const updatedSet = {
@@ -176,7 +176,7 @@ function SetDefault(){
         preBill: preBill,
         preOrder: preOrder,
        // profilePicture: profilePicture,
-        removePicture: removePicture,
+       //removePicture: removePicture,
     };
     console.log("updateSet: ", updatedSet);
     axios.post('http://localhost:8081/Settings', updatedSet)
