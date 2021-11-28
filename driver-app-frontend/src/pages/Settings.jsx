@@ -255,16 +255,16 @@ return(
             </select>}months
             <br/>
        
-            {driver &&<label htmlFor="profilePic">Upload a Profile Picture</label>}
+            {/* {driver &&<label htmlFor="profilePic">Upload a Profile Picture</label>}
             {driver &&<input id='profilePic'  type='file'/>}
             {driver &&<label htmlFor="removePic">Remove Profile Picture</label>}
-            {driver && <input id='removePic' type='checkbox'/>}
+            {driver && <input id='removePic' type='checkbox'/>} */}
             <br/>
         {driver &&<button onClick={SubChanges}>Submit Changes</button>}
         {driver &&<button onClick={SetDefault}>Set to Default</button>}
         {driver &&<button onClick={UndoChanges}>Undo Changes</button>}
-        {driver &&<button onClick={BlockedUser}>Blocked Users</button>}
-        {driver &&<button onClick={UnblockAll}>Unblock All Users</button>}
+        {/* {driver &&<button onClick={BlockedUser}>Blocked Users</button>}
+        {driver &&<button onClick={UnblockAll}>Unblock All Users</button>} */}
     </div>
 )
 

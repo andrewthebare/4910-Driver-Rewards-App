@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, Messaging, SendMessage, SponsorGroupMessage,UserDashboard, SponsorDashBoard, DriverDashboard} from "./pages";
+import { Navigation, Home, About, Contact, AdminDashboard, CreateUser, Login, Profile, SecurityQuestions, Error, EditProfile, AdminEditUser , Settings, Messaging, SendMessage, SponsorGroupMessage,UserDashboard, SponsorDashBoard, DriverDashboard, SignUp} from "./pages";
 import {AdminLogViewer} from "./pages"  //found out we can import like this to avoid merge conflicts
 import { CatalogDisplay } from "./pages";
 import { SponsorEditCatalog } from "./pages";
@@ -46,6 +46,7 @@ function App() {
           <Route path="/ApplicationChoice" exact component={() => <ApplicationChoice />} />
           <Route path="/DriverDashBoard" exact component={() => <DriverDashboard />} />
           <Route path="/SponsorDashBoard" exact component={() => <SponsorDashBoard />} />
+          <Route path="/SignUp" exact component={() => <SignUp />} />
           <Route path="/Profile/EditProfile" exact component={() => <EditProfile />} />
           <Route path="/Messaging" exact component={() => <Messaging />} />
           <Route path="/SendMessage" exact component={() => <SendMessage />} />

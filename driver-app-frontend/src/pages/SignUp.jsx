@@ -2,13 +2,9 @@ import React from "react";
 import axios from 'axios';
 
 export default function SponsorAddSponsor(){
-    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    
   //infrastructure function that just fetches the DB
-  var userType = userInfo.userType;
-  var sponsor = false;
-  if( userType === 1 || userType === 0){
-    sponsor = true;
-  }
+
 
   /**
    * This is a very simple example of how we're going to talk to the DB
@@ -39,8 +35,8 @@ export default function SponsorAddSponsor(){
     //Step 1 - Make sure that all the necissary fields are filled out
     let firstName = document.getElementById("FirstName").value;
     let lastName = document.getElementById("LastName").value;
-    let type = 1;
-    let sponsor = userInfo.sponsorKey;
+    let type = 2;
+    let sponsor = 100;
     let email = document.getElementById("email").value;
     let address = document.getElementById("address").value;
     let username = document.getElementById("username").value;
@@ -91,7 +87,6 @@ export default function SponsorAddSponsor(){
       console.log(response);
       if (response.status === 200){
         alert("Account created successfully");
-        window.location.replace("/SponsorDashBoard");
       }else{
         alert("Account Creation was unsuccessful")
       }
@@ -111,9 +106,8 @@ export default function SponsorAddSponsor(){
       <h1> Create User </h1>
       <form onSubmit={onFormSubmit}>
 
-        
+
          <br/>
-         {sponsor && <h2>
         <label htmlFor="FirstName">First Name</label>
         <input id='FirstName' type='text'/>
         <label htmlFor="LastName">Last Name</label>
@@ -138,10 +132,10 @@ export default function SponsorAddSponsor(){
         <input id='Security Question 2' type='text'/><br/>
         <label htmlFor="Security Question 2 Answer">Security Question 2 Answer</label>
         <input id='Security Question 2 Answer' type='text'/><br/><br/>
-          </h2>}
+
         {/* <button type='submit'>Submit</button> */}
       </form>
-      {sponsor && <button onClick={onFormSubmit}>Submit</button>}
+      <button onClick={onFormSubmit}>Submit</button>
       </center>
     </div>
   )
