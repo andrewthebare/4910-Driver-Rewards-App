@@ -46,14 +46,15 @@ export default function ApplicationSubmit(){
     }
     
     const onCancel = () =>{
-      window.location.replace("/home")
+      window.location.replace("/DriverDashBoard")
     }
 
     const onFormSubmit = () =>{
     var error1 = document.getElementById("error1")
     var error2 = document.getElementById("error2")
     let SponsorID = document.getElementById("SponsorID").value;
-    let driverID = 1;
+    let sessionInfo= JSON.parse(sessionStorage.getItem("userInfo"))
+    let driverID = sessionInfo.userID;
 
     if(SponsorID === '')
         {
@@ -104,7 +105,7 @@ export default function ApplicationSubmit(){
       console.log(response);
       if (response.status === 200){
         alert("Answers Submitted Successfully");
-        //window.location.replace("/SponsorDashboard");
+        window.location.replace("/DriverDashboard");
       }
     })
     .catch(function (error) {   //Error catch and Statement

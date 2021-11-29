@@ -5,7 +5,8 @@ export default function ApplicationCreation(){
 
   const onFormSubmit = () => {
     var error = document.getElementById("error")
-    let sponsID = 0;
+    let sessionInfo= JSON.parse(sessionStorage.getItem("userInfo"))
+    let sponsID = sessionInfo.sponsorKey;
 
     let app1 = document.getElementById("AppQ1").value;
     let app2 = document.getElementById("AppQ2").value;

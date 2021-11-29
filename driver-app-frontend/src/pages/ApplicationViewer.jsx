@@ -5,8 +5,10 @@ import App from "../App";
 export default function ApplicationViewer(){
 
     const loadQuestions = () => {
-        let SponsorID = 0;
-        axios.get('http://localhost:8081/fetchQuestions', SponsorID)
+      let sessionInfo= JSON.parse(sessionStorage.getItem("userInfo"))
+      let SponsorID = sessionInfo.sponsorKey;
+        let sponsIDjson = {SponsorID: SponsorID}
+        axios.get('http://localhost:8081/fetchQuestions', {params: sponsIDjson})
         .then(function(response){
             console.log('fetch', response);
 

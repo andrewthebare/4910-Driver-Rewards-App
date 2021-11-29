@@ -959,6 +959,45 @@ app.get('/fetchApplication',function (req,res){
 
 })
 
+app.post('/approveApplication',function (req,res){
+  console.log('Approving Application');
+  let body = req.body;
+  console.log('body', body);
+
+  ({SponsorID, UserID} = body);
+  con.query(`Update Applications SET Accepted = 1 WHERE SponsorID = ${SponsorID} AND UserID = ${UserID}`, function (err, result, fields) {
+    if (!err){
+      console.log('result',result)
+      res.sendStatus(200);
+    }
+    else{
+      res.sendStatus(400);
+    }
+    if (err) throw err;
+  });
+
+})
+
+app.post('/denyApplication',function (req,res){
+  console.log('Denying Application');
+  let body = req.body;
+  console.log('body', body);
+
+  ({SponsorID, UserID} = body);
+  con.query(`Update Applications SET Accepted = 2 WHERE SponsorID = ${SponsorID} AND UserID = ${UserID}`, function (err, result, fields) {
+    if (!err){
+      console.log('result',result)
+      res.sendStatus(200);
+    }
+    else{
+      res.sendStatus(400);
+    }
+    if (err) throw err;
+  });
+
+})
+
+
 
 
 app.post('/SecurityQuestions',function(req,res){
