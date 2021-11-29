@@ -18,7 +18,7 @@ export default function ApplicationSubmit(){
         else{
             let sponsIDjson = {SponsorID: SponsorID}
             console.log(sponsIDjson)
-            axios.get('http://localhost:8081/fetchQuestions', {params: sponsIDjson})
+            axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchQuestions', {params: sponsIDjson})
         .then(function(response){
             console.log('fetch', response);
 
@@ -99,7 +99,7 @@ export default function ApplicationSubmit(){
       q10: ans10
     }
     
-    axios.post('http://localhost:8081/applicationSubmit', applicationAnswers)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/applicationSubmit', applicationAnswers)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log(response);
       if (response.status === 200){

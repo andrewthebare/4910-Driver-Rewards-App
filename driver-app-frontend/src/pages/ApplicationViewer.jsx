@@ -6,7 +6,7 @@ export default function ApplicationViewer(){
 
     const loadQuestions = () => {
         let SponsorID = 0;
-        axios.get('http://localhost:8081/fetchQuestions', SponsorID)
+        axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchQuestions', SponsorID)
         .then(function(response){
             console.log('fetch', response);
 
@@ -148,7 +148,7 @@ export default function ApplicationViewer(){
         q10: app10
       }
       
-      axios.post('http://localhost:8081/applicationUpdate', applicationQuestions)
+      axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/applicationUpdate', applicationQuestions)
       .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
         console.log(response);
         if (response.status === 200){

@@ -13,7 +13,7 @@ export default function CatalogDisplay(){
   let ascending;
 
   const updateUser = ()=>{
-    axios.post('http://localhost:8081/oneUser', {userID: userInfo.UserID})
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/oneUser', {userID: userInfo.UserID})
     .then(function(response){
       //probably shouldn't pull down the whole user, but I'm lazy
       console.log('user', response);
@@ -47,7 +47,7 @@ export default function CatalogDisplay(){
   const fetchProductData = () =>{
     ascending = false;
 
-    axios.post('http://localhost:8081/fetchCatalog', {query:query, price: price})
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchCatalog', {query:query, price: price})
     .then(function(response){
       console.log('fetch', response);
 

@@ -27,7 +27,7 @@ export default function EditUser() {
     };
 
     //post it to the server
-    axios.get('http://localhost:8081/fetchUsers', newUser)
+    axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchUsers', newUser)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log('response Data',response.data);
       setUsers(response.data)
@@ -57,7 +57,7 @@ export default function EditUser() {
     console.log('selection',selection);
 
     //query the db for a specific user
-    axios.post('http://localhost:8081/oneUser', {userID:selection})
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/oneUser', {userID:selection})
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log('response Data',response);
 
@@ -125,7 +125,7 @@ export default function EditUser() {
     console.log('userData', userData)
 
     //post it to the server
-    axios.post('http://localhost:8081/updateUser', updatedUser)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/updateUser', updatedUser)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log(response);
       if (response.status === 200){

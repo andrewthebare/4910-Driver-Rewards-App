@@ -68,7 +68,7 @@ export default function SponsorViewDrivers(){
       username: userInfo.username,
       sponsorKey: sponsorGroup,
     };
-    axios.post('http://localhost:8081/showSponsorGroup', mjson, { headers: {"Content-Type": "application/json"} })
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/showSponsorGroup', mjson, { headers: {"Content-Type": "application/json"} })
     .then((response) => {
       setUsrs(response.data);
       console.log(usrs);
@@ -92,7 +92,7 @@ export default function SponsorViewDrivers(){
       reason: reason,
       actor: actor,
     }
-    axios.patch('http://localhost:8081/addPoints',mjson)
+    axios.patch('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/addPoints',mjson)
 
     var msg = addPts + " points have been added to your account";
     const msgJson = {
@@ -100,7 +100,7 @@ export default function SponsorViewDrivers(){
       message: msg,
       userID: actor,
     };
-    axios.post('http://localhost:8081/sendAlertMessage', msgJson)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/sendAlertMessage', msgJson)
   }
 
   const removePoints = ()=>{
@@ -117,14 +117,14 @@ export default function SponsorViewDrivers(){
       reason: reason,
       actor: actor,
     }
-    axios.patch('http://localhost:8081/removePoints',mjson)
+    axios.patch('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/removePoints',mjson)
     var msg = remPts + " points have been removed from your account";
     const msgJson = {
       username: userToRem,
       message: msg,
       userID: actor,
     };
-    axios.post('http://localhost:8081/sendAlertMessage', msgJson)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/sendAlertMessage', msgJson)
 
 
   }
@@ -139,7 +139,7 @@ export default function SponsorViewDrivers(){
       sponsorKey: sponsorGroup,
     };
 
-    axios.post('http://localhost:8081/removeDriver', mjson)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/removeDriver', mjson)
   }
 
 

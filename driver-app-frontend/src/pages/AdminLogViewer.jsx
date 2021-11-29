@@ -119,7 +119,7 @@ export default function AdminLogViewer(){
     console.log('logData', logData);
 
 
-    axios.get('http://localhost:8081/fetchLogData', {params:{logData:logData}})
+    axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchLogData', {params:{logData:logData}})
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log('response', response);
       setLogData(response.data);
