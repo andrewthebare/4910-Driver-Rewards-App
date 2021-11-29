@@ -18,14 +18,6 @@ export default function ApplicationChoice(){
     return rows;
   }
 
-  const onApproval = () => {
-    console.log("approve")
-  }
-
-  const onDenial = () => {
-    console.log("deny")
-}
-
   const onCancel = () =>{
     window.location.replace("/SponsorDashboard")
   }
