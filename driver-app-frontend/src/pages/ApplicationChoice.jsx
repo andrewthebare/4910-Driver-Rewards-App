@@ -1,7 +1,22 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import axios from "axios";
+import ApplicationList from "./components/ApplicationLists";
 
 export default function ApplicationChoice(){
+  const [allApplications, setAllApplications] = useState([])
+  
+  const fillApplicationRows = () =>{
+    let rows = [];
+    console.log(allApplications);
+
+    
+    for (let i in allApplications)
+    {
+      rows.push(
+      <ApplicationList application={allApplications[i]}/>)
+    }
+    return rows;
+  }
 
   const onApproval = () => {
     console.log("approve")
@@ -12,11 +27,12 @@ export default function ApplicationChoice(){
 }
 
   const onCancel = () =>{
-    //window.location.replace("/SponsorDashboard")
+    window.location.replace("/SponsorDashboard")
   }
 
   const onFormFetch = () =>{
-    let SponsorID = 0;
+    let sessionInfo= JSON.parse(sessionStorage.getItem("userInfo"))
+    let SponsorID = sessionInfo.sponsorKey;
     let sponsIDjson = {SponsorID: SponsorID}
     
     var tbl = document.getElementById('table');
@@ -27,18 +43,7 @@ export default function ApplicationChoice(){
             let data = response.data;
             console.log('Returned Data', data);
 
-            var table = document.getElementById('table');
-            data.forEach(function(object) {
-                var tr = document.createElement('tr');
-                let obj1 = JSON.stringify(object.ApplicationAns).replace(/[,]/g, '\n')
-                let obj2 = obj1.replace(/[\\]/g, '')
-                console.log('Nice Print', obj2)
-                tr.innerHTML = '<td>' + object.UserID + '</td>' +
-                    '<td>' + obj2 + '</td>' +
-                    '<td>' + '<input id="Approve" type="button" value="Approve">'+ 
-                    '<td>' + '<input id="Deny" type="button" value="Deny" />'+ '</td>' ;
-                table.appendChild(tr);
-                });
+            setAllApplications(data);
         
         })
         
@@ -57,6 +62,7 @@ export default function ApplicationChoice(){
             <th>Approve</th>
             <th>Deny</th>
         </tr>
+        {fillApplicationRows()}
     </table>
       <span id="error"></span><br/>
       <button onClick={onCancel}> Return</button>
