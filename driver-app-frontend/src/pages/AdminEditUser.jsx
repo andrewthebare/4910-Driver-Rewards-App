@@ -21,7 +21,7 @@ export default function EditUser() {
 
   //asks for all the users from DB, and then fills in users variable with response
   const fetchDB = () =>{
-    const newUser = { 
+    const newUser = {
       firstName: 'Fred',
       lastName: 'Flinstone'
     };
@@ -48,7 +48,7 @@ export default function EditUser() {
     for (let i in users){
       options.push(<option value={users[i].userID}>{`${users[i].username} | ${users[i].firstName} ${users[i].lastName}`}</option>)
     }
-    
+
     return options;
   }
 
@@ -61,7 +61,7 @@ export default function EditUser() {
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log('response Data',response);
 
-      //pull it down and populate a new JSON 
+      //pull it down and populate a new JSON
       let data = response.data;
       console.log('data',data)
       setUserData(data);
@@ -73,6 +73,26 @@ export default function EditUser() {
     });
 
 
+  }
+
+  function polynomialRollingHash(str)
+  {
+
+      // P and M
+      let p = 31;
+      let m = (1e9 + 9);
+      let power_of_p = 1;
+      let hash_val = 0;
+
+      // Loop to calculate the hash value
+      // by iterating over the elements of String
+      for(let i = 0; i < str.length; i++)
+      {
+          hash_val = (hash_val + (str[i].charCodeAt() -
+                      'a'.charCodeAt() + 1) * power_of_p) % m;
+          power_of_p = (power_of_p * p) % m;
+      }
+      return hash_val;
   }
 
   const submit = ()=>{
@@ -115,11 +135,11 @@ export default function EditUser() {
       email: email,
       address: address,
       username: username,
-      password: password,  
+      password: polynomialRollingHash(password).toString(),  
       // secureQ1: secureQ1,
       // secureA1: secureA1,
       // secureQ2: secureQ2,
-      // secureA2: secureA2,    
+      // secureA2: secureA2,
     };
 
     console.log('userData', userData)
@@ -186,12 +206,12 @@ export default function EditUser() {
         <br/>
         <br/>
         <br/>
-        
+
     </form>}
     {admin && <button type='submit' onClick={()=> submit()}>Submit</button>}
 
     </div>
-    
+
   )
 
 }

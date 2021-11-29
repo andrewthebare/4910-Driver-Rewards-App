@@ -156,10 +156,10 @@ app.get('/fetchLogData', function (req,res){
 
 
   console.log('Fetching Log Data')
-  con.query(`SELECT username, EventID, EventType, Event.UserID, Content, DATE_FORMAT(Date, '%c/%e/%Y %H:%i') Date from Event, Users where Event.UserID = Users.UserID 
-    and Event.Date >= '${logData.start}' 
-    AND Event.Date <= '${logData.end}' 
-    ${logData.type===-1?'':' and Event.EventType = ' + logData.type} 
+  con.query(`SELECT username, EventID, EventType, Event.UserID, Content, DATE_FORMAT(Date, '%c/%e/%Y %H:%i') Date from Event, Users where Event.UserID = Users.UserID
+    and Event.Date >= '${logData.start}'
+    AND Event.Date <= '${logData.end}'
+    ${logData.type===-1?'':' and Event.EventType = ' + logData.type}
     ${logData.user===''?'':'and Users.username = \"' + logData.user+'\"'}`,
   function (err, result, fields){
     if (err) throw err;
@@ -437,13 +437,13 @@ app.post('/showAll',function (req,res){
 })
 
 
-app.get('/showStarred',function (req,res){
+app.post('/showStarred',function (req,res){
   console.log('Loading All Starred Messages');
-
+  let id = req.body.userID;
   //this creates a connection to the DB
 
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query(`SELECT * FROM Message WHERE Starred = 1;`, function (err, result, fields) {
+  con.query(`SELECT * FROM Message WHERE (RecipientID = ? AND Starred = 1);`, [id], function (err, result, fields) {
     if (err) throw err;
 
     //data packet to send back
@@ -476,11 +476,11 @@ app.get('/showStarred',function (req,res){
 
 app.get('/showUnread',function (req,res){
   console.log('Loading All Unread Messages');
-
+  let id = req.body.userID;
   //this creates a connection to the DB
 
   //This actually makes the connection to the DB, then, if it succeeds, makes a query using sql
-  con.query(`SELECT * FROM Message WHERE Unread = 1;`, function (err, result, fields) {
+  con.query(`SELECT * FROM Message WHERE (RecipientID = ? AND Unread = 1);`,[id], function (err, result, fields) {
     if (err) throw err;
 
     //data packet to send back
@@ -944,6 +944,11 @@ app.get('/fetchQuestions',function (req,res){
 
 })
 
+
+
+
+
+
 app.get('/fetchApplication',function (req,res){
   console.log('Pulling Application Down');
   let sponsID = req.query.SponsorID;
@@ -956,7 +961,7 @@ app.get('/fetchApplication',function (req,res){
     else
     {
       con.query(`SELECT * FROM Applications WHERE SponsorID IN (${sponsID})`, function (err, result, fields) {
-        
+
         console.log('Result', result)
 
         res.send(result).status(200);
@@ -1006,6 +1011,76 @@ app.post('/denyApplication',function (req,res){
 
 })
 
+
+
+
+
+app.post('/resetPassword',function(req,res){
+  console.log('Changing password');
+  let q = req.body.q;
+  let username = req.body.username;
+  let ans = req.body.ans;
+  let newpw = req.body.newpw;
+  con.query(`SELECT * FROM Users WHERE username = ?`, [username],
+    function(err, result, fields){
+      if(err) throw err;
+      else{
+        var string1=JSON.stringify(result[0]);
+        var json1 = JSON.parse(string1);
+        con.query(`SELECT * FROM Settings WHERE UserID = ${json1.UserID}`,
+        function(err, result, fields){
+          if(err) throw err;
+          else{
+            var string2=JSON.stringify(result[0]);
+            var json2 = JSON.parse(string2);
+            if((json2.SecurityQuestion1 == q && json2.SecurityAnswer1) || (json2.SecurityQuestion2 == q && json2.SecurityAnswer2)){
+              con.query(`UPDATE Users SET hashedPassword = ? WHERE UserID = ?`, [newpw, json1.UserID],
+              function(err, result, fields){
+                if(err) throw err;
+              }
+            )
+            }
+          }
+        }
+      )
+
+      }
+    }
+
+
+  )
+
+
+
+})
+
+app.post('/getSecQuestion', function(req, res){
+  let username = req.body.username;
+  console.log(username);
+  con.query(`SELECT * FROM Users WHERE username = ?`, [username],
+    function(err, result, fields){
+      if(err) throw err;
+      else{
+        var string1=JSON.stringify(result[0]);
+        var json1 = JSON.parse(string1);
+        con.query(`SELECT * FROM Settings WHERE UserID = ${json1.UserID}`,
+        function(err, result, fields){
+          if(err) throw err;
+          else{
+            res.send(result).status(200);
+          }
+        }
+      )
+
+      }
+    }
+
+
+  )
+
+
+
+})
 
 
 

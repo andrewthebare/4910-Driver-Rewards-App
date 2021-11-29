@@ -19,7 +19,7 @@ function BlockedUser(){
     //         return false;
     //       }
     //     })
-       
+
 };
 function UnblockAll(){
     alert("There are no users to unblock")
@@ -51,17 +51,11 @@ function SubChanges(){
         document.getElementById("emailNotif").value = 1;
     }else if(!document.getElementById("emailNotif").checked){
         document.getElementById("emailNotif").value = 0;
-    } 
+    }
     let emailNote = document.getElementById("emailNotif").value;
     let preBill = document.getElementById("savePreBill").value;
     let preOrder = document.getElementById("savePreOrders").value;
     //let profilePicture = document.getElementById("profilePic").value;
-    if(document.getElementById("removePic").checked){
-        document.getElementById("removePic").value = 1;
-    }else if(!document.getElementById("removePic").checked){
-        document.getElementById("removePic").value = 0;
-    } 
-    let removePicture = document.getElementById("removePic").value;
 
     if(font === 'regular'){
         font = 1;
@@ -103,12 +97,6 @@ function SubChanges(){
         emailNote =1;
     }
 
-    if(removePicture === '0'){
-        removePicture = 0;
-    }
-    else if(removePicture === '1'){
-        removePicture =1;
-    }
     if(preBill === '1'){preBill = 1}
     else if(preBill === '3'){preBill = 3}
     else if(preBill === '5'){preBill = 5}
@@ -130,8 +118,6 @@ function SubChanges(){
         emailNote: emailNote,
         preBill: preBill,
         preOrder: preOrder,
-       // profilePicture: profilePicture,
-        removePicture: removePicture,
     };
     console.log("updateSet: ", updatedSet);
 
@@ -148,7 +134,7 @@ function SubChanges(){
             return false;
           }
         })
-    
+
 }
 
 function SetDefault(){
@@ -158,13 +144,13 @@ function SetDefault(){
     let font = 1;
     let darkTheme = 0;
     let securityQ = 0;
-    let twostep = 0; 
+    let twostep = 0;
     let emailNote = 0;
     let preBill = 12;
     let preOrder = 12;
     //let profilePicture = null;
-    //let removePicture = false;
-    
+    let removePicture = false;
+
 
     const updatedSet = {
         UserID: UserID,
@@ -176,7 +162,7 @@ function SetDefault(){
         preBill: preBill,
         preOrder: preOrder,
        // profilePicture: profilePicture,
-       //removePicture: removePicture,
+        removePicture: removePicture,
     };
     console.log("updateSet: ", updatedSet);
     axios.post('http://localhost:8081/Settings', updatedSet)
@@ -192,7 +178,7 @@ function SetDefault(){
             return false;
           }
         })
-    
+
 }
 
 function UndoChanges(){
@@ -207,14 +193,14 @@ function Settings(){
 // var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   var driver = false;
-  var userType = 3; 
+  var userType = 3;
   userType = userInfo.userType;
   if(userType === 2 || userType === 1 || userType === 0){
     driver = true;
   }
 return(
     <div>
-        {driver &&<label htmlFor="FontSize">Font Size</label>}   
+        {driver &&<label htmlFor="FontSize">Font Size</label>}
            {driver && <select id='FontSize'>
              <option value="regular">Regular</option>
              <option value="large">Large</option>
@@ -224,7 +210,7 @@ return(
         {driver &&<label htmlFor="darkThemeTab">Dark Theme?</label>}
             {driver &&<input id='darkThemeTab'  type='checkbox'/>}
             <br/>
-        
+
         {driver &&<label htmlFor="securityQs">Require Security Questions?</label>}
             {driver &&<input id='securityQs'  type='checkbox'/>}
             <br/>
@@ -234,7 +220,7 @@ return(
         {driver &&<label htmlFor="emailNotif">Receive Email Notifications?</label>}
             {driver &&<input id='emailNotif'  type='checkbox'/>}
             <br/>
-        {driver &&<label htmlFor="savePreBill">Save previous bills for</label>}   
+        {driver &&<label htmlFor="savePreBill">Save previous bills for</label>}
             {driver &&<select id='savePreBill'>
                 <option value="1">1</option>
                 <option value="3">3</option>
@@ -244,7 +230,7 @@ return(
                 <option value="12">12</option>
             </select>}months
             <br/>
-        {driver &&<label htmlFor="savePreOrders">Save previous orders for</label> }  
+        {driver &&<label htmlFor="savePreOrders">Save previous orders for</label> }
             {driver &&<select id='savePreOrders'>
                 <option value="1">1</option>
                 <option value="3">3</option>
@@ -254,7 +240,7 @@ return(
                 <option value="12">12</option>
             </select>}months
             <br/>
-       
+
             {/* {driver &&<label htmlFor="profilePic">Upload a Profile Picture</label>}
             {driver &&<input id='profilePic'  type='file'/>}
             {driver &&<label htmlFor="removePic">Remove Profile Picture</label>}

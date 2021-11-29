@@ -84,7 +84,12 @@ export default function Messaging(){
   }
 
   const showStarred = ()=>{
-    axios.get('http://localhost:8081/showStarred')
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    var userID = userInfo.UserID;
+    const mjson = {
+      userID: userID,
+    };
+    axios.post('http://localhost:8081/showStarred', mjson)
     .then(function (response) {
       setMsgs(response.data);
       console.log(msgs);
@@ -95,7 +100,12 @@ export default function Messaging(){
   }
 
   const showUnread = ()=>{
-    axios.get('http://localhost:8081/showUnread')
+    var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    var userID = userInfo.UserID;
+    const mjson = {
+      userID: userID,
+    };
+    axios.post('http://localhost:8081/showUnread', mjson)
     .then(function (response) {
       setMsgs(response.data);
       console.log(msgs);
@@ -143,7 +153,7 @@ export default function Messaging(){
   }
   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   var driver = false;
-  var userType = 3; 
+  var userType = 3;
   userType = userInfo.userType;
   if(userType === 2 || userType === 1 || userType === 0){
     driver = true;

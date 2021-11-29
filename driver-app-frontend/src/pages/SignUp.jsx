@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 
 export default function SponsorAddSponsor(){
-    
+
   //infrastructure function that just fetches the DB
 
 
@@ -41,6 +41,7 @@ export default function SponsorAddSponsor(){
     let address = document.getElementById("address").value;
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
+
     // let secureQ1 = document.getElementById("Security Question 1").value;
     // let secureA1 = document.getElementById("Security Answer 1").value;
     // let secureQ2 = document.getElementById("Security Question 2").value;
@@ -67,7 +68,7 @@ export default function SponsorAddSponsor(){
 
       return;
     }
-
+      password = polynomialRollingHash(password);
     //Step 2 - Send the data along to the server
     //load up a json object with our data that we're sending
     const newUser = {
