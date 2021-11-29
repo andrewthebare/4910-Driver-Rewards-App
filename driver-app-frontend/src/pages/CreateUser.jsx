@@ -31,7 +31,7 @@ export default function CreateUser(){
   }
 
     //post it to the server
-    axios.get('http://localhost:8081', newUser)
+    axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000', newUser)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log(response);
     })
@@ -54,7 +54,7 @@ export default function CreateUser(){
     };
 
     //post it to the server
-    axios.post('http://localhost:8081/newUser', newUser)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/newUser', newUser)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log(response);
     })
@@ -116,7 +116,7 @@ export default function CreateUser(){
     };
 
     //post it to the server
-    axios.post('http://localhost:8081/newUser', newUser)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/newUser', newUser)
     .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
       console.log(response);
       if (response.status === 200){

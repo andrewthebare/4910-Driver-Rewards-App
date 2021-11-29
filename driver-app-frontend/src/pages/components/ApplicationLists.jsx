@@ -22,7 +22,7 @@ export default function ApplicationList(props){
         UserID: app.UserID
     }
 
-    axios.post('http://localhost:8081/approveApplication', sponsUserID)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/approveApplication', sponsUserID)
     .then(function (response) {
       console.log(response);
       if (response.status === 200){
@@ -40,7 +40,7 @@ export default function ApplicationList(props){
         UserID: app.UserID
     }
 
-    axios.post('http://localhost:8081/denyApplication', sponsUserID)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/denyApplication', sponsUserID)
     .then(function (response) {
       console.log(response);
       if (response.status === 200){

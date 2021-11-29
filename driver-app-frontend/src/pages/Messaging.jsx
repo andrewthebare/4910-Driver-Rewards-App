@@ -74,7 +74,7 @@ export default function Messaging(){
     const mjson = {
       userID: userID,
     };
-    axios.post('http://localhost:8081/showAll', mjson)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/showAll', mjson)
     .then((response) => {
       setMsgs(response.data);
     })
@@ -89,7 +89,7 @@ export default function Messaging(){
     const mjson = {
       userID: userID,
     };
-    axios.post('http://localhost:8081/showStarred', mjson)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/showStarred', mjson)
     .then(function (response) {
       setMsgs(response.data);
       console.log(msgs);
@@ -105,7 +105,7 @@ export default function Messaging(){
     const mjson = {
       userID: userID,
     };
-    axios.post('http://localhost:8081/showUnread', mjson)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/showUnread', mjson)
     .then(function (response) {
       setMsgs(response.data);
       console.log(msgs);
@@ -131,7 +131,7 @@ export default function Messaging(){
       messageId: mid,
     }
     console.log(mjson);
-    axios.patch('http://localhost:8081/markRead', mjson)
+    axios.patch('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/markRead', mjson)
   }
 
   const markStarred = ()=>{
@@ -140,7 +140,7 @@ export default function Messaging(){
       messageId: mid,
     }
     console.log(mjson);
-    axios.patch('http://localhost:8081/markStarred', mjson)
+    axios.patch('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/markStarred', mjson)
   }
 
   const deleteMsg = ()=>{
@@ -149,7 +149,7 @@ export default function Messaging(){
       messageId: mid,
     }
     console.log(mjson);
-    axios.patch('http://localhost:8081/deleteMsg', mjson)
+    axios.patch('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/deleteMsg', mjson)
   }
   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   var driver = false;

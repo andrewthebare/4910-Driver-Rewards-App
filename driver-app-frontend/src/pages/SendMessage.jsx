@@ -24,7 +24,7 @@ export default function SendMessage(){
     };
 
 
-    axios.post('http://localhost:8081/sendMessage', mjson)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/sendMessage', mjson)
     .then(function (response) {
       console.log(response);
       if (response.status === 200){

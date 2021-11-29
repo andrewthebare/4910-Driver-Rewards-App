@@ -37,7 +37,7 @@ export default function ApplicationChoice(){
     
     var tbl = document.getElementById('table');
     if (tbl.rows.length <= 1) {
-        axios.get('http://localhost:8081/fetchApplication', {params: sponsIDjson})
+        axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchApplication', {params: sponsIDjson})
         .then(function(response){
             console.log('fetch', response);
             let data = response.data;

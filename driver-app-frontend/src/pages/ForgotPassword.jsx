@@ -41,7 +41,7 @@ export default function ForgotPassword(){
       ans: ans,
     };
 
-    axios.post('http://localhost:8081/resetPassword', mjson)
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/resetPassword', mjson)
 
   }
 
@@ -52,7 +52,7 @@ export default function ForgotPassword(){
       const mjson = {
         username: username,
       }
-      axios.post('http://localhost:8081/getSecQuestion', mjson)
+      axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/getSecQuestion', mjson)
       .then((response) => {
         setQs(response.data);
         console.log(qs[0].SecurityQuestion1);

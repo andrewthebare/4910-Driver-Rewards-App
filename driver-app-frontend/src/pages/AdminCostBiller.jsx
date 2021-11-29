@@ -8,7 +8,7 @@ export default function AdminCostBiller(){
     const [sponsors, setSponsors] = useState([{SponsorID: 0, SponsorName: 'username'}])
 
     const fetchSponsors = ()=>{
-        axios.get('http://localhost:8081/fetchSponsors').then(function(response){
+        axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchSponsors').then(function(response){
             console.log('response',response);
             setSponsors(response.data);
         })
@@ -28,7 +28,7 @@ export default function AdminCostBiller(){
         console.log('sponsor', sponsor)
 
         //fetch All users associated with Sponsor
-        axios.get('http://localhost:8081/fetchSponsorsUsers', {params:{sponsor:sponsor}})
+        axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchSponsorsUsers', {params:{sponsor:sponsor}})
         .then(function(response){
             console.log('res', response.data);
             setIDs(response.data);
@@ -76,7 +76,7 @@ export function LogViewer(props){
         let data = [];
 
         if(logData.user!==''){
-            axios.get('http://localhost:8081/fetchLogData', {params:{logData:logData}})
+            axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchLogData', {params:{logData:logData}})
             .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
               if(response.data.length > 0)              
                 data = data.concat(response.data);
@@ -90,7 +90,7 @@ export function LogViewer(props){
                 console.log('i',props.userNames[i].username);
                 logData['user'] = props.userNames[i].username;
                 console.log('logData', logData)
-                axios.get('http://localhost:8081/fetchLogData', {params:{logData:logData}})
+                axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchLogData', {params:{logData:logData}})
                 .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
                   if(response.data.length > 0)              
                     data = data.concat(response.data);

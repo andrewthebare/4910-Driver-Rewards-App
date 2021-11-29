@@ -8,7 +8,7 @@ export default function ApplicationViewer(){
       let sessionInfo= JSON.parse(sessionStorage.getItem("userInfo"))
       let SponsorID = sessionInfo.sponsorKey;
         let sponsIDjson = {SponsorID: SponsorID}
-        axios.get('http://localhost:8081/fetchQuestions', {params: sponsIDjson})
+        axios.get('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/fetchQuestions', {params: sponsIDjson})
         .then(function(response){
             console.log('fetch', response);
 
@@ -150,7 +150,7 @@ export default function ApplicationViewer(){
         q10: app10
       }
       
-      axios.post('http://localhost:8081/applicationUpdate', applicationQuestions)
+      axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/applicationUpdate', applicationQuestions)
       .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
         console.log(response);
         if (response.status === 200){

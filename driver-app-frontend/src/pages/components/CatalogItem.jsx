@@ -8,7 +8,7 @@ export default function CatalogItem(props){
   const purchase = ()=>{
     console.log('im buying '+ item.title);
 
-    axios.post('http://localhost:8081/buyItem', {item:item, user:userID})
+    axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/buyItem', {item:item, user:userID})
     .then(function(response){
 
       response.data.enough?alert('Purchase Successful'):alert('You do not have enough points');
@@ -23,7 +23,7 @@ export default function CatalogItem(props){
         username: userID,
         message: msg,
       };
-      axios.post('http://localhost:8081/sendAlertMessage', msgJson)
+      axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/sendAlertMessage', msgJson)
     })
 
   }

@@ -10,7 +10,7 @@ import axios from 'axios';
     function cancelUpdate(){
         console.log("inside cancelUpdate");
         alert("Successful Canceled");
-        window.location= "http://localhost:3000/Profile";
+        window.location= "/Profile";
         return false;
     }
 
@@ -71,7 +71,7 @@ import axios from 'axios';
         };
         console.log("pass updateUser: ", updatedUser);
         //post it to the server
-        axios.post('http://localhost:8081/Profile/EditProfile', updatedUser)
+        axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/Profile/EditProfile', updatedUser)
         .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
           console.log(response);
           if (response.status === 200){
@@ -81,7 +81,7 @@ import axios from 'axios';
             return false;
           }else{
             alert("Please Try Again")
-            window.location= "http://localhost:3000/Profile/EditProfile";
+            window.location= "/Profile/EditProfile";
             return false;
           }
         })

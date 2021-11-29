@@ -64,7 +64,7 @@ export default function Login(){
       sponsorKey: sponsorKey,
    }
    //post it to the server
-   axios.post('http://localhost:8081/login', loginAttempt)
+   axios.post('http://ec2-52-91-166-21.compute-1.amazonaws.com:3000/login', loginAttempt)
    .then(function (response) { //this part waits and plays out when a response is recieved, it's asynchronous
      console.log("response is:", response);
      var result = response.data;
@@ -79,7 +79,7 @@ export default function Login(){
        else{
         alert("Successful login");
        }
-       window.location.replace("/Profile");
+       window.location.replace("http://3.86.216.62:8080/Profile");
      }
    })
    .catch(function (error) {   //Error catch and Statement
