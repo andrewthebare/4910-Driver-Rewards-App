@@ -12,11 +12,13 @@ export default function ApplicationList(props){
                 .replace(/[\\]/g, '')
                 .replace(/['"']/g, ' ')
                 .replace(/['{}']/g, '')
-  
-  
+
+
   const onApprove = ()=>{
     let sessionInfo= JSON.parse(sessionStorage.getItem("userInfo"))
     let SponsorID = sessionInfo.sponsorKey;
+    let username = sessionInfo.username;
+    let userID = sessionInfo.UserID;
     const sponsUserID = {
         SponsorID: SponsorID,
         UserID: app.UserID
@@ -29,12 +31,21 @@ export default function ApplicationList(props){
         alert("Application Approved");
       }
     })
+    const mjson = {
+      username: username,
+      message: "Your application has been approved",
+      userID: userID,
+    };
 
+
+    axios.post('http://localhost:8081/sendMessage', mjson)
   }
 
   const onDeny = () => {
     let sessionInfo= JSON.parse(sessionStorage.getItem("userInfo"))
     let SponsorID = sessionInfo.sponsorKey;
+    let username = sessionInfo.username;
+    let userID = sessionInfo.UserID;
     const sponsUserID = {
         SponsorID: SponsorID,
         UserID: app.UserID
@@ -47,6 +58,14 @@ export default function ApplicationList(props){
         alert("Application Denied");
       }
     })
+    const mjson = {
+      username: username,
+      message: "Your application has been denied",
+      userID: userID,
+    };
+
+
+    axios.post('http://localhost:8081/sendMessage', mjson)
   }
 
   return(

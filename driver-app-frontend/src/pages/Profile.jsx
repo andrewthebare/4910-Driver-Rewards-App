@@ -32,6 +32,8 @@ function cancelUpdate(){
 
 // }
 //window.onload = get();
+
+
 function Profile() {
   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   if(userInfo.displayMode === 1){
