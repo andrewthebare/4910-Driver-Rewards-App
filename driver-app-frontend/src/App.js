@@ -11,6 +11,7 @@ import ApplicationSubmit from "./pages/ApplicationSubmit";
 import ApplicationChoice from "./pages/ApplicationChoice";
 import {SponsorAddSponsor} from "./pages";
 import {AdminCostBiller} from "./pages";
+import {ForgotPassword} from "./pages";
 import './App.css'
 
 /**
@@ -52,6 +53,7 @@ function App() {
           <Route path="/SendMessage" exact component={() => <SendMessage />} />
           <Route path="/SponsorGroupMessage" exact component={() => <SponsorGroupMessage />} />
           <Route path="/SponsorViewDrivers" exact component={() => <SponsorViewDrivers />} />
+          <Route path="/ForgotPassword" exact component={() => <ForgotPassword />} />
           <Route Path="/Error" exact component={() => <Error />} /> {/*must be at the buttom*/}
 
 	      </Switch>

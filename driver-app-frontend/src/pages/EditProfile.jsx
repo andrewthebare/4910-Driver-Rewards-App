@@ -65,7 +65,7 @@ import axios from 'axios';
           email: email,
           address: address,
           username: username,
-          password: password,
+          password: polynomialRollingHash(password).toString(),
           delete: deleted,
 
         };
@@ -92,7 +92,7 @@ import axios from 'axios';
       }
       var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
       var driver = false;
-      var userType = 3; 
+      var userType = 3;
       userType = userInfo.userType;
       if(userType === 2 || userType === 1 || userType === 0){
         driver = true;
@@ -106,7 +106,7 @@ import axios from 'axios';
 
          <br/>
         {driver && <label htmlFor="FirstName">First Name</label>}
-        {driver && <input id='FirstName' placeholder = {userInfo.FirstName} type='text'/>} 
+        {driver && <input id='FirstName' placeholder = {userInfo.FirstName} type='text'/>}
         {driver && <label htmlFor="LastName">Last Name</label>}
         {driver && <input id='LastName' placeholder = {userInfo.LastName} type='text'/>}<br/>
 
@@ -117,7 +117,7 @@ import axios from 'axios';
         {driver && <label htmlFor="username">Username</label>}
         {driver &&<input id='username' placeholder= {userInfo.username} type='text'/>}
         {driver && <label htmlFor="password">Password</label>}
-        {driver && <input id='password' placeholder= {userInfo.hashedPassword} type='text'/> }<br/>
+        {driver && <input id='password'  type='text'/> }<br/>
         {driver && <label htmlFor="deleteTab">Delete Acount?</label>}
         {driver && <input id='deleteTab'  type='checkbox'/>}
 

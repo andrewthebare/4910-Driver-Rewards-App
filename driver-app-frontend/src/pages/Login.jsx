@@ -37,6 +37,7 @@ export default function Login(){
     //Step 1 - Make sure that all the necissary fields are filled out
     let username = document.getElementById("Username").value;
     let password = document.getElementById("Password").value;
+    password = polynomialRollingHash(password);
     let sponsorKey = document.getElementById("SponsorID").value
     console.log(username);
     console.log(password);
@@ -59,7 +60,7 @@ export default function Login(){
     //load up a json object with our data that we're sending
     const loginAttempt = {
       username: username,
-      password: password,
+      password: password.toString(),
       sponsorKey: sponsorKey,
    }
    //post it to the server
@@ -138,7 +139,7 @@ export default function Login(){
       </form>
       <button onClick={redirect}>Login</button>
        <p className="Forgot-password text-center">
-        <Link to={"/"}>Forgot Password? </Link>
+        <Link to={"/ForgotPassword"}>Forgot Password? </Link>
       </p>
 
    </div>

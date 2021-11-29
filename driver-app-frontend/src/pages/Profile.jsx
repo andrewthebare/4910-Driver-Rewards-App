@@ -18,7 +18,7 @@ function cancelUpdate(){
   window.location.replace("/Profile");
 }
 // function renderUserType(userInfo){
-  
+
 //   if(userInfo.userType === 0) {
 //     console.log("UserType: Admin");
 //     return <div>Admin</div>;
@@ -29,7 +29,7 @@ function cancelUpdate(){
 //     if(userInfo.userType === 1){
 //       return <div>Driver</div>;
 //     }
-    
+
 // }
 //window.onload = get();
 function Profile() {
@@ -44,7 +44,7 @@ function Profile() {
 
   var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   var driver = false;
-  var userType = 3; 
+  var userType = 3;
   userType = userInfo.userType;
   if(userType === 2 || userType === 1 || userType === 0){
     driver = true;
@@ -82,7 +82,7 @@ function Profile() {
           })()}
 
           </p>} */}
-          
+
           <div class="col-lg-5">
           <h3>{userInfo.Points} <h4>Points</h4></h3>
             {driver &&<p>{(()=>{
@@ -110,16 +110,15 @@ function Profile() {
           Address: {userInfo.address}<br></br>
           Email: {userInfo.email}<br></br>
           Username: {userInfo.username}<br></br>
-          Password: {userInfo.hashedPassword}<br></br>
           Sponsor ID: {userInfo.sponsorKey}<br></br>
 
 
           </p>}
           {driver &&<button onClick={updateUser}>Edit</button>}
           {driver && <button onClick={settings}>Settings</button>}
-    
-         
-          
+
+
+
           </div>
         </div>
       </div>

@@ -23,3 +23,4 @@ export { default as SponsorEditCatalog} from "./SponsorCatalogEdit";
 export { default as SponsorViewDrivers} from "./SponsorViewDrivers";
 export { default as SponsorAddSponsor} from "./SponsorAddSponsor";
 export {default as AdminCostBiller} from "./AdminCostBiller"
+export {default as ForgotPassword} from "./ForgotPassword"
