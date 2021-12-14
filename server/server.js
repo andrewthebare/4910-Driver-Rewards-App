@@ -10,10 +10,8 @@ const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json();
 var fs = require("fs");
 const { response, json } = require('express');
-let dbHost = 'sqldb.ccrcpu4iz3tj.us-east-1.rds.amazonaws.com'
-let dbuName = 'admin'
-let dbpWord = 'Team3Test'
-let dbSchema = 'mydb'
+
+//Server Credentials
 
 //Creates the connection
 var server = app.listen(8081, function () {
@@ -238,10 +236,7 @@ app.post('/fetchCatalog', function (req,res){
 
     console.log('options',options)
 
-    axios.get(`https://openapi.etsy.com/v2/listings/active`,{params:options}).then(response =>{
-
-      res.send(response.data.results).status(200);
-    })
+    //Etsy API Call
   })
 })
 
